@@ -114,6 +114,11 @@ public class SimpleMindMapApplication extends Application {
 		return new VBox(20, createNode, createConn);
 	}
 
+	/**
+	 * Add hot keys actions
+	 *
+	 * @param primaryStage2 - hotkey scene assigned to
+	 */
 	private void defineHotKeys(Stage primaryStage2) {
 		primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 
@@ -221,6 +226,9 @@ public class SimpleMindMapApplication extends Application {
 		viewer.getContents().setAll(mindMap);
 	}
 
+	/**
+	 * Redo event
+	 */
 	private void redo() {
 		try {
 			domain.getOperationHistory().redo(domain.getUndoContext(), null, null);
@@ -255,6 +263,9 @@ public class SimpleMindMapApplication extends Application {
 		primaryStage.show();
 	}
 
+	/**
+	 * Undo event
+	 */
 	private void undo() {
 		try {
 			domain.getOperationHistory().undo(domain.getUndoContext(), null, null);
