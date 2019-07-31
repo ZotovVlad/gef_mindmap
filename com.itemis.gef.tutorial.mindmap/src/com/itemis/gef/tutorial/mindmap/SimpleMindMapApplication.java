@@ -12,16 +12,17 @@ import com.itemis.gef.tutorial.mindmap.model.SimpleMindMap;
 import com.itemis.gef.tutorial.mindmap.model.SimpleMindMapExampleFactory;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel.Type;
-import com.itemis.gef.tutorial.mindmap.policies.HotKeysHandler;
 import com.itemis.gef.tutorial.mindmap.visuals.MindMapNodeVisual;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -144,8 +145,8 @@ public class SimpleMindMapApplication extends Application {
 		pane.setMinWidth(800);
 		pane.setMinHeight(600);
 
-		HotKeysHandler keyboard = new HotKeysHandler();
-		keyboard.init();
+//		HotKeysHandler keyboard = new HotKeysHandler();
+//		keyboard.init();
 
 		Scene scene = new Scene(pane);
 		primaryStage.setScene(scene);
@@ -179,6 +180,69 @@ public class SimpleMindMapApplication extends Application {
 
 		// load contents
 		populateViewerContents();
+
+		primaryStage.setOpacity(0.8);
+
+		primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.isShiftDown() && event.isControlDown()) {
+					switch (event.getCode()) {
+					case Z: {
+						// - Pressed (Ctrl + Shift + z)
+						System.out.println("// - Undo (Ctrl + Shift + z)");
+						break;
+					}
+					default: {
+						System.err.println("Unknown hotkey"); // todo remove
+						break;
+					}
+					}
+				} else if (event.isControlDown()) {
+					switch (event.getCode()) {
+					case Z: {
+						// - Undo (Ctrl+z)
+						System.out.println("// - Undo (Ctrl+z)");
+						break;
+					}
+					case R: {
+						// - Redo (Ctrl+r)
+						System.out.println("// - Redo (Ctrl+r)");
+						break;
+					}
+					case X: {
+						// - New node (Ctrl + x)
+						System.out.println("// - New node (Ctrl + x)");
+						break;
+					}
+
+					case C: {
+						// - New connection (Ctrl + c)
+						System.out.println("// - New connection (Ctrl + c)");
+						break;
+					}
+					default: {
+						System.err.println("Unknown hotkey"); // todo remove
+						break;
+					}
+					}
+				} else {
+					switch (event.getCode()) {
+					case DELETE: {
+						// - Удаление выбранной Node (Delete)
+						System.out.println("// - Удаление выбранной Node (Delete)");
+						break;
+					}
+					default: {
+						// - Удаление выбранной Node (Delete)
+						System.err.println("Unknown hotkey"); // todo remove
+						break;
+					}
+					}
+				}
+			}
+		});
 
 		// set-up stage
 		primaryStage.setResizable(true);
