@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2016, 2019 itemis AG and others.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+   
+    Contributors:
+        Alexander Nyßen (itemis AG) - initial API and implementation
+        Tamas Miklossy  (itemis AG) - plugin ui test cases integration (bug #498324)
+ -->
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.eclipse.gef</groupId>
+		<artifactId>org.eclipse.gef.releng</artifactId>
+		<version>5.0.0-SNAPSHOT</version>
+		<relativePath>../org.eclipse.gef.releng/pom.xml</relativePath>
+	</parent>
+	<groupId>org.eclipse.gef</groupId>
+	<artifactId>org.eclipse.gef.dot.tests</artifactId>
+	<version>5.0.300-SNAPSHOT</version>
+	<packaging>eclipse-test-plugin</packaging>
+	<properties>
+		<vmargs>-Xmx1024m -XX:MaxPermSize=512m</vmargs>
+	</properties>
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>${maven-clean-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>gen-clean</id>
+						<phase>clean</phase>
+						<configuration>
+							<filesets combine.children="append">
+								<fileset>
+									<directory>${basedir}/xtend-gen/</directory>
+								</fileset>
+							</filesets>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>xtend-maven-plugin</artifactId>
+				<version>${xtext.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+				<!-- workaround https://github.com/eclipse/xtext/issues/1231 -->
+				<dependencies>
+					<dependency>
+						<groupId>org.eclipse.jdt</groupId>
+						<artifactId>org.eclipse.jdt.core</artifactId>
+						<version>3.10.0</version>
+					</dependency>
+					<dependency>
+						<groupId>org.eclipse.jdt</groupId>
+						<artifactId>org.eclipse.jdt.launching</artifactId>
+						<version>3.10.0</version>
+					</dependency>
+					<dependency>
+						<groupId>org.eclipse.jdt</groupId>
+						<artifactId>org.eclipse.jdt.debug</artifactId>
+						<version>3.10.1</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>
+					<outputDirectory>xtend-gen</outputDirectory>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<configuration>
+					<useUIHarness>true</useUIHarness>
+					<useUIThread>true</useUIThread>
+					<argLine>-Xmx512m -XX:MaxPermSize=256m -Dosgi.framework.extensions=org.eclipse.fx.osgi ${os-jvm-flags}</argLine>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

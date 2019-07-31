@@ -1,0 +1,3 @@
+wiki.title=GEF Layout Developer Documentation
+wiki.path=Layout
+wiki.image.path=images/layout

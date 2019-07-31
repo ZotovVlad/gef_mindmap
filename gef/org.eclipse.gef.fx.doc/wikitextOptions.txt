@@ -1,0 +1,3 @@
+wiki.title=GEF FX Developer Documentation
+wiki.path=FX
+wiki.image.path=images/fx

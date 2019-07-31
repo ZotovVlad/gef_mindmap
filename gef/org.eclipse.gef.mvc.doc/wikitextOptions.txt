@@ -1,0 +1,3 @@
+wiki.title=GEF MVC Developer Documentation
+wiki.path=MVC
+wiki.image.path=images/mvc

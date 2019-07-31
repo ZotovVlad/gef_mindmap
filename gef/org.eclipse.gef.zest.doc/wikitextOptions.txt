@@ -1,0 +1,3 @@
+wiki.title=GEF Zest Developer Documentation
+wiki.path=Zest
+wiki.image.path=images/zest
