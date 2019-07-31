@@ -51,21 +51,13 @@ public class SimpleMindMapApplication extends Application {
 		Button undoButton = new Button("Undo");
 		undoButton.setDisable(true);
 		undoButton.setOnAction((e) -> {
-			try {
-				domain.getOperationHistory().undo(domain.getUndoContext(), null, null);
-			} catch (ExecutionException e1) {
-				e1.printStackTrace();
-			}
+			undo();
 		});
 
 		Button redoButton = new Button("Redo");
 		redoButton.setDisable(true);
 		redoButton.setOnAction((e) -> {
-			try {
-				domain.getOperationHistory().redo(domain.getUndoContext(), null, null);
-			} catch (ExecutionException e1) {
-				e1.printStackTrace();
-			}
+			redo();
 		});
 
 		// add listener to the operation history of our domain
@@ -122,6 +114,71 @@ public class SimpleMindMapApplication extends Application {
 		return new VBox(20, createNode, createConn);
 	}
 
+	private void defineHotKeys(Stage primaryStage2) {
+		primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.isShiftDown() && event.isControlDown()) {
+					switch (event.getCode()) {
+					case Z: {
+						// - Pressed (Ctrl + Shift + z)
+						System.out.println("// - (Ctrl + Shift + z)");
+						break;
+					}
+					default: {
+						System.err.println("Unknown hotkey"); // todo remove
+						break;
+					}
+					}
+				} else if (event.isControlDown()) {
+					switch (event.getCode()) {
+					case Z: {
+						// - Undo (Ctrl+z)
+						System.out.println("// - Undo (Ctrl+z)");
+						undo();
+						break;
+					}
+					case R: {
+						// - Redo (Ctrl+r)
+						System.out.println("// - Redo (Ctrl+r)");
+						redo();
+						break;
+					}
+					case X: {
+						// - New node (Ctrl + x)
+						System.out.println("// - New node (Ctrl + x)");
+						break;
+					}
+
+					case C: {
+						// - New connection (Ctrl + c)
+						System.out.println("// - New connection (Ctrl + c)");
+						break;
+					}
+					default: {
+						System.err.println("Unknown hotkey"); // todo remove
+						break;
+					}
+					}
+				} else {
+					switch (event.getCode()) {
+					case DELETE: {
+						// - Удаление выбранной Node (Delete)
+						System.out.println("// - Удаление выбранной Node (Delete)");
+						break;
+					}
+					default: {
+						// - Удаление выбранной Node (Delete)
+						System.err.println("Unknown hotkey"); // todo remove
+						break;
+					}
+					}
+				}
+			}
+		});
+	}
+
 	/**
 	 * Returns the content viewer of the domain
 	 *
@@ -164,6 +221,14 @@ public class SimpleMindMapApplication extends Application {
 		viewer.getContents().setAll(mindMap);
 	}
 
+	private void redo() {
+		try {
+			domain.getOperationHistory().redo(domain.getUndoContext(), null, null);
+		} catch (ExecutionException e1) {
+			e1.printStackTrace();
+		}
+	}
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
@@ -181,73 +246,20 @@ public class SimpleMindMapApplication extends Application {
 		// load contents
 		populateViewerContents();
 
-		primaryStage.setOpacity(0.8);
-
-		primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-
-			@Override
-			public void handle(KeyEvent event) {
-				if (event.isShiftDown() && event.isControlDown()) {
-					switch (event.getCode()) {
-					case Z: {
-						// - Pressed (Ctrl + Shift + z)
-						System.out.println("// - Undo (Ctrl + Shift + z)");
-						break;
-					}
-					default: {
-						System.err.println("Unknown hotkey"); // todo remove
-						break;
-					}
-					}
-				} else if (event.isControlDown()) {
-					switch (event.getCode()) {
-					case Z: {
-						// - Undo (Ctrl+z)
-						System.out.println("// - Undo (Ctrl+z)");
-						break;
-					}
-					case R: {
-						// - Redo (Ctrl+r)
-						System.out.println("// - Redo (Ctrl+r)");
-						break;
-					}
-					case X: {
-						// - New node (Ctrl + x)
-						System.out.println("// - New node (Ctrl + x)");
-						break;
-					}
-
-					case C: {
-						// - New connection (Ctrl + c)
-						System.out.println("// - New connection (Ctrl + c)");
-						break;
-					}
-					default: {
-						System.err.println("Unknown hotkey"); // todo remove
-						break;
-					}
-					}
-				} else {
-					switch (event.getCode()) {
-					case DELETE: {
-						// - Удаление выбранной Node (Delete)
-						System.out.println("// - Удаление выбранной Node (Delete)");
-						break;
-					}
-					default: {
-						// - Удаление выбранной Node (Delete)
-						System.err.println("Unknown hotkey"); // todo remove
-						break;
-					}
-					}
-				}
-			}
-		});
+		defineHotKeys(primaryStage);
 
 		// set-up stage
 		primaryStage.setResizable(true);
 		primaryStage.setTitle("GEF Simple Mindmap");
 		primaryStage.sizeToScene();
 		primaryStage.show();
+	}
+
+	private void undo() {
+		try {
+			domain.getOperationHistory().undo(domain.getUndoContext(), null, null);
+		} catch (ExecutionException e1) {
+			e1.printStackTrace();
+		}
 	}
 }
