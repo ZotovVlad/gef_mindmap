@@ -12,6 +12,9 @@ import com.itemis.gef.tutorial.mindmap.model.SimpleMindMap;
 import com.itemis.gef.tutorial.mindmap.model.SimpleMindMapExampleFactory;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel.Type;
+import com.itemis.gef.tutorial.mindmap.policies.CreateNewConnectionOnKeyHandler;
+import com.itemis.gef.tutorial.mindmap.policies.CreateNewNodeOnKeyHandler;
+import com.itemis.gef.tutorial.mindmap.policies.DeleteNodeOnHandleKeyHandler;
 import com.itemis.gef.tutorial.mindmap.visuals.MindMapNodeVisual;
 
 import javafx.application.Application;
@@ -152,12 +155,16 @@ public class SimpleMindMapApplication extends Application {
 					}
 					case X: {
 						// - New node (Ctrl + x)
+						CreateNewNodeOnKeyHandler createNode = new CreateNewNodeOnKeyHandler();
+						createNode.createNode();
 						System.out.println("// - New node (Ctrl + x)");
 						break;
 					}
 
 					case C: {
 						// - New connection (Ctrl + c)
+						CreateNewConnectionOnKeyHandler createConnection = new CreateNewConnectionOnKeyHandler();
+						createConnection.createConnection();
 						System.out.println("// - New connection (Ctrl + c)");
 						break;
 					}
@@ -170,11 +177,13 @@ public class SimpleMindMapApplication extends Application {
 					switch (event.getCode()) {
 					case DELETE: {
 						// - Удаление выбранной Node (Delete)
+						DeleteNodeOnHandleKeyHandler deleteNode = new DeleteNodeOnHandleKeyHandler();
+						deleteNode.delete();
+
 						System.out.println("// - Удаление выбранной Node (Delete)");
 						break;
 					}
 					default: {
-						// - Удаление выбранной Node (Delete)
 						System.err.println("Unknown hotkey"); // todo remove
 						break;
 					}
