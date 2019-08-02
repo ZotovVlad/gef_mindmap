@@ -156,7 +156,7 @@ public class SimpleMindMapApplication extends Application {
 					case X: {
 						// - New node (Ctrl + x)
 						CreateNewNodeOnKeyHandler createNode = new CreateNewNodeOnKeyHandler();
-						createNode.createNode();
+						createNode.initialPress(event);
 						System.out.println("// - New node (Ctrl + x)");
 						break;
 					}
@@ -164,7 +164,7 @@ public class SimpleMindMapApplication extends Application {
 					case C: {
 						// - New connection (Ctrl + c)
 						CreateNewConnectionOnKeyHandler createConnection = new CreateNewConnectionOnKeyHandler();
-						createConnection.createConnection();
+						createConnection.initialPress(event);
 						System.out.println("// - New connection (Ctrl + c)");
 						break;
 					}

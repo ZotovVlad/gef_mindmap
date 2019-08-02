@@ -4,6 +4,7 @@ import java.util.Collections;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.gef.mvc.fx.handlers.AbstractHandler;
+import org.eclipse.gef.mvc.fx.handlers.IOnStrokeHandler;
 import org.eclipse.gef.mvc.fx.operations.ChangeSelectionOperation;
 import org.eclipse.gef.mvc.fx.parts.IContentPart;
 import org.eclipse.gef.mvc.fx.parts.IVisualPart;
@@ -18,8 +19,15 @@ import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
 import com.itemis.gef.tutorial.mindmap.parts.SimpleMindMapPart;
 
 import javafx.scene.Node;
+import javafx.scene.input.KeyEvent;
 
-public class CreateNewConnectionOnKeyHandler extends AbstractHandler {
+public class CreateNewConnectionOnKeyHandler extends AbstractHandler implements IOnStrokeHandler {
+
+	@Override
+	public void abortPress() {
+		// TODO Auto-generated method stub
+
+	}
 
 	public void createConnection() {
 		IViewer viewer = getHost().getRoot().getViewer();
@@ -66,5 +74,72 @@ public class CreateNewConnectionOnKeyHandler extends AbstractHandler {
 		// reset creation state
 		creationModel.setSource(null);
 		creationModel.setType(Type.None);
+	}
+
+	@Override
+	public void finalRelease(KeyEvent event) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void initialPress(KeyEvent event) {
+		IViewer viewer = getHost().getRoot().getViewer();
+		ItemCreationModel creationModel = viewer.getAdapter(ItemCreationModel.class);
+		if (creationModel.getType() != Type.Connection) {
+			return; // don't want to create a connection
+		}
+
+		if (creationModel.getSource() == null) {
+			// the host is the source
+			creationModel.setSource((MindMapNodePart) getHost());
+			return; // wait for the next click
+		}
+
+		// okay, we have a pair
+		MindMapNodePart source = creationModel.getSource();
+		MindMapNodePart target = (MindMapNodePart) getHost();
+
+		// check if valid
+		if (source == target) {
+			return;
+		}
+
+		IVisualPart<? extends Node> part = getHost().getRoot().getChildrenUnmodifiable().get(0);
+		if (part instanceof SimpleMindMapPart) {
+			MindMapConnection newConn = new MindMapConnection();
+			newConn.connect(source.getContent(), target.getContent());
+
+			// use CreatePolicy to add a new connection to the model
+			CreationPolicy creationPolicy = getHost().getRoot().getAdapter(CreationPolicy.class);
+			init(creationPolicy);
+			creationPolicy.create(newConn, part, HashMultimap.<IContentPart<? extends Node>, String>create());
+			commit(creationPolicy);
+
+			// select target node
+			// FIXME
+			try {
+				viewer.getDomain().execute(new ChangeSelectionOperation(viewer, Collections.singletonList(target)),
+						null);
+			} catch (ExecutionException e1) {
+			}
+		}
+
+		// reset creation state
+		creationModel.setSource(null);
+		creationModel.setType(Type.None);
+
+	}
+
+	@Override
+	public void press(KeyEvent event) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void release(KeyEvent event) {
+		// TODO Auto-generated method stub
+
 	}
 }
