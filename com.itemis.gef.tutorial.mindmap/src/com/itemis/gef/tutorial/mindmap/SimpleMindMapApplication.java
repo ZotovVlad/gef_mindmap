@@ -178,7 +178,7 @@ public class SimpleMindMapApplication extends Application {
 					case DELETE: {
 						// - Удаление выбранной Node (Delete)
 						DeleteNodeOnHandleKeyHandler deleteNode = new DeleteNodeOnHandleKeyHandler();
-						deleteNode.delete();
+						deleteNode.initialPress(event);
 
 						System.out.println("// - Удаление выбранной Node (Delete)");
 						break;
