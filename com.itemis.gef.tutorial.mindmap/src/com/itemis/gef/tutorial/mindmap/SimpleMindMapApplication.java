@@ -3,11 +3,13 @@ package com.itemis.gef.tutorial.mindmap;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.IUndoContext;
 import org.eclipse.gef.common.adapt.AdapterKey;
+import org.eclipse.gef.geometry.planar.Rectangle;
 import org.eclipse.gef.mvc.fx.domain.HistoricizingDomain;
 import org.eclipse.gef.mvc.fx.domain.IDomain;
 import org.eclipse.gef.mvc.fx.viewer.IViewer;
 
 import com.google.inject.Guice;
+import com.itemis.gef.tutorial.mindmap.model.MindMapNode;
 import com.itemis.gef.tutorial.mindmap.model.SimpleMindMap;
 import com.itemis.gef.tutorial.mindmap.model.SimpleMindMapExampleFactory;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel;
@@ -26,6 +28,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -40,7 +43,32 @@ public class SimpleMindMapApplication extends Application {
 	}
 
 	private Stage primaryStage;
+
 	private HistoricizingDomain domain;
+
+	/**
+	 * add connection
+	 */
+	private void addConnection() {
+		ItemCreationModel creationModel = getContentViewer().getAdapter(ItemCreationModel.class);
+		creationModel.setType(Type.Connection);
+	}
+
+	/**
+	 * add node
+	 *
+	 * @param primaryStage
+	 */
+	private void addNode(Stage primaryStage) {
+		ItemCreationModel creationModel = getContentViewer().getAdapter(ItemCreationModel.class);
+		creationModel.setType(Type.Node);
+
+		MindMapNode newNode = createMindMapNode(primaryStage);
+		getContentViewer().getContents().add(newNode);
+
+		// reset creation state
+		creationModel.setType(Type.None);
+	}
 
 	/**
 	 * Creates the undo/redo buttons
@@ -69,6 +97,16 @@ public class SimpleMindMapApplication extends Application {
 		});
 
 		return new HBox(10, undoButton, redoButton);
+	}
+
+	private MindMapNode createMindMapNode(Stage primaryStage) {
+		MindMapNode newNode = new MindMapNode();
+		newNode.setTitle("New node");
+		newNode.setDescription("no description");
+		newNode.setColor(Color.GREENYELLOW);
+		newNode.setBounds(new Rectangle(primaryStage.getWidth() / 2, primaryStage.getHeight() / 2, 120, 80));
+
+		return newNode;
 	}
 
 	/**
@@ -122,16 +160,6 @@ public class SimpleMindMapApplication extends Application {
 	private void defineHotKeys(Stage primaryStage2) {
 		primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 
-			private void addConnection() {
-				ItemCreationModel creationModel = getContentViewer().getAdapter(ItemCreationModel.class);
-				creationModel.setType(Type.Connection);
-			}
-
-			private void addNode(Stage primaryStage) {
-				ItemCreationModel creationModel = getContentViewer().getAdapter(ItemCreationModel.class);
-				creationModel.setType(Type.Node);
-			}
-
 			@Override
 			public void handle(KeyEvent event) {
 				if (event.isShiftDown() && event.isControlDown()) {
@@ -142,7 +170,6 @@ public class SimpleMindMapApplication extends Application {
 						break;
 					}
 					default: {
-						System.err.println("Unknown hotkey"); // todo remove
 						break;
 					}
 					}
@@ -162,22 +189,17 @@ public class SimpleMindMapApplication extends Application {
 					}
 					case X: {
 						// - New node (Ctrl + x)
-//						CreateNewNodeOnKeyHandler createNode = new CreateNewNodeOnKeyHandler();
-//						createNode.initialPress(event);
-						addNode(primaryStage2);
 						System.out.println("// - New node (Ctrl + x)");
+						addNode(primaryStage2);
 						break;
 					}
 
 					case C: {
 						// - New connection (Ctrl + c)
-//						CreateNewConnectionOnKeyHandler createConnection = new CreateNewConnectionOnKeyHandler();
-//						createConnection.initialPress(event);
 						addConnection();
 						break;
 					}
 					default: {
-						System.err.println("Unknown hotkey"); // todo remove
 						break;
 					}
 					}
@@ -185,14 +207,10 @@ public class SimpleMindMapApplication extends Application {
 					switch (event.getCode()) {
 					case DELETE: {
 						// - Удаление выбранной Node (Delete)
-						// DeleteNodeOnHandleKeyHandler deleteNode = new DeleteNodeOnHandleKeyHandler();
-						// deleteNode.initialPress(event);
-
 						System.out.println("// - Удаление выбранной Node (Delete)");
 						break;
 					}
 					default: {
-						System.err.println("Unknown hotkey"); // todo remove
 						break;
 					}
 					}
