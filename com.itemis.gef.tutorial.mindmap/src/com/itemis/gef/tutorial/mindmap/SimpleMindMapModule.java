@@ -29,11 +29,8 @@ import com.itemis.gef.tutorial.mindmap.parts.handles.DeleteMindMapNodeHandlePart
 import com.itemis.gef.tutorial.mindmap.parts.handles.MindMapHoverIntentHandlePartFactory;
 import com.itemis.gef.tutorial.mindmap.parts.handles.MindMapSelectionHandlePartFactory;
 import com.itemis.gef.tutorial.mindmap.policies.CreateNewConnectionOnClickHandler;
-import com.itemis.gef.tutorial.mindmap.policies.CreateNewConnectionOnKeyHandler;
 import com.itemis.gef.tutorial.mindmap.policies.CreateNewNodeOnClickHandler;
-import com.itemis.gef.tutorial.mindmap.policies.CreateNewNodeOnKeyHandler;
 import com.itemis.gef.tutorial.mindmap.policies.DeleteNodeOnHandleClickHandler;
-import com.itemis.gef.tutorial.mindmap.policies.DeleteNodeOnHandleKeyHandler;
 import com.itemis.gef.tutorial.mindmap.policies.ShowMindMapNodeContextMenuOnClickHandler;
 
 /**
@@ -57,7 +54,6 @@ public class SimpleMindMapModule extends MvcFxModule {
 
 	protected void bindDeleteMindMapNodeHandlePartAdapters(MapBinder<AdapterKey<?>, Object> adapterMapBinder) {
 		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(DeleteNodeOnHandleClickHandler.class);
-		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(DeleteNodeOnHandleKeyHandler.class);
 	}
 
 	@Override
@@ -78,7 +74,6 @@ public class SimpleMindMapModule extends MvcFxModule {
 
 		// support creation of nodes via mouse click
 		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(CreateNewNodeOnClickHandler.class);
-		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(CreateNewNodeOnKeyHandler.class);
 
 		// adding the creation feedback behavior
 		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(CreateFeedbackBehavior.class);
@@ -129,7 +124,6 @@ public class SimpleMindMapModule extends MvcFxModule {
 
 		// support creation of connections
 		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(CreateNewConnectionOnClickHandler.class);
-		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(CreateNewConnectionOnKeyHandler.class);
 
 		// bind the context menu policy to the part
 		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(ShowMindMapNodeContextMenuOnClickHandler.class);

@@ -12,9 +12,6 @@ import com.itemis.gef.tutorial.mindmap.model.SimpleMindMap;
 import com.itemis.gef.tutorial.mindmap.model.SimpleMindMapExampleFactory;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel.Type;
-import com.itemis.gef.tutorial.mindmap.policies.CreateNewConnectionOnKeyHandler;
-import com.itemis.gef.tutorial.mindmap.policies.CreateNewNodeOnKeyHandler;
-import com.itemis.gef.tutorial.mindmap.policies.DeleteNodeOnHandleKeyHandler;
 import com.itemis.gef.tutorial.mindmap.visuals.MindMapNodeVisual;
 
 import javafx.application.Application;
@@ -125,6 +122,16 @@ public class SimpleMindMapApplication extends Application {
 	private void defineHotKeys(Stage primaryStage2) {
 		primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 
+			private void addConnection() {
+				ItemCreationModel creationModel = getContentViewer().getAdapter(ItemCreationModel.class);
+				creationModel.setType(Type.Connection);
+			}
+
+			private void addNode(Stage primaryStage) {
+				ItemCreationModel creationModel = getContentViewer().getAdapter(ItemCreationModel.class);
+				creationModel.setType(Type.Node);
+			}
+
 			@Override
 			public void handle(KeyEvent event) {
 				if (event.isShiftDown() && event.isControlDown()) {
@@ -155,17 +162,18 @@ public class SimpleMindMapApplication extends Application {
 					}
 					case X: {
 						// - New node (Ctrl + x)
-						CreateNewNodeOnKeyHandler createNode = new CreateNewNodeOnKeyHandler();
-						createNode.initialPress(event);
+//						CreateNewNodeOnKeyHandler createNode = new CreateNewNodeOnKeyHandler();
+//						createNode.initialPress(event);
+						addNode(primaryStage2);
 						System.out.println("// - New node (Ctrl + x)");
 						break;
 					}
 
 					case C: {
 						// - New connection (Ctrl + c)
-						CreateNewConnectionOnKeyHandler createConnection = new CreateNewConnectionOnKeyHandler();
-						createConnection.initialPress(event);
-						System.out.println("// - New connection (Ctrl + c)");
+//						CreateNewConnectionOnKeyHandler createConnection = new CreateNewConnectionOnKeyHandler();
+//						createConnection.initialPress(event);
+						addConnection();
 						break;
 					}
 					default: {
@@ -177,8 +185,8 @@ public class SimpleMindMapApplication extends Application {
 					switch (event.getCode()) {
 					case DELETE: {
 						// - Удаление выбранной Node (Delete)
-						DeleteNodeOnHandleKeyHandler deleteNode = new DeleteNodeOnHandleKeyHandler();
-						deleteNode.initialPress(event);
+						// DeleteNodeOnHandleKeyHandler deleteNode = new DeleteNodeOnHandleKeyHandler();
+						// deleteNode.initialPress(event);
 
 						System.out.println("// - Удаление выбранной Node (Delete)");
 						break;
