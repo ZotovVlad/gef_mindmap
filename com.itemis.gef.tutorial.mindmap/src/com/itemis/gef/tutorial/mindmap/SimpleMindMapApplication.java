@@ -3,13 +3,11 @@ package com.itemis.gef.tutorial.mindmap;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.IUndoContext;
 import org.eclipse.gef.common.adapt.AdapterKey;
-import org.eclipse.gef.geometry.planar.Rectangle;
 import org.eclipse.gef.mvc.fx.domain.HistoricizingDomain;
 import org.eclipse.gef.mvc.fx.domain.IDomain;
 import org.eclipse.gef.mvc.fx.viewer.IViewer;
 
 import com.google.inject.Guice;
-import com.itemis.gef.tutorial.mindmap.model.MindMapNode;
 import com.itemis.gef.tutorial.mindmap.model.SimpleMindMap;
 import com.itemis.gef.tutorial.mindmap.model.SimpleMindMapExampleFactory;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel;
@@ -28,7 +26,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -45,30 +42,6 @@ public class SimpleMindMapApplication extends Application {
 	private Stage primaryStage;
 
 	private HistoricizingDomain domain;
-
-	/**
-	 * add connection
-	 */
-	private void addConnection() {
-		ItemCreationModel creationModel = getContentViewer().getAdapter(ItemCreationModel.class);
-		creationModel.setType(Type.Connection);
-	}
-
-	/**
-	 * add node
-	 *
-	 * @param primaryStage
-	 */
-	private void addNode(Stage primaryStage) {
-		ItemCreationModel creationModel = getContentViewer().getAdapter(ItemCreationModel.class);
-		creationModel.setType(Type.Node);
-
-		MindMapNode newNode = createMindMapNode(primaryStage);
-		getContentViewer().getContents().add(newNode);
-
-		// reset creation state
-		creationModel.setType(Type.None);
-	}
 
 	/**
 	 * Creates the undo/redo buttons
@@ -97,16 +70,6 @@ public class SimpleMindMapApplication extends Application {
 		});
 
 		return new HBox(10, undoButton, redoButton);
-	}
-
-	private MindMapNode createMindMapNode(Stage primaryStage) {
-		MindMapNode newNode = new MindMapNode();
-		newNode.setTitle("New node");
-		newNode.setDescription("no description");
-		newNode.setColor(Color.GREENYELLOW);
-		newNode.setBounds(new Rectangle(primaryStage.getWidth() / 2, primaryStage.getHeight() / 2, 120, 80));
-
-		return newNode;
 	}
 
 	/**
@@ -154,26 +117,14 @@ public class SimpleMindMapApplication extends Application {
 
 	/**
 	 * Add hot keys actions
-	 *
-	 * @param primaryStage2 - hotkey scene assigned to
 	 */
-	private void defineHotKeys(Stage primaryStage2) {
+	private void defineHotKeys() {
+
 		primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 
 			@Override
 			public void handle(KeyEvent event) {
-				if (event.isShiftDown() && event.isControlDown()) {
-					switch (event.getCode()) {
-					case Z: {
-						// - Pressed (Ctrl + Shift + z)
-						System.out.println("// - (Ctrl + Shift + z)");
-						break;
-					}
-					default: {
-						break;
-					}
-					}
-				} else if (event.isControlDown()) {
+				if (event.isControlDown()) {
 					switch (event.getCode()) {
 					case Z: {
 						// - Undo (Ctrl+z)
@@ -187,35 +138,12 @@ public class SimpleMindMapApplication extends Application {
 						redo();
 						break;
 					}
-					case X: {
-						// - New node (Ctrl + x)
-						System.out.println("// - New node (Ctrl + x)");
-						addNode(primaryStage2);
+					default:
 						break;
-					}
-
-					case C: {
-						// - New connection (Ctrl + c)
-						addConnection();
-						break;
-					}
-					default: {
-						break;
-					}
-					}
-				} else {
-					switch (event.getCode()) {
-					case DELETE: {
-						// - Удаление выбранной Node (Delete)
-						System.out.println("// - Удаление выбранной Node (Delete)");
-						break;
-					}
-					default: {
-						break;
-					}
 					}
 				}
 			}
+
 		});
 	}
 
@@ -289,7 +217,7 @@ public class SimpleMindMapApplication extends Application {
 		// load contents
 		populateViewerContents();
 
-		defineHotKeys(primaryStage);
+		defineHotKeys();
 
 		// set-up stage
 		primaryStage.setResizable(true);
