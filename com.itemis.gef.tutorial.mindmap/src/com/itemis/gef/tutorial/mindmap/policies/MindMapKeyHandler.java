@@ -91,32 +91,36 @@ public class MindMapKeyHandler extends AbstractHandler implements IOnStrokeHandl
 		return newNode;
 	}
 
+	private void deleteNode() {
+		boolean flag = false;
+
+		// query DeletionPolicy for the removal of the host part
+		IRootPart<? extends Node> root = getHost().getRoot();
+		DeletionPolicy delPolicy = root.getAdapter(DeletionPolicy.class);
+		init(delPolicy);
+
+		// delete all anchored connection parts
+		for (IVisualPart<? extends Node> a : new ArrayList<>(getHost().getAnchoredsUnmodifiable())) {
+			if (a instanceof MindMapConnectionPart) {
+				delPolicy.delete((IContentPart<? extends Node>) a);
+			}
+			flag = true;
+		}
+
+		// delete the node part
+		if (flag) {
+			delPolicy.delete((IContentPart<? extends Node>) getHost());
+		}
+		commit(delPolicy);
+	}
+
 	@Override
 	public void finalRelease(KeyEvent event) {
 
 		switch (event.getCode()) {
 		case DELETE: {
-			// - Удаление выбранной Node (Delete)
-//			HoverModel hover = getHost().getViewer().getAdapter(HoverModel.class);
-//			if (getHost() == hover.getHover()) {
-//				hover.clearHover();
-//			}
-
-			// query DeletionPolicy for the removal of the host part
-			IRootPart<? extends Node> root = getHost().getRoot();
-			DeletionPolicy delPolicy = root.getAdapter(DeletionPolicy.class);
-			init(delPolicy);
-
-			// delete all anchored connection parts
-			for (IVisualPart<? extends Node> a : new ArrayList<>(getHost().getAnchoredsUnmodifiable())) {
-				if (a instanceof MindMapConnectionPart) {
-					delPolicy.delete((IContentPart<? extends Node>) a);
-				}
-			}
-
-			// delete the node part
-			delPolicy.delete((IContentPart<? extends Node>) getHost());
-			commit(delPolicy);
+			// - Delete node (Delete)
+			deleteNode();
 			break;
 		}
 		default: {
@@ -158,7 +162,7 @@ public class MindMapKeyHandler extends AbstractHandler implements IOnStrokeHandl
 				break;
 			}
 			case A: {
-				// - Print all Nodes (Ctrl + a)
+				// - Print all nodes (Ctrl + a)
 				printInfoOnAllNodes();
 				break;
 			}
