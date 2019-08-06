@@ -9,11 +9,9 @@ import org.eclipse.gef.mvc.fx.handlers.IOnStrokeHandler;
 import org.eclipse.gef.mvc.fx.parts.IContentPart;
 import org.eclipse.gef.mvc.fx.parts.IRootPart;
 import org.eclipse.gef.mvc.fx.parts.IVisualPart;
-import org.eclipse.gef.mvc.fx.policies.CreationPolicy;
 import org.eclipse.gef.mvc.fx.policies.DeletionPolicy;
 import org.eclipse.gef.mvc.fx.viewer.IViewer;
 
-import com.google.common.collect.HashMultimap;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.itemis.gef.tutorial.mindmap.model.MindMapConnection;
@@ -21,7 +19,6 @@ import com.itemis.gef.tutorial.mindmap.model.MindMapNode;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel.Type;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapConnectionPart;
-import com.itemis.gef.tutorial.mindmap.parts.SimpleMindMapPart;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -61,23 +58,23 @@ public class MindMapKeyHandler extends AbstractHandler implements IOnStrokeHandl
 
 		creationModel.setType(Type.Node);
 
-		IVisualPart<? extends Node> part = viewer.getRootPart().getChildrenUnmodifiable().get(0);
-		if (part instanceof SimpleMindMapPart) {
-
-			MindMapNode newNode = createMindMapNode();
-
-			// GEF provides the CreatePolicy to add a new element to the model
-			CreationPolicy creationPolicy = getHost().getRoot().getAdapter(CreationPolicy.class);
-			init(creationPolicy);
-			// create a IContentPart for our new model. The newly created
-			// IContentPart is returned, but we do not need it.
-			creationPolicy.create(newNode, part, HashMultimap.<IContentPart<? extends Node>, String>create());
-			// commit the creation
-			commit(creationPolicy);
-		}
-
-		// reset creation state
-		creationModel.setType(Type.None);
+		/*
+		 * IVisualPart<? extends Node> part =
+		 * viewer.getRootPart().getChildrenUnmodifiable().get(0); if (part instanceof
+		 * SimpleMindMapPart) {
+		 * 
+		 * MindMapNode newNode = createMindMapNode();
+		 * 
+		 * // GEF provides the CreatePolicy to add a new element to the model
+		 * CreationPolicy creationPolicy =
+		 * getHost().getRoot().getAdapter(CreationPolicy.class); init(creationPolicy);
+		 * // create a IContentPart for our new model. The newly created // IContentPart
+		 * is returned, but we do not need it. creationPolicy.create(newNode, part,
+		 * HashMultimap.<IContentPart<? extends Node>, String>create()); // commit the
+		 * creation commit(creationPolicy); }
+		 * 
+		 * // reset creation state creationModel.setType(Type.None);
+		 */
 	}
 
 	private MindMapNode createMindMapNode() {
