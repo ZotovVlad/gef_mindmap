@@ -1,12 +1,17 @@
 package com.itemis.gef.tutorial.mindmap.model;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import org.eclipse.gef.geometry.planar.Rectangle;
 
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 public class SimpleMindMapExampleFactory {
 
 	private static final double WIDTH = 150;
+	private String urlImage = "Event-search-icon.png";
 
 	public SimpleMindMap createComplexExample() {
 		SimpleMindMap mindMap = new SimpleMindMap();
@@ -25,6 +30,12 @@ public class SimpleMindMapExampleFactory {
 			child.setTitle("Association #" + i);
 			child.setDescription("I just realized, this is related to the core idea!");
 			child.setColor(Color.ALICEBLUE);
+			try {
+				child.setImage(new Image(new FileInputStream(urlImage)));
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 			child.setBounds(new Rectangle(50 + (i * 200), 250, WIDTH, 100));
 			mindMap.addChildElement(child);

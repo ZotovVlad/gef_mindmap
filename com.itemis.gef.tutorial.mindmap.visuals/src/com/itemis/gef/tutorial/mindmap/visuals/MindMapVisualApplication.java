@@ -1,11 +1,14 @@
 package com.itemis.gef.tutorial.mindmap.visuals;
 
+import java.io.FileInputStream;
+
 import org.eclipse.gef.fx.anchors.ChopBoxStrategy;
 import org.eclipse.gef.fx.anchors.DynamicAnchor;
 import org.eclipse.gef.fx.nodes.Connection;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -16,6 +19,8 @@ public class MindMapVisualApplication extends Application {
 		Application.launch(args);
 	}
 
+	private String urlImage = "Event-search-icon.png";
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Pane root = new Pane();
@@ -25,6 +30,8 @@ public class MindMapVisualApplication extends Application {
 		node.setTitle("Test Node");
 		node.setDescription("This is just a test node, to see, how it looks :)");
 		node.relocate(50, 50);
+
+		node.setImage(new Image(new FileInputStream(urlImage)));
 
 		MindMapNodeVisual node2 = new MindMapNodeVisual();
 		node2.setTitle("Test Node 2");

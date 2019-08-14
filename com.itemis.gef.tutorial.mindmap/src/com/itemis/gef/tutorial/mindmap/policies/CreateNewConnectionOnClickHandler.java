@@ -64,7 +64,7 @@ public class CreateNewConnectionOnClickHandler extends AbstractHandler implement
 			// use CreatePolicy to add a new connection to the model
 			CreationPolicy creationPolicy = getHost().getRoot().getAdapter(CreationPolicy.class);
 			init(creationPolicy);
-			creationPolicy.create(newConn, part, HashMultimap.<IContentPart<? extends Node>, String> create());
+			creationPolicy.create(newConn, part, HashMultimap.<IContentPart<? extends Node>, String>create());
 			commit(creationPolicy);
 
 			// select target node

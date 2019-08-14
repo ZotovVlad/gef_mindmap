@@ -63,6 +63,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		visual.setTitle(node.getTitle());
 		visual.setDescription(node.getDescription());
 		visual.setColor(node.getColor());
+		visual.setImage(node.getImage());
 
 		// use the IResizableContentPart API to resize the visual
 		setVisualSize(getContentSize());

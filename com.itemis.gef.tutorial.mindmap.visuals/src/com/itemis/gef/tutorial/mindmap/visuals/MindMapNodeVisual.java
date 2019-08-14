@@ -1,5 +1,8 @@
 package com.itemis.gef.tutorial.mindmap.visuals;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import org.eclipse.gef.fx.nodes.GeometryNode;
 import org.eclipse.gef.geometry.planar.RoundedRectangle;
 
@@ -7,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.VPos;
 import javafx.scene.Group;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -24,6 +28,8 @@ public class MindMapNodeVisual extends Region {
 	private Text descriptionText;
 	private GeometryNode<RoundedRectangle> shape;
 	private VBox labelVBox;
+	private Image descriptionImage;
+	private String urlImage = "Event-search-icon.png";
 
 	public MindMapNodeVisual() {
 		// create background shape
@@ -48,6 +54,16 @@ public class MindMapNodeVisual extends Region {
 		// create description text
 		descriptionText = new Text();
 		descriptionText.setTextOrigin(VPos.TOP);
+
+		try {
+			descriptionImage = new Image(new FileInputStream(urlImage));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// descriptionImage = new Image(urlImage);
+		// descriptionImage
 
 		// use TextFlow to enable wrapping of the description text within the
 		// label bounds
@@ -105,8 +121,16 @@ public class MindMapNodeVisual extends Region {
 		return shape;
 	}
 
+	public Image getImage() {
+		return descriptionImage;
+	}
+
 	public Text getTitleText() {
 		return titleText;
+	}
+
+	public String getUrlImage() {
+		return urlImage;
 	}
 
 	public void setColor(Color color) {
@@ -117,7 +141,15 @@ public class MindMapNodeVisual extends Region {
 		this.descriptionText.setText(description);
 	}
 
+	public void setImage(Image image) {
+		this.descriptionImage = image;
+	}
+
 	public void setTitle(String title) {
 		this.titleText.setText(title);
+	}
+
+	public void setUrlImage(String urlImage) {
+		this.urlImage = urlImage;
 	}
 }

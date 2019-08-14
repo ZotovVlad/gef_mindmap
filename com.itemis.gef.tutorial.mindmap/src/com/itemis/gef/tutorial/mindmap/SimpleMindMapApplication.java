@@ -1,5 +1,8 @@
 package com.itemis.gef.tutorial.mindmap;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.IUndoContext;
 import org.eclipse.gef.common.adapt.AdapterKey;
@@ -22,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -82,6 +86,12 @@ public class SimpleMindMapApplication extends Application {
 
 		MindMapNodeVisual graphic = new MindMapNodeVisual();
 		graphic.setTitle("New Node");
+		try {
+			graphic.setImage(new Image(new FileInputStream(graphic.getUrlImage())));
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		// the toggleGroup makes sure, we only select one
 		ToggleGroup toggleGroup = new ToggleGroup();

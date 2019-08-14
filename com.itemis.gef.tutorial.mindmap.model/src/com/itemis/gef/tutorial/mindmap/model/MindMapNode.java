@@ -7,6 +7,7 @@ import org.eclipse.gef.geometry.planar.Rectangle;
 
 import com.google.common.collect.Lists;
 
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 public class MindMapNode extends AbstractMindMapItem implements Serializable {
@@ -22,6 +23,7 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	public static final String PROP_BOUNDS = "bounds";
 	public static final String PROP_INCOMING_CONNECTIONS = "incomingConnections";
 	public static final String PROP_OUTGOGING_CONNECTIONS = "outgoingConnections";
+	public static final String PROP_IMAGE = "image";
 
 	/**
 	 * The title of the node
@@ -37,6 +39,11 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	 * The background color of the node
 	 */
 	private Color color;
+
+	/**
+	 * The image of the node
+	 */
+	private Image image;
 
 	/**
 	 * The size and position of the visual representation
@@ -66,6 +73,10 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 
 	public String getDescription() {
 		return description;
+	}
+
+	public Image getImage() {
+		return image;
 	}
 
 	public List<MindMapConnection> getIncomingConnections() {
@@ -100,6 +111,10 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 
 	public void setDescription(String description) {
 		pcs.firePropertyChange(PROP_DESCRIPTION, this.description, (this.description = description));
+	}
+
+	public void setImage(Image image) {
+		pcs.firePropertyChange(PROP_IMAGE, this.image, (this.image = image));
 	}
 
 	public void setTitle(String title) {

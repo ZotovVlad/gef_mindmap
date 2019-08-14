@@ -1,5 +1,7 @@
 package com.itemis.gef.tutorial.mindmap.policies;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -15,6 +17,7 @@ import org.eclipse.gef.mvc.fx.policies.DeletionPolicy;
 
 import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeColorOperation;
 import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeDescriptionOperation;
+import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeImageOperation;
 import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeTitleOperation;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapConnectionPart;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
@@ -24,6 +27,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -36,6 +40,8 @@ import javafx.scene.shape.Rectangle;
  *
  */
 public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler implements IOnClickHandler {
+
+	private String urlImage = "Event-search-icon.png";
 
 	@Override
 	public void click(MouseEvent event) {
@@ -70,10 +76,29 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 			commit(delPolicy);
 		});
 
+		MenuItem imageNodeItem = new MenuItem("Change Image");
+		imageNodeItem.setOnAction((e) -> {
+			MindMapNodePart host = (MindMapNodePart) getHost();
+			try {
+				Image newImage;
+				try {
+					newImage = new Image(new FileInputStream(urlImage));
+					ITransactionalOperation op = new SetMindMapNodeImageOperation(host, newImage);
+					host.getRoot().getViewer().getDomain().execute(op, null);
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+// = showDialog(host.getContent().getTitle(), "Enter new Image...");
+			} catch (ExecutionException e1) {
+				e1.printStackTrace();
+			}
+		});
+
 		Menu colorMenu = createChangeColorMenu();
 		Menu textMenu = createChangeTextsMenu();
 
-		ContextMenu ctxMenu = new ContextMenu(textMenu, colorMenu, deleteNodeItem);
+		ContextMenu ctxMenu = new ContextMenu(textMenu, colorMenu, imageNodeItem, deleteNodeItem);
 		// show the menu at the mouse position
 		ctxMenu.show((Node) event.getTarget(), event.getScreenX(), event.getScreenY());
 	}
@@ -91,7 +116,7 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 	}
 
 	private Menu createChangeTextsMenu() {
-		Menu textsMenu = new Menu("Change");
+		Menu textsMenu = new Menu("Change Text");
 
 		MindMapNodePart host = (MindMapNodePart) getHost();
 
