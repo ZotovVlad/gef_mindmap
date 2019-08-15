@@ -11,6 +11,8 @@ import javafx.geometry.Orientation;
 import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -30,6 +32,7 @@ public class MindMapNodeVisual extends Region {
 	private VBox labelVBox;
 	private Image descriptionImage;
 	private String urlImage = "Event-search-icon.png";
+	private int quantityImage = 0;
 
 	public MindMapNodeVisual() {
 		// create background shape
@@ -142,7 +145,18 @@ public class MindMapNodeVisual extends Region {
 	}
 
 	public void setImage(Image image) {
-		this.descriptionImage = image;
+		if (this.quantityImage == 0) {
+			ImageView iv1 = new ImageView();
+			iv1.setImage(image);
+			iv1.setFitWidth(100);
+			HBox box = new HBox();
+			box.getChildren().add(iv1);
+			labelVBox.getChildren().add(box);
+			this.descriptionImage = image;
+			this.quantityImage = 1;
+		} else {
+
+		}
 	}
 
 	public void setTitle(String title) {

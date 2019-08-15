@@ -98,7 +98,7 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 		Menu colorMenu = createChangeColorMenu();
 		Menu textMenu = createChangeTextsMenu();
 
-		ContextMenu ctxMenu = new ContextMenu(textMenu, colorMenu, imageNodeItem, deleteNodeItem);
+		ContextMenu ctxMenu = new ContextMenu(imageNodeItem, textMenu, colorMenu, deleteNodeItem);
 		// show the menu at the mouse position
 		ctxMenu.show((Node) event.getTarget(), event.getScreenX(), event.getScreenY());
 	}

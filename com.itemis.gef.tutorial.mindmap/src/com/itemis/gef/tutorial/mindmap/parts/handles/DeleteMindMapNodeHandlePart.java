@@ -21,7 +21,7 @@ public class DeleteMindMapNodeHandlePart extends AbstractHandlePart<Group> {
 		Group group = new Group();
 
 		// create diagonal lines
-		double SIZE = 5;
+		double SIZE = 7;
 		Polyline topLeftBottomRight = new Polyline(-SIZE, -SIZE, SIZE, SIZE);
 		Polyline topRightBottomLeft = new Polyline(SIZE, -SIZE, -SIZE, SIZE);
 
