@@ -26,8 +26,6 @@ import javafx.scene.paint.Color;
  */
 public class CreateNewNodeOnClickHandler extends AbstractHandler implements IOnClickHandler {
 
-	private String urlImage = "Event-search-icon.png";
-
 	@Override
 	public void click(MouseEvent e) {
 		if (!e.isPrimaryButtonDown()) {
@@ -55,7 +53,7 @@ public class CreateNewNodeOnClickHandler extends AbstractHandler implements IOnC
 			newNode.setTitle("New node");
 			newNode.setDescription("no description");
 			newNode.setColor(Color.GREENYELLOW);
-			newNode.setBounds(new Rectangle(mouseInLocal.getX(), mouseInLocal.getY(), 120, 80));
+			newNode.setBounds(new Rectangle(mouseInLocal.getX(), mouseInLocal.getY(), 150, 100));
 
 			// GEF provides the CreatePolicy to add a new element to the model
 			CreationPolicy creationPolicy = getHost().getRoot().getAdapter(CreationPolicy.class);

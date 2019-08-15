@@ -1,8 +1,5 @@
 package com.itemis.gef.tutorial.mindmap.visuals;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 import org.eclipse.gef.fx.nodes.GeometryNode;
 import org.eclipse.gef.geometry.planar.RoundedRectangle;
 
@@ -12,7 +9,6 @@ import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -31,7 +27,7 @@ public class MindMapNodeVisual extends Region {
 	private GeometryNode<RoundedRectangle> shape;
 	private VBox labelVBox;
 	private Image descriptionImage;
-	private String urlImage = "Event-search-icon.png";
+	private String urlImage = "null.png";
 	private int quantityImage = 0;
 
 	public MindMapNodeVisual() {
@@ -58,12 +54,12 @@ public class MindMapNodeVisual extends Region {
 		descriptionText = new Text();
 		descriptionText.setTextOrigin(VPos.TOP);
 
-		try {
-			descriptionImage = new Image(new FileInputStream(urlImage));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			descriptionImage = new Image(new FileInputStream(urlImage));
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 		// descriptionImage = new Image(urlImage);
 		// descriptionImage
@@ -145,17 +141,12 @@ public class MindMapNodeVisual extends Region {
 	}
 
 	public void setImage(Image image) {
-		if (this.quantityImage == 0) {
-			ImageView iv1 = new ImageView();
-			iv1.setImage(image);
+		if (!(this.descriptionImage == image)) {
+			ImageView iv1 = new ImageView(image);
 			iv1.setFitWidth(100);
-			HBox box = new HBox();
-			box.getChildren().add(iv1);
-			labelVBox.getChildren().add(box);
+			labelVBox.getChildren().remove(this.descriptionImage);
+			labelVBox.getChildren().add(iv1);
 			this.descriptionImage = image;
-			this.quantityImage = 1;
-		} else {
-
 		}
 	}
 

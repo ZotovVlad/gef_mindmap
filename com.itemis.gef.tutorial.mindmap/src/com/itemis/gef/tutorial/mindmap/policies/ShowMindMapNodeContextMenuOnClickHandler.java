@@ -23,6 +23,8 @@ import com.itemis.gef.tutorial.mindmap.parts.MindMapConnectionPart;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
 
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -40,8 +42,6 @@ import javafx.scene.shape.Rectangle;
  *
  */
 public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler implements IOnClickHandler {
-
-	private String urlImage = "Event-search-icon.png";
 
 	@Override
 	public void click(MouseEvent event) {
@@ -79,17 +79,20 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 		MenuItem imageNodeItem = new MenuItem("Change Image");
 		imageNodeItem.setOnAction((e) -> {
 			MindMapNodePart host = (MindMapNodePart) getHost();
+			String newNameImage = null;
 			try {
-				Image newImage;
 				try {
-					newImage = new Image(new FileInputStream(urlImage));
+					newNameImage = showDialog(host.getContent().getDescription(), "Enter name new Image...");
+					Image newImage = new Image(new FileInputStream("Icons/" + newNameImage + ".png"));
 					ITransactionalOperation op = new SetMindMapNodeImageOperation(host, newImage);
 					host.getRoot().getViewer().getDomain().execute(op, null);
 				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					Alert alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Warning");
+					alert.setHeaderText(null);
+					alert.setContentText("File '" + newNameImage + "' not found");
+					alert.showAndWait();
 				}
-// = showDialog(host.getContent().getTitle(), "Enter new Image...");
 			} catch (ExecutionException e1) {
 				e1.printStackTrace();
 			}

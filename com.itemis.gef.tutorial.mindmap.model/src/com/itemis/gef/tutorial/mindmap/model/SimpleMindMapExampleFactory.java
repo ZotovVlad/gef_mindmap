@@ -7,7 +7,6 @@ import javafx.scene.paint.Color;
 public class SimpleMindMapExampleFactory {
 
 	private static final double WIDTH = 150;
-	private String urlImage = "Event-search-icon.png";
 
 	public SimpleMindMap createComplexExample() {
 		SimpleMindMap mindMap = new SimpleMindMap();

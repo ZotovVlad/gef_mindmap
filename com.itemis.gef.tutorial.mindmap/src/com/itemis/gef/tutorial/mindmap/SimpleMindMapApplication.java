@@ -39,7 +39,6 @@ public class SimpleMindMapApplication extends Application {
 		Application.launch(args);
 	}
 
-	private String urlImage = "Event-search-icon.png";
 	private Stage primaryStage;
 
 	private HistoricizingDomain domain;

@@ -63,7 +63,6 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		visual.setTitle(node.getTitle());
 		visual.setDescription(node.getDescription());
 		visual.setColor(node.getColor());
-
 		if (node.getImage() != null) {
 			visual.setImage(node.getImage());
 		}
@@ -94,7 +93,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 	public void propertyChange(PropertyChangeEvent event) {
 		String prop = event.getPropertyName();
 		if (MindMapNode.PROP_COLOR.equals(prop) || MindMapNode.PROP_DESCRIPTION.equals(prop)
-				|| MindMapNode.PROP_TITLE.equals(prop)) {
+				|| MindMapNode.PROP_TITLE.equals(prop) || MindMapNode.PROP_IMAGE.equals(prop)) {
 			refreshVisual();
 		}
 	}
