@@ -1,5 +1,8 @@
 package com.itemis.gef.tutorial.mindmap.policies;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import org.eclipse.gef.geometry.planar.Rectangle;
 import org.eclipse.gef.mvc.fx.handlers.AbstractHandler;
 import org.eclipse.gef.mvc.fx.handlers.IOnClickHandler;
@@ -16,6 +19,7 @@ import com.itemis.gef.tutorial.mindmap.parts.SimpleMindMapPart;
 
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
@@ -54,6 +58,12 @@ public class CreateNewNodeOnClickHandler extends AbstractHandler implements IOnC
 			newNode.setDescription("no description");
 			newNode.setColor(Color.GREENYELLOW);
 			newNode.setBounds(new Rectangle(mouseInLocal.getX(), mouseInLocal.getY(), 150, 100));
+			try {
+				newNode.setImage(new Image(new FileInputStream("Icons/" + "icon0" + ".png")));
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
 			// GEF provides the CreatePolicy to add a new element to the model
 			CreationPolicy creationPolicy = getHost().getRoot().getAdapter(CreationPolicy.class);

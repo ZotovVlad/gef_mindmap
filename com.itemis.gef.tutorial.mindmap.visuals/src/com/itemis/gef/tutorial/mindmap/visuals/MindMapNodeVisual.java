@@ -144,7 +144,11 @@ public class MindMapNodeVisual extends Region {
 		if (!(this.descriptionImage == image)) {
 			ImageView iv1 = new ImageView(image);
 			iv1.setFitWidth(100);
-			labelVBox.getChildren().remove(this.descriptionImage);
+			try {
+				labelVBox.getChildren().remove(2);
+			} catch (Exception e) {
+
+			}
 			labelVBox.getChildren().add(iv1);
 			this.descriptionImage = image;
 		}
