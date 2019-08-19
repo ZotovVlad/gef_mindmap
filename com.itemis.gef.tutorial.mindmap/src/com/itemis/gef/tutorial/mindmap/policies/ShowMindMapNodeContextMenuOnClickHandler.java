@@ -1,9 +1,12 @@
 package com.itemis.gef.tutorial.mindmap.policies;
 
-import java.io.FileInputStream;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Optional;
+
+import javax.imageio.ImageIO;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.gef.mvc.fx.handlers.AbstractHandler;
@@ -22,6 +25,7 @@ import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeTitleOperation;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapConnectionPart;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -33,6 +37,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
 
 /**
  * This policy shows a context menu for MindMapNodeParts, providing some editing
@@ -81,20 +86,34 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 			MindMapNodePart host = (MindMapNodePart) getHost();
 			String newNameImage = null;
 			try {
-				try {
-					newNameImage = showDialog(host.getContent().getDescription(), "Enter name new Image...");
-					Image newImage = new Image(new FileInputStream("Icons/" + newNameImage + ".png"));
-					ITransactionalOperation op = new SetMindMapNodeImageOperation(host, newImage);
-					host.getRoot().getViewer().getDomain().execute(op, null);
-				} catch (FileNotFoundException e1) {
-					Alert alert = new Alert(AlertType.WARNING);
-					alert.setTitle("Warning");
-					alert.setHeaderText(null);
-					alert.setContentText("File '" + newNameImage + "' not found");
-					alert.showAndWait();
-				}
-			} catch (ExecutionException e1) {
-				e1.printStackTrace();
+				FileChooser fileChooser = new FileChooser();
+				// Set extension filter
+				FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)",
+						"*.JPG");
+				FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)",
+						"*.PNG");
+				fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
+				// Show open file dialog
+				File file = fileChooser.showOpenDialog(null);
+				BufferedImage bufferedImage = ImageIO.read(file);
+				Image newImage = SwingFXUtils.toFXImage(bufferedImage, null);
+
+//					newNameImage = showDialog(host.getContent().getDescription(), "Enter name new Image...");
+//					Image newImage = new Image(new FileInputStream("Icons/" + newNameImage + ".png"));
+				ITransactionalOperation op = new SetMindMapNodeImageOperation(host, newImage);
+				host.getRoot().getViewer().getDomain().execute(op, null);
+			} catch (FileNotFoundException e1) {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Warning");
+				alert.setHeaderText(null);
+				alert.setContentText("File '" + newNameImage + "' not found");
+				alert.showAndWait();
+			} catch (Exception e1) {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Warning");
+				alert.setHeaderText(null);
+				alert.setContentText("File not selected");
+				alert.showAndWait();
 			}
 		});
 
