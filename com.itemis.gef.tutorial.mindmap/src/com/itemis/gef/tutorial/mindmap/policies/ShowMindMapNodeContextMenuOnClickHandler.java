@@ -18,6 +18,7 @@ import org.eclipse.gef.mvc.fx.parts.IRootPart;
 import org.eclipse.gef.mvc.fx.parts.IVisualPart;
 import org.eclipse.gef.mvc.fx.policies.DeletionPolicy;
 
+import com.itemis.gef.tutorial.mindmap.model.MindMapNode;
 import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeColorOperation;
 import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeDescriptionOperation;
 import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeImageOperation;
@@ -89,15 +90,14 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 				FileChooser fileChooser = new FileChooser();
 				// Set extension filter
 				FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)",
-						"*.JPG");
+						"*.jpg");
 				FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)",
-						"*.PNG");
+						"*.png");
 				fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
 				// Show open file dialog
 				File file = fileChooser.showOpenDialog(null);
 				BufferedImage bufferedImage = ImageIO.read(file);
 				Image newImage = SwingFXUtils.toFXImage(bufferedImage, null);
-
 //					newNameImage = showDialog(host.getContent().getDescription(), "Enter name new Image...");
 //					Image newImage = new Image(new FileInputStream("Icons/" + newNameImage + ".png"));
 				ITransactionalOperation op = new SetMindMapNodeImageOperation(host, newImage);
@@ -117,10 +117,23 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 			}
 		});
 
+		MenuItem getPathSource = new MenuItem("Get path source");
+		getPathSource.setOnAction((e) -> {
+			MindMapNodePart host = (MindMapNodePart) getHost();
+			MindMapNode node = host.getContent();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Information");
+			alert.setHeaderText(null);
+			String pathFile = "File this node locates in the folder: " + MindMapNode.userDir + File.separator + "Files"
+					+ File.separator + node.hashCode() + ".txt";
+			alert.setContentText(pathFile);
+			alert.showAndWait();
+		});
+
 		Menu colorMenu = createChangeColorMenu();
 		Menu textMenu = createChangeTextsMenu();
 
-		ContextMenu ctxMenu = new ContextMenu(imageNodeItem, textMenu, colorMenu, deleteNodeItem);
+		ContextMenu ctxMenu = new ContextMenu(imageNodeItem, textMenu, colorMenu, deleteNodeItem, getPathSource);
 		// show the menu at the mouse position
 		ctxMenu.show((Node) event.getTarget(), event.getScreenX(), event.getScreenY());
 	}

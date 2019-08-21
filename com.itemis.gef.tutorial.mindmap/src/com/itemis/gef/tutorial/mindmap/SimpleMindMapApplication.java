@@ -1,5 +1,7 @@
 package com.itemis.gef.tutorial.mindmap;
 
+import java.io.File;
+
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.IUndoContext;
 import org.eclipse.gef.common.adapt.AdapterKey;
@@ -208,6 +210,9 @@ public class SimpleMindMapApplication extends Application {
 		// create domain using guice
 		this.domain = (HistoricizingDomain) Guice.createInjector(module).getInstance(IDomain.class);
 
+		// update, refresh source and data
+		updateSource();
+
 		// create viewers
 		hookViewers();
 
@@ -234,6 +239,16 @@ public class SimpleMindMapApplication extends Application {
 			domain.getOperationHistory().undo(domain.getUndoContext(), null, null);
 		} catch (ExecutionException e1) {
 			e1.printStackTrace();
+		}
+	}
+
+	private void updateSource() {
+		String path = System.getProperty("user.dir") + File.separator + "Files";
+
+		for (File file : new File(path).listFiles()) {
+			if (file.isFile()) {
+				file.delete();
+			}
 		}
 	}
 }

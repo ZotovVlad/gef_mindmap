@@ -1,5 +1,7 @@
 package com.itemis.gef.tutorial.mindmap.model;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -17,6 +19,8 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	 */
 	private static final long serialVersionUID = 8875579454539897410L;
 
+	public static final String userDir = System.getProperty("user.dir");
+
 	public static final String PROP_TITLE = "title";
 	public static final String PROP_DESCRIPTION = "description";
 	public static final String PROP_COLOR = "color";
@@ -24,7 +28,7 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	public static final String PROP_INCOMING_CONNECTIONS = "incomingConnections";
 	public static final String PROP_OUTGOGING_CONNECTIONS = "outgoingConnections";
 	public static final String PROP_IMAGE = "image";
-
+	public static final String PROP_FILE = "file";
 	/**
 	 * The title of the node
 	 */
@@ -41,6 +45,11 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	private Color color;
 
 	/**
+	 * The file of the node
+	 */
+	private File file;
+
+	/**
 	 * The image of the node
 	 */
 	private Image image;
@@ -51,7 +60,19 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	private Rectangle bounds;
 
 	private List<MindMapConnection> incomingConnections = Lists.newArrayList();
+
 	private List<MindMapConnection> outgoingConnections = Lists.newArrayList();
+
+	public MindMapNode() {
+		super();
+		File f = new File(userDir + File.separator + "Files" + File.separator + this.hashCode() + ".txt");
+		try {
+			f.createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public void addIncomingConnection(MindMapConnection conn) {
 		incomingConnections.add(conn);
@@ -73,6 +94,10 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 
 	public String getDescription() {
 		return description;
+	}
+
+	public File getFile() {
+		return file;
 	}
 
 	public Image getImage() {
@@ -111,6 +136,10 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 
 	public void setDescription(String description) {
 		pcs.firePropertyChange(PROP_DESCRIPTION, this.description, (this.description = description));
+	}
+
+	public void setFile(File file) {
+		pcs.firePropertyChange(PROP_FILE, this.file, (this.file = file));
 	}
 
 	public void setImage(Image image) {

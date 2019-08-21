@@ -1,14 +1,11 @@
 package com.itemis.gef.tutorial.mindmap.visuals;
 
-import java.io.FileInputStream;
-
 import org.eclipse.gef.fx.anchors.ChopBoxStrategy;
 import org.eclipse.gef.fx.anchors.DynamicAnchor;
 import org.eclipse.gef.fx.nodes.Connection;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -25,23 +22,31 @@ public class MindMapVisualApplication extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		Pane root = new Pane();
 
-		Image image = new Image(new FileInputStream(urlImage));
+		// Image image = new Image(new FileInputStream(urlImage));
 		// ImageView iv1 = new ImageView(image);
 
+		String userDir = System.getProperty("user.dir");
+//		File f = new File(userDir + File.separator + "test" + ".txt");
+//		f.createNewFile(); \Files
+
 		// create state visuals
+
 		MindMapNodeVisual node = new MindMapNodeVisual();
 		node.setTitle("Test Node");
 		node.setDescription("This is just a test node, to see, how it looks :)");
 		node.relocate(500, 50);
-		node.setImage(image);
+		// node.setImage(image);
 
 		MindMapNodeVisual node2 = new MindMapNodeVisual();
 		node2.setTitle("Test Node 2");
 		node2.setDescription("This is just a test node, to see, how it looks :)");
 		node2.relocate(150, 250);
 		node2.setColor(Color.ALICEBLUE);
-		node2.setImage(image);
+		// node2.setImage(image);
 		// node2.getChildrenUnmodifiable().add(iv1);
+
+		System.out.println(node.hashCode());
+		System.out.println(node2.hashCode());
 
 		Connection conn = new MindMapConnectionVisual();
 		conn.setStartAnchor(new DynamicAnchor(node, new ChopBoxStrategy()));
