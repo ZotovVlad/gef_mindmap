@@ -83,6 +83,8 @@ public class SimpleMindMapModule extends MvcFxModule {
 		// adding hotkeys handler
 		// working create new node, new connection on hotkeys
 		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(MindMapKeyHandler.class);
+
+		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(CreateNewConnectionOnClickHandler.class);
 	}
 
 	@Override

@@ -36,6 +36,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
@@ -127,6 +128,7 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 			String pathFile = "File this node locates in the folder: " + MindMapNode.userDir + File.separator + "Files"
 					+ File.separator + node.hashCode() + ".txt";
 			alert.setContentText(pathFile);
+			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 			alert.showAndWait();
 		});
 
