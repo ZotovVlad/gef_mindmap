@@ -1,7 +1,5 @@
 package com.itemis.gef.tutorial.mindmap.parts.feedback;
 
-import java.util.List;
-
 import org.eclipse.gef.common.adapt.AdapterKey;
 import org.eclipse.gef.fx.anchors.IAnchor;
 import org.eclipse.gef.fx.anchors.StaticAnchor;
@@ -11,7 +9,6 @@ import org.eclipse.gef.geometry.planar.Point;
 import org.eclipse.gef.mvc.fx.parts.AbstractFeedbackPart;
 import org.eclipse.gef.mvc.fx.parts.IVisualPart;
 
-import com.google.common.collect.Lists;
 import com.google.common.reflect.TypeToken;
 import com.google.inject.Provider;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
@@ -51,8 +48,6 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Node> {
 				if (connectionIsNotStart) {
 					getVisual().addControlPoint(index++,
 							FX2Geometry.toPoint(getVisual().sceneToLocal(event.getSceneX(), event.getSceneY())));
-					points.add(v1);
-					System.out.println(points.size());
 				}
 				connectionIsNotStart = true;
 			}
@@ -66,7 +61,6 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Node> {
 
 	}
 
-	private List<Point> points = Lists.newArrayList();
 	private int index = 0;
 
 	@Override
@@ -98,9 +92,9 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Node> {
 	@Override
 	protected void doDetachFromAnchorageVisual(IVisualPart<? extends Node> anchorage, String role) {
 		getVisual().setStartPoint(getVisual().getStartPoint());
-		getVisual().setPoints(points);
 		((MousePositionAnchor) getVisual().getEndAnchor()).dispose();
 		getVisual().setEndPoint(getVisual().getEndPoint());
+
 	}
 
 	@Override

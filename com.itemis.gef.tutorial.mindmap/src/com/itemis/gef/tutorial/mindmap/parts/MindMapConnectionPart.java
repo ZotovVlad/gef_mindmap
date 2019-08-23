@@ -28,6 +28,7 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> {
 
 	private static final String START_ROLE = "START";
 	private static final String END_ROLE = "END";
+	private static final String POINT_ROLE = "POINT";
 
 	@Override
 	protected void doAttachToAnchorageVisual(IVisualPart<? extends Node> anchorage, String role) {
@@ -46,6 +47,8 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> {
 			getVisual().setStartAnchor(anchor);
 		} else if (role.equals(END_ROLE)) {
 			getVisual().setEndAnchor(anchor);
+		} else if (role.equals(POINT_ROLE)) {
+			getVisual().setAnchors((List<IAnchor>) anchor);
 		} else {
 			throw new IllegalArgumentException("Invalid role: " + role);
 		}
@@ -62,6 +65,8 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> {
 			getVisual().setStartPoint(getVisual().getStartPoint());
 		} else if (role.equals(END_ROLE)) {
 			getVisual().setEndPoint(getVisual().getEndPoint());
+		} else if (role.equals(POINT_ROLE)) {
+			getVisual().setControlPoints(getVisual().getControlPoints());
 		} else {
 			throw new IllegalArgumentException("Invalid role: " + role);
 		}
