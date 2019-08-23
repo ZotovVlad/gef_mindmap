@@ -1,5 +1,7 @@
 package com.itemis.gef.tutorial.mindmap.parts.feedback;
 
+import java.util.List;
+
 import org.eclipse.gef.common.adapt.AdapterKey;
 import org.eclipse.gef.fx.anchors.IAnchor;
 import org.eclipse.gef.fx.anchors.StaticAnchor;
@@ -9,6 +11,7 @@ import org.eclipse.gef.geometry.planar.Point;
 import org.eclipse.gef.mvc.fx.parts.AbstractFeedbackPart;
 import org.eclipse.gef.mvc.fx.parts.IVisualPart;
 
+import com.google.common.collect.Lists;
 import com.google.common.reflect.TypeToken;
 import com.google.inject.Provider;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
@@ -27,6 +30,8 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Node> {
 
 	private class MousePositionAnchor extends StaticAnchor implements EventHandler<MouseEvent> {
 
+		boolean connectionIsNotStart = false;
+
 		public MousePositionAnchor(Point referencePositionInScene) {
 			super(referencePositionInScene);
 		}
@@ -34,20 +39,35 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Node> {
 		public void dispose() {
 			// listen to any mouse move and reposition the anchor
 			getRoot().getVisual().getScene().removeEventHandler(MouseEvent.MOUSE_MOVED, this);
+			getRoot().getVisual().getScene().removeEventHandler(MouseEvent.MOUSE_PRESSED, this);
 		}
 
 		@Override
 		public void handle(MouseEvent event) {
 			Point v = new Point(event.getSceneX(), event.getSceneY());
 			referencePositionProperty().setValue(v);
+			if (event.isPrimaryButtonDown()) {
+				Point v1 = new Point(event.getSceneX(), event.getSceneY());
+				if (connectionIsNotStart) {
+					getVisual().addControlPoint(index++,
+							FX2Geometry.toPoint(getVisual().sceneToLocal(event.getSceneX(), event.getSceneY())));
+					points.add(v1);
+					System.out.println(points.size());
+				}
+				connectionIsNotStart = true;
+			}
 		}
 
 		public void init() {
 			// listen to any mouse move and reposition the anchor
 			getRoot().getVisual().getScene().addEventHandler(MouseEvent.MOUSE_MOVED, this);
+			getRoot().getVisual().getScene().addEventHandler(MouseEvent.MOUSE_PRESSED, this);
 		}
 
 	}
+
+	private List<Point> points = Lists.newArrayList();
+	private int index = 0;
 
 	@Override
 	public void doAttachToAnchorageVisual(IVisualPart<? extends Node> anchorage, String role) {
@@ -78,6 +98,7 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Node> {
 	@Override
 	protected void doDetachFromAnchorageVisual(IVisualPart<? extends Node> anchorage, String role) {
 		getVisual().setStartPoint(getVisual().getStartPoint());
+		getVisual().setPoints(points);
 		((MousePositionAnchor) getVisual().getEndAnchor()).dispose();
 		getVisual().setEndPoint(getVisual().getEndPoint());
 	}
