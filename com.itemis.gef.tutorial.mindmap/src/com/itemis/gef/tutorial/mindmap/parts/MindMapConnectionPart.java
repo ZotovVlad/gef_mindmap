@@ -6,6 +6,8 @@ import java.util.List;
 import org.eclipse.gef.common.adapt.AdapterKey;
 import org.eclipse.gef.fx.anchors.IAnchor;
 import org.eclipse.gef.fx.nodes.Connection;
+import org.eclipse.gef.geometry.planar.Point;
+import org.eclipse.gef.geometry.planar.Rectangle;
 import org.eclipse.gef.mvc.fx.parts.AbstractContentPart;
 import org.eclipse.gef.mvc.fx.parts.IVisualPart;
 
@@ -14,6 +16,8 @@ import com.google.common.collect.SetMultimap;
 import com.google.common.reflect.TypeToken;
 import com.google.inject.Provider;
 import com.itemis.gef.tutorial.mindmap.model.MindMapConnection;
+import com.itemis.gef.tutorial.mindmap.model.MindMapNode;
+import com.itemis.gef.tutorial.mindmap.parts.feedback.CreateConnectionFeedbackPart;
 import com.itemis.gef.tutorial.mindmap.visuals.MindMapConnectionVisual;
 
 import javafx.scene.Node;
@@ -48,6 +52,7 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> {
 		} else if (role.equals(END_ROLE)) {
 			getVisual().setEndAnchor(anchor);
 		} else if (role.equals(POINT_ROLE)) {
+			System.out.println();
 			getVisual().setAnchors((List<IAnchor>) anchor);
 		} else {
 			throw new IllegalArgumentException("Invalid role: " + role);
@@ -77,6 +82,13 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> {
 		SetMultimap<Object, String> anchorages = HashMultimap.create();
 
 		anchorages.put(getContent().getSource(), START_ROLE);
+		if (!CreateConnectionFeedbackPart.getPoints().isEmpty()) {
+			for (Point points : CreateConnectionFeedbackPart.getPoints()) {
+				MindMapNode newNode = new MindMapNode();
+				newNode.setBounds(new Rectangle(points.x, points.y, 1, 1));
+				anchorages.put(newNode, POINT_ROLE);
+			}
+		}
 		anchorages.put(getContent().getTarget(), END_ROLE);
 
 		return anchorages;
@@ -95,5 +107,10 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> {
 	@Override
 	public MindMapConnection getContent() {
 		return (MindMapConnection) super.getContent();
+	}
+
+	@Override
+	public MindMapConnectionVisual getVisual() {
+		return (MindMapConnectionVisual) super.getVisual();
 	}
 }

@@ -1,5 +1,8 @@
 package com.itemis.gef.tutorial.mindmap.parts.feedback;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.gef.common.adapt.AdapterKey;
 import org.eclipse.gef.fx.anchors.IAnchor;
 import org.eclipse.gef.fx.anchors.StaticAnchor;
@@ -44,10 +47,10 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Node> {
 			Point v = new Point(event.getSceneX(), event.getSceneY());
 			referencePositionProperty().setValue(v);
 			if (event.isPrimaryButtonDown()) {
-				Point v1 = new Point(event.getSceneX(), event.getSceneY());
 				if (connectionIsNotStart) {
 					getVisual().addControlPoint(index++,
 							FX2Geometry.toPoint(getVisual().sceneToLocal(event.getSceneX(), event.getSceneY())));
+					points.add(v);
 				}
 				connectionIsNotStart = true;
 			}
@@ -59,6 +62,12 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Node> {
 			getRoot().getVisual().getScene().addEventHandler(MouseEvent.MOUSE_PRESSED, this);
 		}
 
+	}
+
+	private static List<Point> points = new ArrayList<>();
+
+	public static List<Point> getPoints() {
+		return points;
 	}
 
 	private int index = 0;
