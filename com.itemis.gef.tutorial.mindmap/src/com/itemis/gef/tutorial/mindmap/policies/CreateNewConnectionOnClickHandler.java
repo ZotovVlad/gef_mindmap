@@ -41,15 +41,22 @@ public class CreateNewConnectionOnClickHandler extends AbstractHandler implement
 			return; // don't want to create a connection
 		}
 
-		if (creationModel.getSource() == null) {
-			// the host is the source
-			creationModel.setSource((MindMapNodePart) getHost());
-			return; // wait for the next click
-		}
+		MindMapNodePart source = null;
+		MindMapNodePart target = null;
+		try {
+			if (creationModel.getSource() == null) {
+				// the host is the source
+				creationModel.setSource((MindMapNodePart) getHost());
+				return; // wait for the next click
+			}
 
-		// okay, we have a pair
-		MindMapNodePart source = creationModel.getSource();
-		MindMapNodePart target = (MindMapNodePart) getHost();
+			// okay, we have a pair
+			source = creationModel.getSource();
+			target = (MindMapNodePart) getHost();
+		} catch (Exception e2) {
+			// TODO: handle exception
+			System.out.println(123);
+		}
 
 		// check if valid
 		if (source == target) {
