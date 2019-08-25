@@ -17,6 +17,7 @@ import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel.Type;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
 import com.itemis.gef.tutorial.mindmap.parts.SimpleMindMapPart;
+import com.itemis.gef.tutorial.mindmap.parts.feedback.CreateConnectionFeedbackPart;
 
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
@@ -66,8 +67,8 @@ public class CreateNewConnectionOnClickHandler extends AbstractHandler implement
 		IVisualPart<? extends Node> part = getHost().getRoot().getChildrenUnmodifiable().get(0);
 		if (part instanceof SimpleMindMapPart) {
 			MindMapConnection newConn = new MindMapConnection();
-			newConn.connect(source.getContent(), target.getContent());
-
+			newConn.connect(source.getContent(), target.getContent(), creationModel.getPoints());// CreateConnectionFeedbackPart.points);
+			CreateConnectionFeedbackPart.points = null;
 			// use CreatePolicy to add a new connection to the model
 			CreationPolicy creationPolicy = getHost().getRoot().getAdapter(CreationPolicy.class);
 			init(creationPolicy);

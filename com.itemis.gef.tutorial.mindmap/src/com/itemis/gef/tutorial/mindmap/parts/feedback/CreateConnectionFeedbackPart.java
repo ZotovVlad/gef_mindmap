@@ -1,11 +1,11 @@
 package com.itemis.gef.tutorial.mindmap.parts.feedback;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.eclipse.gef.common.adapt.AdapterKey;
 import org.eclipse.gef.fx.anchors.IAnchor;
 import org.eclipse.gef.fx.anchors.StaticAnchor;
+import org.eclipse.gef.fx.nodes.Connection;
 import org.eclipse.gef.geometry.convert.fx.FX2Geometry;
 import org.eclipse.gef.geometry.convert.fx.Geometry2FX;
 import org.eclipse.gef.geometry.planar.Point;
@@ -26,7 +26,7 @@ import javafx.scene.input.MouseEvent;
  * {@link MindMapNodePart} and the mouseposition.
  *
  */
-public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Node> {
+public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Connection> {
 
 	private class MousePositionAnchor extends StaticAnchor implements EventHandler<MouseEvent> {
 
@@ -51,6 +51,7 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Node> {
 					getVisual().addControlPoint(index++,
 							FX2Geometry.toPoint(getVisual().sceneToLocal(event.getSceneX(), event.getSceneY())));
 					points.add(v);
+
 				}
 				connectionIsNotStart = true;
 			}
@@ -64,11 +65,7 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Node> {
 
 	}
 
-	private static List<Point> points = new ArrayList<>();
-
-	public static List<Point> getPoints() {
-		return points;
-	}
+	public static ArrayList<Point> points = new ArrayList<>();
 
 	private int index = 0;
 
@@ -93,10 +90,20 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Node> {
 		getVisual().setEndAnchor(endAnchor);
 	}
 
+//	@Override
+//	protected Node doCreateVisual() {
+//		return new MindMapConnectionVisual();
+//	}
+
 	@Override
-	protected Node doCreateVisual() {
+	protected Connection doCreateVisual() {
 		return new MindMapConnectionVisual();
+//		return null;
 	}
+
+//	@Override
+//	protected void doRefreshVisual(Node visual) {
+//	}
 
 	@Override
 	protected void doDetachFromAnchorageVisual(IVisualPart<? extends Node> anchorage, String role) {
@@ -107,7 +114,9 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Node> {
 	}
 
 	@Override
-	protected void doRefreshVisual(Node visual) {
+	protected void doRefreshVisual(Connection visual) {
+		// TODO Auto-generated method stub
+		System.out.println();
 	}
 
 	@Override

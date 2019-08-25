@@ -1,5 +1,9 @@
 package com.itemis.gef.tutorial.mindmap.model;
 
+import java.util.ArrayList;
+
+import org.eclipse.gef.geometry.planar.Point;
+
 public class MindMapConnection extends AbstractMindMapItem {
 
 	/**
@@ -11,13 +15,16 @@ public class MindMapConnection extends AbstractMindMapItem {
 	private MindMapNode target;
 	private boolean connected;
 
-	public void connect(MindMapNode source, MindMapNode target) {
+	private ArrayList<Point> connectionPoints;
+
+	public void connect(MindMapNode source, MindMapNode target, ArrayList<Point> connectionPoints) {
 		if (source == null || target == null || source == target) {
 			throw new IllegalArgumentException();
 		}
 		disconnect();
 		this.source = source;
 		this.target = target;
+		this.connectionPoints = connectionPoints;
 		reconnect();
 	}
 
@@ -27,6 +34,10 @@ public class MindMapConnection extends AbstractMindMapItem {
 			target.removeIncomingConnection(this);
 			connected = false;
 		}
+	}
+
+	public ArrayList<Point> getPoints() {
+		return connectionPoints;
 	}
 
 	public MindMapNode getSource() {
@@ -41,6 +52,7 @@ public class MindMapConnection extends AbstractMindMapItem {
 		if (!connected) {
 			source.addOutgoingConnection(this);
 			target.addIncomingConnection(this);
+
 			connected = true;
 		}
 	}

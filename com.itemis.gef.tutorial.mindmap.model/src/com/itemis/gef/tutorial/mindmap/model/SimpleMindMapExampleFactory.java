@@ -46,7 +46,7 @@ public class SimpleMindMapExampleFactory {
 			mindMap.addChildElement(child);
 
 			MindMapConnection conn = new MindMapConnection();
-			conn.connect(center, child);
+			conn.connect(center, child, null);
 
 			mindMap.addChildElement(conn);
 		}
@@ -66,7 +66,7 @@ public class SimpleMindMapExampleFactory {
 		mindMap.addChildElement(child2);
 
 		MindMapConnection conn = new MindMapConnection();
-		conn.connect(child, child2);
+		conn.connect(child, child2, null);
 		mindMap.addChildElement(conn);
 
 		return mindMap;
