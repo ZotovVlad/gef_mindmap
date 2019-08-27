@@ -97,7 +97,7 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Connectio
 
 	@Override
 	protected Connection doCreateVisual() {
-		return new MindMapConnectionVisual();
+		return new MindMapConnectionVisual(points);
 //		return null;
 	}
 

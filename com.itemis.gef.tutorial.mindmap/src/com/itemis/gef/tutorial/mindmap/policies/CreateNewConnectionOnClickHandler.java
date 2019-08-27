@@ -67,8 +67,8 @@ public class CreateNewConnectionOnClickHandler extends AbstractHandler implement
 		IVisualPart<? extends Node> part = getHost().getRoot().getChildrenUnmodifiable().get(0);
 		if (part instanceof SimpleMindMapPart) {
 			MindMapConnection newConn = new MindMapConnection();
-			newConn.connect(source.getContent(), target.getContent(), creationModel.getPoints());// CreateConnectionFeedbackPart.points);
-			CreateConnectionFeedbackPart.points = null;
+			newConn.connect(source.getContent(), target.getContent(), CreateConnectionFeedbackPart.points);// CreateConnectionFeedbackPart.points);
+
 			// use CreatePolicy to add a new connection to the model
 			CreationPolicy creationPolicy = getHost().getRoot().getAdapter(CreationPolicy.class);
 			init(creationPolicy);
