@@ -29,6 +29,9 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	public static final String PROP_OUTGOGING_CONNECTIONS = "outgoingConnections";
 	public static final String PROP_IMAGE = "image";
 	public static final String PROP_FILE = "file";
+	public static final String PROP_QUANTITYANCHORS = "quantityAnchors";
+	public static final String PROP_ANCHORS = "anchors";
+
 	/**
 	 * The title of the node
 	 */
