@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 public class SimpleMindMapExampleFactory {
 
 	private static final double WIDTH = 150;
+	private static final double HEIGHT = 100;
 
 	public SimpleMindMap createComplexExample() {
 		SimpleMindMap mindMap = new SimpleMindMap();
@@ -19,7 +20,7 @@ public class SimpleMindMapExampleFactory {
 		center.setTitle("The Core Idea");
 		center.setDescription("This is my Core idea");
 		center.setColor(Color.GREENYELLOW);
-		center.setBounds(new Rectangle(250, 50, WIDTH, 100));
+		center.setBounds(new Rectangle(250, 50, WIDTH, HEIGHT));
 		try {
 			center.setImage(new Image(new FileInputStream("Icons/" + "icon0" + ".png")));
 		} catch (FileNotFoundException e) {
@@ -42,7 +43,7 @@ public class SimpleMindMapExampleFactory {
 				e.printStackTrace();
 			}
 
-			child.setBounds(new Rectangle(50 + (i * 200), 250, WIDTH, 100));
+			child.setBounds(new Rectangle(50 + (i * 200), 250, WIDTH, HEIGHT));
 			mindMap.addChildElement(child);
 
 			MindMapConnection conn = new MindMapConnection();
@@ -55,7 +56,7 @@ public class SimpleMindMapExampleFactory {
 		child2.setTitle("Association #4-2");
 		child2.setDescription("I just realized, this is related to the last idea!");
 		child2.setColor(Color.LIGHTGRAY);
-		child2.setBounds(new Rectangle(250, 550, WIDTH, 100));
+		child2.setBounds(new Rectangle(250, 550, WIDTH, HEIGHT));
 		try {
 			child2.setImage(new Image(new FileInputStream("Icons/" + "icon0" + ".png")));
 		} catch (FileNotFoundException e) {
@@ -79,7 +80,7 @@ public class SimpleMindMapExampleFactory {
 		center.setTitle("The Core Idea");
 		center.setDescription("This is my Core idea. I need a larger Explanation to it, so I can test the warpping.");
 		center.setColor(Color.GREENYELLOW);
-		center.setBounds(new Rectangle(20, 50, WIDTH, 100));
+		center.setBounds(new Rectangle(20, 50, WIDTH, HEIGHT));
 		try {
 			center.setImage(new Image(new FileInputStream("Icons/" + "icon0" + ".png")));
 		} catch (FileNotFoundException e) {

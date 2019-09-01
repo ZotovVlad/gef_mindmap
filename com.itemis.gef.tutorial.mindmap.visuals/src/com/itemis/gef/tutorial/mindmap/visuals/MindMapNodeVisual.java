@@ -1,6 +1,11 @@
 package com.itemis.gef.tutorial.mindmap.visuals;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.eclipse.gef.fx.nodes.GeometryNode;
+import org.eclipse.gef.geometry.planar.Point;
 import org.eclipse.gef.geometry.planar.RoundedRectangle;
 
 import javafx.geometry.Insets;
@@ -20,6 +25,8 @@ public class MindMapNodeVisual extends Region {
 	private static final double HORIZONTAL_PADDING = 20d;
 	private static final double VERTICAL_PADDING = 10d;
 	private static final double VERTICAL_SPACING = 5d;
+	private static final double NODE_WIDTH = 150;
+	private static final double NODE_HEIGH = 100;
 
 	private Text titleText;
 	private TextFlow descriptionFlow;
@@ -29,10 +36,11 @@ public class MindMapNodeVisual extends Region {
 	private Image descriptionImage;
 	private String urlImage = "null.png";
 	private int quantityImage = 0;
+	private List<Point> points = new ArrayList<>();
 
 	public MindMapNodeVisual() {
 		// create background shape
-		shape = new GeometryNode<>(new RoundedRectangle(0, 0, 70, 30, 8, 8));
+		shape = new GeometryNode<>(new RoundedRectangle(0, 0, NODE_WIDTH, NODE_HEIGH, 8, 8));
 		shape.setFill(Color.LIGHTGREEN);
 		shape.setStroke(Color.BLACK);
 
@@ -81,6 +89,9 @@ public class MindMapNodeVisual extends Region {
 		// wrap shape and VBox in Groups so that their bounds-in-parent is
 		// considered when determining the layout-bounds of this visual
 		getChildren().addAll(new Group(shape), new Group(labelVBox));
+
+		points.addAll(Arrays.asList(new Point(0, 0), new Point(NODE_WIDTH / 2, 0), new Point(NODE_WIDTH, 0),
+				new Point(NODE_WIDTH, NODE_HEIGH / 2), new Point(NODE_HEIGH, NODE_HEIGH)));
 	}
 
 	@Override
@@ -122,6 +133,10 @@ public class MindMapNodeVisual extends Region {
 
 	public Image getImage() {
 		return descriptionImage;
+	}
+
+	public List<Point> getPoints() {
+		return points;
 	}
 
 	public Text getTitleText() {
