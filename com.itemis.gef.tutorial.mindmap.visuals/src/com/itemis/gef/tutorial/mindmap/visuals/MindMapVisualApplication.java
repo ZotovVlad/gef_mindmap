@@ -49,7 +49,8 @@ public class MindMapVisualApplication extends Application {
 		System.out.println(node2.hashCode());
 
 		Connection conn = new MindMapConnectionVisual();
-		conn.setStartAnchor(new DynamicAnchor(node, new ChopBoxStrategy()));
+		conn.setStartAnchor(new DynamicAnchor(node, new ChopBoxStrategy())); // OrthogonalProjectionStrategy,
+																				// ProjectionStrategy
 		conn.setEndAnchor(new DynamicAnchor(node2, new ChopBoxStrategy()));
 
 		// root.getChildren().add(iv1);

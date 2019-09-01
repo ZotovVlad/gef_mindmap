@@ -40,7 +40,11 @@ public class MindMapNodeVisual extends Region {
 
 	public MindMapNodeVisual() {
 		// create background shape
+<<<<<<< HEAD
 		shape = new GeometryNode<>(new RoundedRectangle(0, 0, NODE_WIDTH, NODE_HEIGH, 8, 8));
+=======
+		shape = new GeometryNode<>(new RoundedRectangle(0, 0, 700, 30, 8, 8));
+>>>>>>> c69143b9f96d0e751666669bd6c11183ed432603
 		shape.setFill(Color.LIGHTGREEN);
 		shape.setStroke(Color.BLACK);
 
