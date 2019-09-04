@@ -1,5 +1,7 @@
 package com.itemis.gef.tutorial.mindmap.parts;
 
+import java.util.Optional;
+
 import org.eclipse.gef.common.adapt.IAdaptable;
 import org.eclipse.gef.fx.anchors.IAnchor;
 import org.eclipse.gef.fx.anchors.StaticAnchor;
@@ -11,6 +13,7 @@ import com.itemis.gef.tutorial.mindmap.visuals.MindMapNodeVisual;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.scene.Node;
+import javafx.scene.control.TextInputDialog;
 
 /**
  * The {@link SimpleMindMapAnchorProvider} create an anchor for a
@@ -23,6 +26,7 @@ import javafx.scene.Node;
 public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPart<? extends Node>>
 		implements Provider<IAnchor> {
 
+	public static boolean flagDefaultAnchor;
 	private StaticAnchor staticAnchor;
 
 	@Override
@@ -32,14 +36,26 @@ public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPa
 
 	@Override
 	public IAnchor get() {
-		if (staticAnchor == null) {
-			// get the visual from the host (MindMapNodePart)
-			Node anchorage = getAdaptable().getVisual();
-			// create a new anchor instance
+		// if (staticAnchor == null) {
+		// get the visual from the host (MindMapNodePart)
+		Node anchorage = getAdaptable().getVisual();
+		// create a new anchor instance2
 
-			staticAnchor = new StaticAnchor(anchorage, ((MindMapNodeVisual) anchorage).getPoints().get(1));
+		if (flagDefaultAnchor) {
+			staticAnchor = new StaticAnchor(anchorage, ((MindMapNodeVisual) anchorage).getPoints().get(0));
+		} else {
+			TextInputDialog dialog = new TextInputDialog();
+			dialog.setTitle("Укажите номер точки");
+			dialog.setGraphic(null);
+			dialog.setHeaderText("");
 
+			Optional<String> result = dialog.showAndWait();
+
+			staticAnchor = new StaticAnchor(anchorage,
+					((MindMapNodeVisual) anchorage).getPoints().get(Integer.parseInt(result.get()) - 1));
 		}
+
+		// }
 		return staticAnchor;
 	}
 }

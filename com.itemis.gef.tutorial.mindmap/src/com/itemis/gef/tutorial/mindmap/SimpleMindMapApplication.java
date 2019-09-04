@@ -14,6 +14,7 @@ import com.itemis.gef.tutorial.mindmap.model.SimpleMindMap;
 import com.itemis.gef.tutorial.mindmap.model.SimpleMindMapExampleFactory;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel.Type;
+import com.itemis.gef.tutorial.mindmap.parts.SimpleMindMapAnchorProvider;
 import com.itemis.gef.tutorial.mindmap.visuals.MindMapNodeVisual;
 
 import javafx.application.Application;
@@ -183,12 +184,16 @@ public class SimpleMindMapApplication extends Application {
 	 * Creates the example mind map and sets it as content to the viewer.
 	 */
 	private void populateViewerContents() {
+		SimpleMindMapAnchorProvider.flagDefaultAnchor = true;
+
 		SimpleMindMapExampleFactory fac = new SimpleMindMapExampleFactory();
 
 		SimpleMindMap mindMap = fac.createComplexExample();
 
 		IViewer viewer = getContentViewer();
 		viewer.getContents().setAll(mindMap);
+
+		SimpleMindMapAnchorProvider.flagDefaultAnchor = false;
 	}
 
 	/**

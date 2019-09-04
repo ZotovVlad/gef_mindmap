@@ -92,7 +92,8 @@ public class MindMapNodeVisual extends Region {
 		getChildren().addAll(new Group(shape), new Group(labelVBox));
 
 		points.addAll(Arrays.asList(new Point(0, 0), new Point(NODE_WIDTH / 2, 0), new Point(NODE_WIDTH, 0),
-				new Point(NODE_WIDTH, NODE_HEIGH / 2), new Point(NODE_HEIGH, NODE_HEIGH)));
+				new Point(NODE_WIDTH, NODE_HEIGH / 2), new Point(NODE_WIDTH, NODE_HEIGH),
+				new Point(NODE_WIDTH / 2, NODE_HEIGH), new Point(0, NODE_HEIGH), new Point(0, NODE_HEIGH / 2)));
 	}
 
 	@Override
