@@ -27,6 +27,7 @@ public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPa
 		implements Provider<IAnchor> {
 
 	public static boolean flagDefaultAnchor;
+	public static boolean flagPrimaryHandle;
 	private StaticAnchor staticAnchor;
 
 	@Override
@@ -44,12 +45,15 @@ public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPa
 		if (flagDefaultAnchor) {
 			staticAnchor = new StaticAnchor(anchorage, ((MindMapNodeVisual) anchorage).getPoints().get(0));
 		} else {
-			TextInputDialog dialog = new TextInputDialog();
-			dialog.setTitle("Укажите номер точки");
-			dialog.setGraphic(null);
-			dialog.setHeaderText("");
+			Optional<String> result = null;
+			do {
+				TextInputDialog dialog = new TextInputDialog();
+				dialog.setTitle("Укажите номер точки");
+				dialog.setGraphic(null);
+				dialog.setHeaderText("Укажите номер точки(от 1 до 8):");
 
-			Optional<String> result = dialog.showAndWait();
+				result = dialog.showAndWait();
+			} while ((Integer.parseInt(result.get()) > 8) || (Integer.parseInt(result.get()) < 1));
 
 			staticAnchor = new StaticAnchor(anchorage,
 					((MindMapNodeVisual) anchorage).getPoints().get(Integer.parseInt(result.get()) - 1));
