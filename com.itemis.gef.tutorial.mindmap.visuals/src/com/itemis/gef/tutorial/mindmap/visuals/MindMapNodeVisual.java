@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
@@ -25,8 +26,8 @@ public class MindMapNodeVisual extends Region {
 	private static final double HORIZONTAL_PADDING = 20d;
 	private static final double VERTICAL_PADDING = 10d;
 	private static final double VERTICAL_SPACING = 5d;
-	private static final double NODE_WIDTH = 150;
-	private static final double NODE_HEIGH = 100;
+	private static final double NODE_WIDTH = 170;
+	private static final double NODE_HEIGH = 170;
 
 	private Text titleText;
 	private TextFlow descriptionFlow;
@@ -37,6 +38,7 @@ public class MindMapNodeVisual extends Region {
 	private String urlImage = "null.png";
 	private int quantityImage = 0;
 	private List<Point> points = new ArrayList<>();
+	private List<Rectangle> pointsBox = new ArrayList<>();
 
 	public MindMapNodeVisual() {
 
@@ -94,6 +96,13 @@ public class MindMapNodeVisual extends Region {
 		points.addAll(Arrays.asList(new Point(0, 0), new Point(NODE_WIDTH / 2, 0), new Point(NODE_WIDTH, 0),
 				new Point(NODE_WIDTH, NODE_HEIGH / 2), new Point(NODE_WIDTH, NODE_HEIGH),
 				new Point(NODE_WIDTH / 2, NODE_HEIGH), new Point(0, NODE_HEIGH), new Point(0, NODE_HEIGH / 2)));
+
+		for (int i = 0; i < points.size(); i++) {
+			pointsBox.add(new Rectangle(points.get(i).x - 10 / 2, points.get(i).y - 10 / 2, 10, 10));
+		}
+
+		getChildren().addAll(pointsBox);
+
 	}
 
 	@Override

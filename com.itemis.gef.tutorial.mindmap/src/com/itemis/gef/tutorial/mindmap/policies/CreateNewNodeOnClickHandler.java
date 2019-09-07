@@ -57,7 +57,7 @@ public class CreateNewNodeOnClickHandler extends AbstractHandler implements IOnC
 			newNode.setTitle("New node");
 			newNode.setDescription("no description");
 			newNode.setColor(Color.GREENYELLOW);
-			newNode.setBounds(new Rectangle(mouseInLocal.getX(), mouseInLocal.getY(), 150, 100));
+			newNode.setBounds(new Rectangle(mouseInLocal.getX(), mouseInLocal.getY(), 170, 170));
 			try {
 				newNode.setImage(new Image(new FileInputStream("Icons/" + "icon0" + ".png")));
 			} catch (FileNotFoundException e1) {

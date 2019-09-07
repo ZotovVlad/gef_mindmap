@@ -57,6 +57,7 @@ public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPa
 
 			staticAnchor = new StaticAnchor(anchorage,
 					((MindMapNodeVisual) anchorage).getPoints().get(Integer.parseInt(result.get()) - 1));
+
 		}
 
 		// }
