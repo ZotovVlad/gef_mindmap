@@ -97,16 +97,21 @@ public class MindMapNodeVisual extends Region {
 				new Point(NODE_WIDTH, NODE_HEIGH / 2), new Point(NODE_WIDTH, NODE_HEIGH),
 				new Point(NODE_WIDTH / 2, NODE_HEIGH), new Point(0, NODE_HEIGH), new Point(0, NODE_HEIGH / 2)));
 
+		int sizeRectanglePoints = 8;
+
 		for (int i = 0; i < points.size(); i++) {
 			Rectangle rec = null;
 			if ((i == 2) || (i == 3)) {
-				rec = new Rectangle(points.get(i).x - 10, points.get(i).y, 10, 10);
+				rec = new Rectangle(points.get(i).x - sizeRectanglePoints, points.get(i).y, sizeRectanglePoints,
+						sizeRectanglePoints);
 			} else if (i == 4) {
-				rec = new Rectangle(points.get(i).x - 10, points.get(i).y - 10, 10, 10);
+				rec = new Rectangle(points.get(i).x - sizeRectanglePoints, points.get(i).y - sizeRectanglePoints,
+						sizeRectanglePoints, sizeRectanglePoints);
 			} else if ((i == 5) || (i == 6)) {
-				rec = new Rectangle(points.get(i).x, points.get(i).y - 10, 10, 10);
+				rec = new Rectangle(points.get(i).x, points.get(i).y - sizeRectanglePoints, sizeRectanglePoints,
+						sizeRectanglePoints);
 			} else {
-				rec = new Rectangle(points.get(i).x, points.get(i).y, 10, 10);
+				rec = new Rectangle(points.get(i).x, points.get(i).y, sizeRectanglePoints, sizeRectanglePoints);
 			}
 
 			pointsBox.add(rec);

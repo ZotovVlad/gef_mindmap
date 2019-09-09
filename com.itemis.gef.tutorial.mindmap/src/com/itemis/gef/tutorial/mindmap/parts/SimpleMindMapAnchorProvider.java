@@ -13,9 +13,7 @@ import com.itemis.gef.tutorial.mindmap.visuals.MindMapConnectionVisual;
 import com.itemis.gef.tutorial.mindmap.visuals.MindMapNodeVisual;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -65,17 +63,24 @@ public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPa
 //		}
 		List<Rectangle> pointBox = ((MindMapNodeVisual) anchorage).getPointsBox();
 		for (Rectangle rectangle : pointBox) {
-			rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//			rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//
+//				@Override
+//				public void handle(MouseEvent event) {
+//					// TODO Auto-generated method stub
+//					point = new Point();
+//					point.setLocation(event.getX(), event.getY());
+//					// point.setLocation(pointBox.get(5).getX() + 10 / 2, pointBox.get(5).getY() +
+//					// 10 / 2);
+//				}
+//			});
+			rectangle.setOnMouseEntered((event) -> {
 
-				@Override
-				public void handle(MouseEvent event) {
-					// TODO Auto-generated method stub
-					point = new Point();
-					point.setLocation(event.getX(), event.getY());
-					// point.setLocation(pointBox.get(5).getX() + 10 / 2, pointBox.get(5).getY() +
-					// 10 / 2);
-				}
+				point = new Point();
+				point.setLocation(event.getX(), event.getY());
+
 			});
+
 		}
 
 		staticAnchor = new StaticAnchor(anchorage, point);
