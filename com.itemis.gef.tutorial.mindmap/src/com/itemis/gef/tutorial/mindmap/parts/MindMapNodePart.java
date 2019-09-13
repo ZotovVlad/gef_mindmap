@@ -27,6 +27,9 @@ import javafx.scene.transform.Translate;
 public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> implements
 		ITransformableContentPart<MindMapNodeVisual>, IResizableContentPart<MindMapNodeVisual>, PropertyChangeListener {
 
+	public int quantityRectangleConnection;
+	public boolean connectionOnlyRight;
+
 	@Override
 	protected void doActivate() {
 		super.doActivate();
@@ -35,7 +38,8 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 
 	@Override
 	protected MindMapNodeVisual doCreateVisual() {
-		return new MindMapNodeVisual();
+		propertySet();
+		return new MindMapNodeVisual(quantityRectangleConnection, connectionOnlyRight);
 	}
 
 	@Override
@@ -69,6 +73,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 
 		// use the IResizableContentPart API to resize the visual
 		setVisualSize(getContentSize());
+
 		// use the ITransformableContentPart API to position the visual
 		setVisualTransform(getContentTransform());
 	}
@@ -95,6 +100,29 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		if (MindMapNode.PROP_COLOR.equals(prop) || MindMapNode.PROP_DESCRIPTION.equals(prop)
 				|| MindMapNode.PROP_TITLE.equals(prop) || MindMapNode.PROP_IMAGE.equals(prop)) {
 			refreshVisual();
+		}
+	}
+
+	private void propertySet() {
+		MindMapNode node = getContent();
+		switch (node.getTitle()) {
+		case "START":
+			quantityRectangleConnection = 1;
+			connectionOnlyRight = true;
+			break;
+		case "FINISH":
+			quantityRectangleConnection = 1;
+			connectionOnlyRight = false;
+			break;
+		case "New Node":
+			quantityRectangleConnection = 0;
+			break;
+		case "New Connection":
+			quantityRectangleConnection = 0;
+			break;
+		default:
+			quantityRectangleConnection = 6;
+			break;
 		}
 	}
 

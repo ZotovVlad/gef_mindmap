@@ -83,7 +83,7 @@ public class SimpleMindMapApplication extends Application {
 	private Node createToolPalette() {
 		ItemCreationModel creationModel = getContentViewer().getAdapter(ItemCreationModel.class);
 
-		MindMapNodeVisual graphic = new MindMapNodeVisual();
+		MindMapNodeVisual graphic = new MindMapNodeVisual(0, false);
 		graphic.setTitle("New Node");
 
 		// the toggleGroup makes sure, we only select one
@@ -170,8 +170,8 @@ public class SimpleMindMapApplication extends Application {
 		pane.setCenter(getContentViewer().getCanvas());
 		pane.setRight(createToolPalette());
 
-		pane.setMinWidth(800);
-		pane.setMinHeight(600);
+		pane.setMinWidth(1500);
+		pane.setMinHeight(900);
 
 //		HotKeysHandler keyboard = new HotKeysHandler();
 //		keyboard.init();

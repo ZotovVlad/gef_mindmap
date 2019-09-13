@@ -28,6 +28,7 @@ public class MindMapNodeVisual extends Region {
 	private static final double VERTICAL_SPACING = 5d;
 	private static final double NODE_WIDTH = 170;
 	private static final double NODE_HEIGH = 170;
+	private static final int SIZERECTANGLEBOX = 10;
 
 	private Text titleText;
 	private TextFlow descriptionFlow;
@@ -40,7 +41,7 @@ public class MindMapNodeVisual extends Region {
 	private List<Point> points = new ArrayList<>();
 	private List<Rectangle> pointsBox = new ArrayList<>();
 
-	public MindMapNodeVisual() {
+	public MindMapNodeVisual(int quantityRectangleConnection, boolean connectionOnlyRight) {
 
 		// create background shape
 		shape = new GeometryNode<>(new RoundedRectangle(0, 0, NODE_WIDTH, NODE_HEIGH, 8, 8));
@@ -93,31 +94,54 @@ public class MindMapNodeVisual extends Region {
 		// considered when determining the layout-bounds of this visual
 		getChildren().addAll(new Group(shape), new Group(labelVBox));
 
+		Rectangle rec = null;
+
 		points.addAll(Arrays.asList(new Point(0, 0), new Point(NODE_WIDTH, 0), new Point(NODE_WIDTH, NODE_HEIGH / 2),
 				new Point(NODE_WIDTH, NODE_HEIGH), new Point(0, NODE_HEIGH), new Point(0, NODE_HEIGH / 2)));
 
-		int sizeRectanglePoints = 8;
-
-		for (int i = 0; i < points.size(); i++) {
-			Rectangle rec = null;
-
-			if ((i == 0) || (i == 5)) {
-				rec = new Rectangle(points.get(i).x, points.get(i).y, sizeRectanglePoints, sizeRectanglePoints);
-			} else if ((i == 1) || (i == 2)) {
-				rec = new Rectangle(points.get(i).x - sizeRectanglePoints, points.get(i).y, sizeRectanglePoints,
-						sizeRectanglePoints);
-			} else if (i == 3) {
-				rec = new Rectangle(points.get(i).x - sizeRectanglePoints, points.get(i).y - sizeRectanglePoints,
-						sizeRectanglePoints, sizeRectanglePoints);
-			} else if (i == 4) {
-				rec = new Rectangle(points.get(i).x, points.get(i).y - sizeRectanglePoints, sizeRectanglePoints,
-						sizeRectanglePoints);
+		if (quantityRectangleConnection == 6) {
+			for (int i = 0; i < points.size(); i++) {
+				switch (i) {
+				case 0:
+					rec = new Rectangle(points.get(i).x, points.get(i).y, SIZERECTANGLEBOX, SIZERECTANGLEBOX);
+					break;
+				case 1:
+					rec = new Rectangle(points.get(i).x - SIZERECTANGLEBOX, points.get(i).y, SIZERECTANGLEBOX,
+							SIZERECTANGLEBOX);
+					break;
+				case 2:
+					rec = new Rectangle(points.get(i).x - SIZERECTANGLEBOX, points.get(i).y - SIZERECTANGLEBOX / 2,
+							SIZERECTANGLEBOX, SIZERECTANGLEBOX);
+					break;
+				case 3:
+					rec = new Rectangle(points.get(i).x - SIZERECTANGLEBOX, points.get(i).y - SIZERECTANGLEBOX,
+							SIZERECTANGLEBOX, SIZERECTANGLEBOX);
+					break;
+				case 4:
+					rec = new Rectangle(points.get(i).x, points.get(i).y - SIZERECTANGLEBOX, SIZERECTANGLEBOX,
+							SIZERECTANGLEBOX);
+					break;
+				case 5:
+					rec = new Rectangle(points.get(i).x, points.get(i).y - SIZERECTANGLEBOX / 2, SIZERECTANGLEBOX,
+							SIZERECTANGLEBOX);
+					break;
+				default:
+					break;
+				}
+				pointsBox.add(rec);
 			}
-
-			pointsBox.add(rec);
+			getChildren().addAll(pointsBox);
+		} else if (quantityRectangleConnection == 1) {
+			if (connectionOnlyRight) {
+				rec = new Rectangle(points.get(2).x - SIZERECTANGLEBOX, points.get(2).y - SIZERECTANGLEBOX,
+						SIZERECTANGLEBOX, SIZERECTANGLEBOX);
+				pointsBox.add(rec);
+			} else {
+				rec = new Rectangle(points.get(5).x, points.get(5).y, SIZERECTANGLEBOX, SIZERECTANGLEBOX);
+				pointsBox.add(rec);
+			}
+			getChildren().addAll(pointsBox);
 		}
-
-		getChildren().addAll(pointsBox);
 
 	}
 
