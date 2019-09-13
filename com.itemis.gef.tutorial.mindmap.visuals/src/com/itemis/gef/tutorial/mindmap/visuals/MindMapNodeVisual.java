@@ -93,25 +93,25 @@ public class MindMapNodeVisual extends Region {
 		// considered when determining the layout-bounds of this visual
 		getChildren().addAll(new Group(shape), new Group(labelVBox));
 
-		points.addAll(Arrays.asList(new Point(0, 0), new Point(NODE_WIDTH / 2, 0), new Point(NODE_WIDTH, 0),
-				new Point(NODE_WIDTH, NODE_HEIGH / 2), new Point(NODE_WIDTH, NODE_HEIGH),
-				new Point(NODE_WIDTH / 2, NODE_HEIGH), new Point(0, NODE_HEIGH), new Point(0, NODE_HEIGH / 2)));
+		points.addAll(Arrays.asList(new Point(0, 0), new Point(NODE_WIDTH, 0), new Point(NODE_WIDTH, NODE_HEIGH / 2),
+				new Point(NODE_WIDTH, NODE_HEIGH), new Point(0, NODE_HEIGH), new Point(0, NODE_HEIGH / 2)));
 
 		int sizeRectanglePoints = 8;
 
 		for (int i = 0; i < points.size(); i++) {
 			Rectangle rec = null;
-			if ((i == 2) || (i == 3)) {
+
+			if ((i == 0) || (i == 5)) {
+				rec = new Rectangle(points.get(i).x, points.get(i).y, sizeRectanglePoints, sizeRectanglePoints);
+			} else if ((i == 1) || (i == 2)) {
 				rec = new Rectangle(points.get(i).x - sizeRectanglePoints, points.get(i).y, sizeRectanglePoints,
 						sizeRectanglePoints);
-			} else if (i == 4) {
+			} else if (i == 3) {
 				rec = new Rectangle(points.get(i).x - sizeRectanglePoints, points.get(i).y - sizeRectanglePoints,
 						sizeRectanglePoints, sizeRectanglePoints);
-			} else if ((i == 5) || (i == 6)) {
+			} else if (i == 4) {
 				rec = new Rectangle(points.get(i).x, points.get(i).y - sizeRectanglePoints, sizeRectanglePoints,
 						sizeRectanglePoints);
-			} else {
-				rec = new Rectangle(points.get(i).x, points.get(i).y, sizeRectanglePoints, sizeRectanglePoints);
 			}
 
 			pointsBox.add(rec);
