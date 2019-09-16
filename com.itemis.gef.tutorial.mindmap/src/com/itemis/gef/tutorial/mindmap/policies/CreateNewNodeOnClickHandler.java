@@ -56,7 +56,7 @@ public class CreateNewNodeOnClickHandler extends AbstractHandler implements IOnC
 			MindMapNode newNode = new MindMapNode();
 			newNode.setTitle("New node");
 			newNode.setDescription("no description");
-			newNode.setColor(Color.GREENYELLOW);
+			newNode.setColor(Color.PALEVIOLETRED);
 			newNode.setBounds(new Rectangle(mouseInLocal.getX(), mouseInLocal.getY(), 170, 170));
 			try {
 				newNode.setImage(new Image(new FileInputStream("Icons/" + "icon0" + ".png")));

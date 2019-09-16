@@ -62,9 +62,9 @@ public class MindMapKeyHandler extends AbstractHandler implements IOnStrokeHandl
 		 * IVisualPart<? extends Node> part =
 		 * viewer.getRootPart().getChildrenUnmodifiable().get(0); if (part instanceof
 		 * SimpleMindMapPart) {
-		 * 
+		 *
 		 * MindMapNode newNode = createMindMapNode();
-		 * 
+		 *
 		 * // GEF provides the CreatePolicy to add a new element to the model
 		 * CreationPolicy creationPolicy =
 		 * getHost().getRoot().getAdapter(CreationPolicy.class); init(creationPolicy);
@@ -72,7 +72,7 @@ public class MindMapKeyHandler extends AbstractHandler implements IOnStrokeHandl
 		 * is returned, but we do not need it. creationPolicy.create(newNode, part,
 		 * HashMultimap.<IContentPart<? extends Node>, String>create()); // commit the
 		 * creation commit(creationPolicy); }
-		 * 
+		 *
 		 * // reset creation state creationModel.setType(Type.None);
 		 */
 	}
@@ -82,7 +82,7 @@ public class MindMapKeyHandler extends AbstractHandler implements IOnStrokeHandl
 		MindMapNode newNode = new MindMapNode();
 		newNode.setTitle("New node");
 		newNode.setDescription("no description");
-		newNode.setColor(Color.GREENYELLOW);
+		newNode.setColor(Color.PALEVIOLETRED);
 		newNode.setBounds(new Rectangle(scene.getWidth() / 2 - 120 / 2, scene.getHeight() / 2 - 80 / 2, 120, 80));
 
 		return newNode;

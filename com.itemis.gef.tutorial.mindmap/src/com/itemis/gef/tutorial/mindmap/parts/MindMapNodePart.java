@@ -16,6 +16,7 @@ import com.google.common.collect.SetMultimap;
 import com.itemis.gef.tutorial.mindmap.model.MindMapNode;
 import com.itemis.gef.tutorial.mindmap.visuals.MindMapNodeVisual;
 
+import javafx.scene.paint.Color;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Translate;
 
@@ -66,7 +67,14 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		MindMapNode node = getContent();
 		visual.setTitle(node.getTitle());
 		visual.setDescription(node.getDescription());
-		visual.setColor(node.getColor());
+		if (!(node.getIncomingConnections().isEmpty() && node.getOutgoingConnections().isEmpty())) {
+			visual.setColor(Color.GREENYELLOW);
+			node.setColor(Color.GREENYELLOW);
+		} else {
+			visual.setColor(node.getColor());
+			node.setColor(node.getColor());
+		}
+
 		if (node.getImage() != null) {
 			visual.setImage(node.getImage());
 		}
