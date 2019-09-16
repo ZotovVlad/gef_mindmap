@@ -2,6 +2,7 @@ package com.itemis.gef.tutorial.mindmap.parts;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.eclipse.gef.mvc.fx.parts.ITransformableContentPart;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
+import com.itemis.gef.tutorial.mindmap.model.MindMapConnection;
 import com.itemis.gef.tutorial.mindmap.model.MindMapNode;
 import com.itemis.gef.tutorial.mindmap.visuals.MindMapNodeVisual;
 
@@ -30,6 +32,9 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 
 	public int quantityRectangleConnection;
 	public boolean connectionOnlyRight;
+
+	private boolean flagOutcoming = false;
+	private boolean flagIncoming = false;
 
 	@Override
 	protected void doActivate() {
@@ -67,15 +72,44 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		MindMapNode node = getContent();
 		visual.setTitle(node.getTitle());
 		visual.setDescription(node.getDescription());
-		if (!(node.getIncomingConnections().isEmpty() && node.getOutgoingConnections().isEmpty())) {
-			visual.setColor(Color.GREENYELLOW);
-			node.setColor(Color.GREENYELLOW);
-		} else {
-			visual.setColor(node.getColor());
-			node.setColor(node.getColor());
-		}
 
-		if (node.getImage() != null) {
+		if (node.getClass().getName().equals("com.itemis.gef.tutorial.mindmap.model.MindMapNode")) {
+			List<MindMapConnection> incomingConnections = new ArrayList<>();
+			List<MindMapConnection> outgoingConnections = new ArrayList<>();
+			if (!node.getIncomingConnections().isEmpty()) {
+				incomingConnections = node.getIncomingConnections();
+				while (true) {
+					if (incomingConnections.get(0).getSource().getTitle().equals("START")) {
+						flagIncoming = true;
+						break;
+					} else {
+						break;
+					}
+				}
+			}
+			if (!node.getOutgoingConnections().isEmpty()) {
+				outgoingConnections = node.getOutgoingConnections();
+				while (true) {
+					if (outgoingConnections.get(0).getTarget().getTitle().equals("FINISH")) {
+						flagOutcoming = true;
+						break;
+					} else {
+						break;
+					}
+				}
+			}
+
+			if (flagIncoming && flagOutcoming) {
+				visual.setColor(Color.GREENYELLOW);
+				node.setColor(Color.GREENYELLOW);
+			} else {
+				visual.setColor(node.getColor());
+				node.setColor(node.getColor());
+			}
+		}
+		if (node.getImage() != null)
+
+		{
 			visual.setImage(node.getImage());
 		}
 
