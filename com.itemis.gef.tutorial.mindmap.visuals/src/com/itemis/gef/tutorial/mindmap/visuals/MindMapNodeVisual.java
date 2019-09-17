@@ -40,6 +40,7 @@ public class MindMapNodeVisual extends Region {
 	private int quantityImage = 0;
 	private List<Point> points = new ArrayList<>();
 	private List<Rectangle> pointsBox = new ArrayList<>();
+	private Color color;
 
 	public MindMapNodeVisual(int quantityRectangleConnection, boolean connectionOnlyRight) {
 
@@ -169,6 +170,10 @@ public class MindMapNodeVisual extends Region {
 		return minWidth(height);
 	}
 
+	public Color getColor() {
+		return color;
+	}
+
 	@Override
 	public Orientation getContentBias() {
 		return Orientation.HORIZONTAL;
@@ -203,6 +208,7 @@ public class MindMapNodeVisual extends Region {
 	}
 
 	public void setColor(Color color) {
+		this.color = color;
 		shape.setFill(color);
 	}
 

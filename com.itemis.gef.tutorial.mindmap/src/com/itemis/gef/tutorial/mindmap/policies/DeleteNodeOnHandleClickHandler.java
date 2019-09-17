@@ -30,6 +30,7 @@ public class DeleteNodeOnHandleClickHandler extends AbstractHandler implements I
 
 		// determine the node part for which the delete hover handle is clicked
 		MindMapNodePart node = (MindMapNodePart) getHost().getAnchoragesUnmodifiable().keySet().iterator().next();
+
 		node.deleteColorContent();
 
 		// initialize deletion policy

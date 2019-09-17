@@ -68,13 +68,13 @@ public class SimpleMindMapExampleFactory {
 
 		MindMapNode start = new MindMapNode();
 		start.setTitle("START");
-		start.setColor(Color.GREENYELLOW);
+		start.setColor(Color.PALEVIOLETRED);
 		start.setBounds(new Rectangle(50, 450, WIDTH, HEIGHT));
 		mindMap.addChildElement(start);
 
 		MindMapNode finish = new MindMapNode();
 		finish.setTitle("FINISH");
-		finish.setColor(Color.GREENYELLOW);
+		finish.setColor(Color.PALEVIOLETRED);
 		finish.setBounds(new Rectangle(1150, 450, WIDTH, HEIGHT));
 		mindMap.addChildElement(finish);
 

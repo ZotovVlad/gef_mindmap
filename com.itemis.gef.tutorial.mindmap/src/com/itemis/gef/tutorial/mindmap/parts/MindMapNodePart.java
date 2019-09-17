@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.eclipse.gef.geometry.planar.Dimension;
 import org.eclipse.gef.geometry.planar.Rectangle;
@@ -30,17 +31,79 @@ import javafx.scene.transform.Translate;
 public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> implements
 		ITransformableContentPart<MindMapNodeVisual>, IResizableContentPart<MindMapNodeVisual>, PropertyChangeListener {
 
+	public static List<MindMapNodeVisual> mindMapNodeVisual = new ArrayList<>();
 	public int quantityRectangleConnection;
-	public boolean connectionOnlyRight;
 
+	public boolean connectionOnlyRight;
 	private boolean flagOutcoming = false;
+
 	private boolean flagIncoming = false;
 
 	private MindMapNode node;
 
 	public void deleteColorContent() {
-		System.out.println();
-		// this.node;
+		List<MindMapConnection> incomingConnections = new ArrayList<>();
+		List<MindMapConnection> outgoingConnections = new ArrayList<>();
+
+		MindMapNodePart.mindMapNodeVisual = mindMapNodeVisual.stream().distinct().collect(Collectors.toList());
+
+		MindMapNode node = this.node;
+		MindMapNode nextNode = node;
+
+		if (!nextNode.getIncomingConnections().isEmpty()) {
+			while (true) {
+				incomingConnections = nextNode.getIncomingConnections();
+				nextNode = incomingConnections.get(0).getSource();
+				if (nextNode.getTitle().equals("START")) {
+					break;
+				} else {
+					int currentIndex = -1;
+					for (int i = 0; i < MindMapNodePart.mindMapNodeVisual.size(); i++) {
+						if (nextNode.getTitle()
+								.equals(MindMapNodePart.mindMapNodeVisual.get(i).getTitleText().getText())) {
+							currentIndex = i;
+//							MindMapNodePart.mindMapNodeVisual.get(currentIndex).setColor(Color.PALEVIOLETRED);
+//							System.out.println(MindMapNodePart.mindMapNodeVisual.get(currentIndex).getColor());
+						}
+					}
+					nextNode.setColor(Color.PALEVIOLETRED);
+					if (currentIndex != -1) {
+						MindMapNodePart.mindMapNodeVisual.get(currentIndex).setColor(Color.PALEVIOLETRED);
+					}
+				}
+			}
+		}
+
+		nextNode = node;
+		if (!nextNode.getOutgoingConnections().isEmpty()) {
+			while (true) {
+				outgoingConnections = nextNode.getOutgoingConnections();
+				nextNode = outgoingConnections.get(0).getTarget();
+				if (nextNode.getTitle().equals("FINISH")) {
+					break;
+				} else {
+					int currentIndex = -1;
+					for (int i = 0; i < MindMapNodePart.mindMapNodeVisual.size(); i++) {
+						if (nextNode.getTitle()
+								.equals(MindMapNodePart.mindMapNodeVisual.get(i).getTitleText().getText())) {
+							currentIndex = i;
+//							MindMapNodePart.mindMapNodeVisual.get(currentIndex).setColor(Color.PALEVIOLETRED);
+//							System.out.println(MindMapNodePart.mindMapNodeVisual.get(currentIndex).getColor());
+						}
+					}
+					nextNode.setColor(Color.PALEVIOLETRED);
+					if (currentIndex != -1) {
+						MindMapNodePart.mindMapNodeVisual.get(currentIndex).setColor(Color.PALEVIOLETRED);
+					}
+				}
+			}
+		}
+
+		// use the IResizableContentPart API to resize the visual
+		// setVisualSize(getContentSize());
+
+		// use the ITransformableContentPart API to position the visual
+		// setVisualTransform(getContentTransform());
 	}
 
 	@Override
@@ -75,9 +138,10 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 
 	@Override
 	protected void doRefreshVisual(MindMapNodeVisual visual) {
+
 		// updating the visual's texts
-		MindMapNode mindMapNode = getContent();
-		this.node = mindMapNode;
+		MindMapNode node = getContent();
+		this.node = node;
 
 		visual.setTitle(node.getTitle());
 		visual.setDescription(node.getDescription());
@@ -107,7 +171,6 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 
 			nextNode = node;
 			if (!nextNode.getOutgoingConnections().isEmpty()) {
-
 				while (true) {
 					outgoingConnections = nextNode.getOutgoingConnections();
 					nextNode = outgoingConnections.get(0).getTarget();
@@ -122,8 +185,6 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 				visual.setColor(Color.GREENYELLOW);
 				node.setColor(Color.GREENYELLOW);
 			} else {
-//				visual.setColor(Color.PALEVIOLETRED);
-//				node.setColor(Color.PALEVIOLETRED);
 				visual.setColor(node.getColor());
 				node.setColor(node.getColor());
 			}
@@ -133,6 +194,8 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		{
 			visual.setImage(node.getImage());
 		}
+
+		MindMapNodePart.mindMapNodeVisual.add(visual);
 
 		// use the IResizableContentPart API to resize the visual
 		setVisualSize(getContentSize());
