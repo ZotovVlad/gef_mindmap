@@ -86,9 +86,9 @@ public class SimpleMindMapExampleFactory {
 		conn2.connect(child.get(2), finish, null);
 		mindMap.addChildElement(conn2);
 
-		MindMapConnection conn3 = new MindMapConnection();
-		conn3.connect(child.get(0), child2_1, null);
-		mindMap.addChildElement(conn3);
+//		MindMapConnection conn3 = new MindMapConnection();
+//		conn3.connect(child.get(0), child2_1, null);
+//		mindMap.addChildElement(conn3);
 
 		MindMapConnection conn4 = new MindMapConnection();
 		conn4.connect(start, child2_1, null);
