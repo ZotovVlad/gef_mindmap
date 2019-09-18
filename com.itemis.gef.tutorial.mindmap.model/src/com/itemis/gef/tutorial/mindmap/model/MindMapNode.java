@@ -62,9 +62,9 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	 */
 	private Rectangle bounds;
 
-	private List<MindMapConnection> incomingConnections = Lists.newArrayList();
+	public List<MindMapConnection> incomingConnections = Lists.newArrayList();
 
-	private List<MindMapConnection> outgoingConnections = Lists.newArrayList();
+	public List<MindMapConnection> outgoingConnections = Lists.newArrayList();
 
 	public MindMapNode() {
 		super();

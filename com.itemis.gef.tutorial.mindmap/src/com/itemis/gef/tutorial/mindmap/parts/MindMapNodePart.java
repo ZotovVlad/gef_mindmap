@@ -32,13 +32,14 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		ITransformableContentPart<MindMapNodeVisual>, IResizableContentPart<MindMapNodeVisual>, PropertyChangeListener {
 
 	public static List<MindMapNodeVisual> mindMapNodeVisual = new ArrayList<>();
-	public int quantityRectangleConnection;
+	private static List<MindMapNode> nodeDeleteColor = new ArrayList<>();
 
+	public int quantityRectangleConnection;
 	public boolean connectionOnlyRight;
+
 	private boolean flagOutcoming = false;
 
 	private boolean flagIncoming = false;
-
 	private MindMapNode node;
 
 	public void deleteColorContent() {
@@ -62,8 +63,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 						if (nextNode.getTitle()
 								.equals(MindMapNodePart.mindMapNodeVisual.get(i).getTitleText().getText())) {
 							currentIndex = i;
-//							MindMapNodePart.mindMapNodeVisual.get(currentIndex).setColor(Color.PALEVIOLETRED);
-//							System.out.println(MindMapNodePart.mindMapNodeVisual.get(currentIndex).getColor());
+							nodeDeleteColor.add(nextNode);
 						}
 					}
 					nextNode.setColor(Color.PALEVIOLETRED);
@@ -87,8 +87,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 						if (nextNode.getTitle()
 								.equals(MindMapNodePart.mindMapNodeVisual.get(i).getTitleText().getText())) {
 							currentIndex = i;
-//							MindMapNodePart.mindMapNodeVisual.get(currentIndex).setColor(Color.PALEVIOLETRED);
-//							System.out.println(MindMapNodePart.mindMapNodeVisual.get(currentIndex).getColor());
+							nodeDeleteColor.add(nextNode);
 						}
 					}
 					nextNode.setColor(Color.PALEVIOLETRED);
@@ -168,6 +167,12 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 					}
 				}
 			}
+			nextNode = node;
+			for (int i = 0; i < MindMapNodePart.nodeDeleteColor.size(); i++) {
+				if (nextNode.getTitle().equals(MindMapNodePart.nodeDeleteColor.get(i).getTitle())) {
+					flagIncoming = false;
+				}
+			}
 
 			nextNode = node;
 			if (!nextNode.getOutgoingConnections().isEmpty()) {
@@ -180,6 +185,12 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 					}
 				}
 			}
+			nextNode = node;
+			for (int i = 0; i < MindMapNodePart.nodeDeleteColor.size(); i++) {
+				if (nextNode.getTitle().equals(MindMapNodePart.nodeDeleteColor.get(i).getTitle())) {
+					flagOutcoming = false;
+				}
+			}
 
 			if (flagIncoming && flagOutcoming) {
 				visual.setColor(Color.GREENYELLOW);
@@ -188,6 +199,9 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 				visual.setColor(node.getColor());
 				node.setColor(node.getColor());
 			}
+
+			flagIncoming = false;
+			flagOutcoming = false;
 		}
 		if (node.getImage() != null)
 
