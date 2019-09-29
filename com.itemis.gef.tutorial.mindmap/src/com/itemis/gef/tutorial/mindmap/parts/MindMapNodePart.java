@@ -37,9 +37,9 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 	public int quantityRectangleConnection;
 	public boolean connectionOnlyRight;
 
-	private boolean flagOutcoming = false;
+//	private boolean flagOutcoming = false;
+//	private boolean flagIncoming = false;
 
-	private boolean flagIncoming = false;
 	private MindMapNode node;
 
 	public void deleteColorContent() {
@@ -50,6 +50,8 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 
 		MindMapNode node = this.node;
 		MindMapNode nextNode = node;
+
+		nextNode.setFlagNodeInChain(true);
 
 		if (!nextNode.getIncomingConnections().isEmpty()) {
 			while (true) {
@@ -146,10 +148,10 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		visual.setDescription(node.getDescription());
 
 		if (node.getTitle().equals("START")) {
-			flagIncoming = true;
+			node.flagIncoming = true;
 		}
 		if (node.getTitle().equals("FINISH")) {
-			flagOutcoming = true;
+			node.flagOutcoming = true;
 		}
 
 		if (node.getClass().getName().equals("com.itemis.gef.tutorial.mindmap.model.MindMapNode")) {
@@ -162,7 +164,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 					incomingConnections = nextNode.getIncomingConnections();
 					nextNode = incomingConnections.get(0).getSource();
 					if (nextNode.getTitle().equals("START")) {
-						flagIncoming = true;
+						node.flagIncoming = true;
 						break;
 					}
 				}
@@ -170,7 +172,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 			nextNode = node;
 			for (int i = 0; i < MindMapNodePart.nodeDeleteColor.size(); i++) {
 				if (nextNode.getTitle().equals(MindMapNodePart.nodeDeleteColor.get(i).getTitle())) {
-					flagIncoming = false;
+					node.flagIncoming = false;
 				}
 			}
 
@@ -180,7 +182,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 					outgoingConnections = nextNode.getOutgoingConnections();
 					nextNode = outgoingConnections.get(0).getTarget();
 					if (nextNode.getTitle().equals("FINISH")) {
-						flagOutcoming = true;
+						node.flagOutcoming = true;
 						break;
 					}
 				}
@@ -188,11 +190,11 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 			nextNode = node;
 			for (int i = 0; i < MindMapNodePart.nodeDeleteColor.size(); i++) {
 				if (nextNode.getTitle().equals(MindMapNodePart.nodeDeleteColor.get(i).getTitle())) {
-					flagOutcoming = false;
+					node.flagOutcoming = false;
 				}
 			}
 
-			if (flagIncoming && flagOutcoming) {
+			if (node.flagIncoming && node.flagOutcoming) {
 				visual.setColor(Color.GREENYELLOW);
 				node.setColor(Color.GREENYELLOW);
 			} else {
@@ -200,12 +202,10 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 				node.setColor(node.getColor());
 			}
 
-			flagIncoming = false;
-			flagOutcoming = false;
+			node.flagIncoming = false;
+			node.flagOutcoming = false;
 		}
-		if (node.getImage() != null)
-
-		{
+		if (node.getImage() != null) {
 			visual.setImage(node.getImage());
 		}
 
@@ -220,7 +220,8 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 
 	@Override
 	public MindMapNode getContent() {
-		return (MindMapNode) super.getContent();
+		MindMapNode mmn = (MindMapNode) super.getContent();
+		return mmn;
 	}
 
 	@Override

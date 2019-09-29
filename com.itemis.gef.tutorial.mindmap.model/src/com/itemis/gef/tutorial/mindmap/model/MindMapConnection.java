@@ -17,6 +17,10 @@ public class MindMapConnection extends AbstractMindMapItem {
 
 	private ArrayList<Point> connectionPoints;
 
+	public MindMapConnection() {
+
+	}
+
 	public void connect(MindMapNode source, MindMapNode target, ArrayList<Point> connectionPoints) {
 		if (source == null || target == null || source == target) {
 			throw new IllegalArgumentException();
@@ -26,6 +30,7 @@ public class MindMapConnection extends AbstractMindMapItem {
 		this.target = target;
 		this.connectionPoints = connectionPoints;
 		reconnect();
+		setIncomingOutgoing();
 	}
 
 	public void disconnect() {
@@ -55,6 +60,12 @@ public class MindMapConnection extends AbstractMindMapItem {
 
 			connected = true;
 		}
+	}
+
+	private void setIncomingOutgoing() {
+		this.source.flagOutcoming = true;
+		this.target.flagIncoming = true;
+		System.out.println();
 	}
 
 	public void setSource(MindMapNode source) {

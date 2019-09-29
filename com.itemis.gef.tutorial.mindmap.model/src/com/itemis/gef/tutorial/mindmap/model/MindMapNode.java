@@ -32,6 +32,11 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	public static final String PROP_QUANTITYANCHORS = "quantityAnchors";
 	public static final String PROP_ANCHORS = "anchors";
 
+	public boolean flagOutcoming = false;
+	public boolean flagIncoming = false;
+
+	public boolean flagNodeInChain = false;
+
 	/**
 	 * The title of the node
 	 */
@@ -63,16 +68,15 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	private Rectangle bounds;
 
 	public List<MindMapConnection> incomingConnections = Lists.newArrayList();
-
 	public List<MindMapConnection> outgoingConnections = Lists.newArrayList();
 
 	public MindMapNode() {
 		super();
+
 		File f = new File(userDir + File.separator + "Files" + File.separator + this.hashCode() + ".txt");
 		try {
 			f.createNewFile();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -119,6 +123,10 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		return title;
 	}
 
+	public boolean isFlagNodeInChain() {
+		return flagNodeInChain;
+	}
+
 	public void removeIncomingConnection(MindMapConnection conn) {
 		incomingConnections.remove(conn);
 		pcs.firePropertyChange(PROP_INCOMING_CONNECTIONS, conn, null);
@@ -143,6 +151,10 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 
 	public void setFile(File file) {
 		pcs.firePropertyChange(PROP_FILE, this.file, (this.file = file));
+	}
+
+	public void setFlagNodeInChain(boolean flagNodeInChain) {
+		this.flagNodeInChain = flagNodeInChain;
 	}
 
 	public void setImage(Image image) {
