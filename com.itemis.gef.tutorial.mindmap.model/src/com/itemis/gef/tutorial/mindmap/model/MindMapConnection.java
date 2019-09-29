@@ -63,9 +63,8 @@ public class MindMapConnection extends AbstractMindMapItem {
 	}
 
 	private void setIncomingOutgoing() {
-		this.source.flagOutcoming = true;
-		this.target.flagIncoming = true;
-		System.out.println();
+		this.source.addTitlesOutgoingConnection(this.target.getTitlesOutgoingConnection());
+		this.target.addTitlesIncomingConnection(this.source.getTitlesIncomingConnection());
 	}
 
 	public void setSource(MindMapNode source) {

@@ -3,6 +3,7 @@ package com.itemis.gef.tutorial.mindmap.model;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.gef.geometry.planar.Rectangle;
@@ -32,10 +33,8 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	public static final String PROP_QUANTITYANCHORS = "quantityAnchors";
 	public static final String PROP_ANCHORS = "anchors";
 
-	public boolean flagOutcoming = false;
-	public boolean flagIncoming = false;
-
-	public boolean flagNodeInChain = false;
+	private List<String> titlesIncomingConnection = new ArrayList<>();
+	private List<String> titlesOutgoingConnection = new ArrayList<>();
 
 	/**
 	 * The title of the node
@@ -68,6 +67,7 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	private Rectangle bounds;
 
 	public List<MindMapConnection> incomingConnections = Lists.newArrayList();
+
 	public List<MindMapConnection> outgoingConnections = Lists.newArrayList();
 
 	public MindMapNode() {
@@ -89,6 +89,22 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	public void addOutgoingConnection(MindMapConnection conn) {
 		outgoingConnections.add(conn);
 		pcs.firePropertyChange(PROP_OUTGOGING_CONNECTIONS, null, conn);
+	}
+
+	public void addTitleIncomingConnection(String titlesIncomingConnection) {
+		this.titlesIncomingConnection.add(titlesIncomingConnection);
+	}
+
+	public void addTitleOutgoingConnection(String titlesOutgoingConnection) {
+		this.titlesOutgoingConnection.add(titlesOutgoingConnection);
+	}
+
+	public void addTitlesIncomingConnection(List<String> titlesIncomingConnection) {
+		this.titlesIncomingConnection.addAll(titlesIncomingConnection);
+	}
+
+	public void addTitlesOutgoingConnection(List<String> titlesOutgoingConnection) {
+		this.titlesOutgoingConnection.addAll(titlesOutgoingConnection);
 	}
 
 	public Rectangle getBounds() {
@@ -123,8 +139,12 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		return title;
 	}
 
-	public boolean isFlagNodeInChain() {
-		return flagNodeInChain;
+	public List<String> getTitlesIncomingConnection() {
+		return titlesIncomingConnection;
+	}
+
+	public List<String> getTitlesOutgoingConnection() {
+		return titlesOutgoingConnection;
 	}
 
 	public void removeIncomingConnection(MindMapConnection conn) {
@@ -153,15 +173,13 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		pcs.firePropertyChange(PROP_FILE, this.file, (this.file = file));
 	}
 
-	public void setFlagNodeInChain(boolean flagNodeInChain) {
-		this.flagNodeInChain = flagNodeInChain;
-	}
-
 	public void setImage(Image image) {
 		pcs.firePropertyChange(PROP_IMAGE, this.image, (this.image = image));
 	}
 
 	public void setTitle(String title) {
+		titlesIncomingConnection.add(title);
+		titlesOutgoingConnection.add(title);
 		pcs.firePropertyChange(PROP_TITLE, this.title, (this.title = title));
 	}
 }
