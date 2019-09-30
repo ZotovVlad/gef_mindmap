@@ -30,6 +30,8 @@ import javafx.scene.paint.Color;
  */
 public class CreateNewNodeOnClickHandler extends AbstractHandler implements IOnClickHandler {
 
+	private static int i = 0;
+
 	@Override
 	public void click(MouseEvent e) {
 		if (!e.isPrimaryButtonDown()) {
@@ -54,7 +56,7 @@ public class CreateNewNodeOnClickHandler extends AbstractHandler implements IOnC
 			Point2D mouseInLocal = part.getVisual().sceneToLocal(e.getSceneX(), e.getSceneY());
 
 			MindMapNode newNode = new MindMapNode();
-			newNode.setTitle("New node");
+			newNode.setTitle("Node" + i++);
 			newNode.setDescription("no description");
 			newNode.setColor(Color.PALEVIOLETRED);
 			newNode.setBounds(new Rectangle(mouseInLocal.getX(), mouseInLocal.getY(), 170, 170));

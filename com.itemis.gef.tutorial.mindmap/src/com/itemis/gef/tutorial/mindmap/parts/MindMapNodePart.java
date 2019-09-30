@@ -15,7 +15,6 @@ import org.eclipse.gef.mvc.fx.parts.ITransformableContentPart;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
-import com.itemis.gef.tutorial.mindmap.model.MindMapConnection;
 import com.itemis.gef.tutorial.mindmap.model.MindMapNode;
 import com.itemis.gef.tutorial.mindmap.visuals.MindMapNodeVisual;
 
@@ -32,79 +31,21 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		ITransformableContentPart<MindMapNodeVisual>, IResizableContentPart<MindMapNodeVisual>, PropertyChangeListener {
 
 	public static List<MindMapNodeVisual> mindMapNodeVisual = new ArrayList<>();
-	private static List<MindMapNode> nodeDeleteColor = new ArrayList<>();
+	private static List<MindMapNode> mindMapNode = new ArrayList<>();
 
 	public int quantityRectangleConnection;
 	public boolean connectionOnlyRight;
 
-//	private boolean flagOutcoming = false;
-//	private boolean flagIncoming = false;
-
 	private MindMapNode node;
 
 	public void deleteColorContent() {
-		List<MindMapConnection> incomingConnections = new ArrayList<>();
-		List<MindMapConnection> outgoingConnections = new ArrayList<>();
 
-		MindMapNodePart.mindMapNodeVisual = mindMapNodeVisual.stream().distinct().collect(Collectors.toList());
+		// MindMapNodePart.mindMapNodeVisual =
+		// mindMapNodeVisual.stream().distinct().collect(Collectors.toList());
 
-		MindMapNode node = this.node;
-		MindMapNode nextNode = node;
-
-		if (!nextNode.getIncomingConnections().isEmpty()) {
-			while (true) {
-				incomingConnections = nextNode.getIncomingConnections();
-				nextNode = incomingConnections.get(0).getSource();
-				if (nextNode.getTitle().equals("START")) {
-					break;
-				} else {
-					int currentIndex = -1;
-					for (int i = 0; i < MindMapNodePart.mindMapNodeVisual.size(); i++) {
-						if (nextNode.getTitle()
-								.equals(MindMapNodePart.mindMapNodeVisual.get(i).getTitleText().getText())) {
-							currentIndex = i;
-							nodeDeleteColor.add(nextNode);
-						}
-					}
-					nextNode.setColor(Color.PALEVIOLETRED);
-					if (currentIndex != -1) {
-						MindMapNodePart.mindMapNodeVisual.get(currentIndex).setColor(Color.PALEVIOLETRED);
-					}
-				}
-			}
-		}
-
-		nextNode = node;
-		if (!nextNode.getOutgoingConnections().isEmpty()) {
-			while (true) {
-				outgoingConnections = nextNode.getOutgoingConnections();
-				nextNode = outgoingConnections.get(0).getTarget();
-				if (nextNode.getTitle().equals("FINISH")) {
-					break;
-				} else {
-					int currentIndex = -1;
-					for (int i = 0; i < MindMapNodePart.mindMapNodeVisual.size(); i++) {
-						if (nextNode.getTitle()
-								.equals(MindMapNodePart.mindMapNodeVisual.get(i).getTitleText().getText())) {
-							currentIndex = i;
-							nodeDeleteColor.add(nextNode);
-						}
-					}
-					nextNode.setColor(Color.PALEVIOLETRED);
-					if (currentIndex != -1) {
-						MindMapNodePart.mindMapNodeVisual.get(currentIndex).setColor(Color.PALEVIOLETRED);
-					}
-				}
-			}
-		}
-
+		MindMapNodePart.mindMapNode = mindMapNode.stream().distinct().collect(Collectors.toList());
+		doRefreshVisual(mindMapNodeVisual.get(0));
 		refreshVisual();
-
-		// use the IResizableContentPart API to resize the visual
-		// setVisualSize(getContentSize());
-
-		// use the ITransformableContentPart API to position the visual
-		// setVisualTransform(getContentTransform());
 	}
 
 	@Override
@@ -147,7 +88,13 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		visual.setTitle(node.getTitle());
 		visual.setDescription(node.getDescription());
 
-		System.out.println();
+		if (node.isStarted() && node.isFinished()) {
+			visual.setColor(Color.GREENYELLOW);
+			node.setColor(Color.GREENYELLOW);
+		} else {
+			visual.setColor(node.getColor());
+			node.setColor(node.getColor());
+		}
 
 //		if (node.getTitle().equals("START")) {
 //			node.flagIncoming = true;
@@ -212,6 +159,8 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		}
 
 		MindMapNodePart.mindMapNodeVisual.add(visual);
+
+		MindMapNodePart.mindMapNode.add(node);
 
 		// use the IResizableContentPart API to resize the visual
 		setVisualSize(getContentSize());

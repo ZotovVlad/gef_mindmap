@@ -78,29 +78,29 @@ public class SimpleMindMapExampleFactory {
 		finish.setBounds(new Rectangle(1150, 450, WIDTH, HEIGHT));
 		mindMap.addChildElement(finish);
 
-		MindMapConnection conn1 = new MindMapConnection();
-		conn1.connect(start, child.get(0), null);
-		mindMap.addChildElement(conn1);
-
-		MindMapConnection conn2 = new MindMapConnection();
-		conn2.connect(child.get(2), finish, null);
-		mindMap.addChildElement(conn2);
-
-//		MindMapConnection conn3 = new MindMapConnection();
-//		conn3.connect(child.get(0), child2_1, null);
-//		mindMap.addChildElement(conn3);
-
-		MindMapConnection conn4 = new MindMapConnection();
-		conn4.connect(start, child2_1, null);
-		mindMap.addChildElement(conn4);
-
-		MindMapConnection conn5 = new MindMapConnection();
-		conn5.connect(start, child2_2, null);
-		mindMap.addChildElement(conn5);
-
-		MindMapConnection conn6 = new MindMapConnection();
-		conn6.connect(child2_2, finish, null);
-		mindMap.addChildElement(conn6);
+//		MindMapConnection conn1 = new MindMapConnection();
+//		conn1.connect(start, child.get(0), null);
+//		mindMap.addChildElement(conn1);
+//
+//		MindMapConnection conn2 = new MindMapConnection();
+//		conn2.connect(child.get(2), finish, null);
+//		mindMap.addChildElement(conn2);
+//
+////		MindMapConnection conn3 = new MindMapConnection();
+////		conn3.connect(child.get(0), child2_1, null);
+////		mindMap.addChildElement(conn3);
+//
+//		MindMapConnection conn4 = new MindMapConnection();
+//		conn4.connect(start, child2_1, null);
+//		mindMap.addChildElement(conn4);
+//
+//		MindMapConnection conn5 = new MindMapConnection();
+//		conn5.connect(start, child2_2, null);
+//		mindMap.addChildElement(conn5);
+//
+//		MindMapConnection conn6 = new MindMapConnection();
+//		conn6.connect(child2_2, finish, null);
+//		mindMap.addChildElement(conn6);
 
 		return mindMap;
 	}

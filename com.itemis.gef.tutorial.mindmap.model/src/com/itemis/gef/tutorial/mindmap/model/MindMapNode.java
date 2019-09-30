@@ -3,8 +3,10 @@ package com.itemis.gef.tutorial.mindmap.model;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.gef.geometry.planar.Rectangle;
 
@@ -17,6 +19,9 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 
 	/**
 	 * Generated UUID
+	 */
+	/**
+	 *
 	 */
 	private static final long serialVersionUID = 8875579454539897410L;
 
@@ -33,8 +38,8 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	public static final String PROP_QUANTITYANCHORS = "quantityAnchors";
 	public static final String PROP_ANCHORS = "anchors";
 
-	private List<String> titlesIncomingConnection = new ArrayList<>();
-	private List<String> titlesOutgoingConnection = new ArrayList<>();
+	private Set<String> titlesIncomingConnection = new HashSet<>();
+	private Set<String> titlesOutgoingConnection = new HashSet<>();
 
 	/**
 	 * The title of the node
@@ -99,11 +104,11 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		this.titlesOutgoingConnection.add(titlesOutgoingConnection);
 	}
 
-	public void addTitlesIncomingConnection(List<String> titlesIncomingConnection) {
+	public void addTitlesIncomingConnection(Set<String> titlesIncomingConnection) {
 		this.titlesIncomingConnection.addAll(titlesIncomingConnection);
 	}
 
-	public void addTitlesOutgoingConnection(List<String> titlesOutgoingConnection) {
+	public void addTitlesOutgoingConnection(Set<String> titlesOutgoingConnection) {
 		this.titlesOutgoingConnection.addAll(titlesOutgoingConnection);
 	}
 
@@ -139,12 +144,32 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		return title;
 	}
 
-	public List<String> getTitlesIncomingConnection() {
+	public Set<String> getTitlesIncomingConnection() {
 		return titlesIncomingConnection;
 	}
 
-	public List<String> getTitlesOutgoingConnection() {
+	public Set<String> getTitlesOutgoingConnection() {
 		return titlesOutgoingConnection;
+	}
+
+	public boolean isFinished() {
+		for (Iterator<String> it = this.getTitlesOutgoingConnection().iterator(); it.hasNext();) {
+			String f = it.next();
+			if (f.equals(new String("FINISH"))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean isStarted() {
+		for (Iterator<String> it = this.getTitlesIncomingConnection().iterator(); it.hasNext();) {
+			String f = it.next();
+			if (f.equals(new String("START"))) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void removeIncomingConnection(MindMapConnection conn) {

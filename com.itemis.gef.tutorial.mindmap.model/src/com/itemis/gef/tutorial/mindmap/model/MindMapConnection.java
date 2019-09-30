@@ -1,6 +1,7 @@
 package com.itemis.gef.tutorial.mindmap.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.gef.geometry.planar.Point;
 
@@ -65,6 +66,21 @@ public class MindMapConnection extends AbstractMindMapItem {
 	private void setIncomingOutgoing() {
 		this.source.addTitlesOutgoingConnection(this.target.getTitlesOutgoingConnection());
 		this.target.addTitlesIncomingConnection(this.source.getTitlesIncomingConnection());
+
+		List<MindMapConnection> IncomingConnections = this.source.getIncomingConnections();
+		while (!(IncomingConnections.isEmpty())) {
+			IncomingConnections.get(0).getSource()
+					.addTitlesOutgoingConnection(this.target.getTitlesOutgoingConnection());
+			IncomingConnections = IncomingConnections.get(0).getSource().getIncomingConnections();
+		}
+
+		List<MindMapConnection> OutgoingConnections = this.target.getOutgoingConnections();
+		while (!(OutgoingConnections.isEmpty())) {
+			OutgoingConnections.get(0).getTarget()
+					.addTitlesIncomingConnection(this.source.getTitlesIncomingConnection());
+			OutgoingConnections = OutgoingConnections.get(0).getTarget().getOutgoingConnections();
+		}
+
 	}
 
 	public void setSource(MindMapNode source) {

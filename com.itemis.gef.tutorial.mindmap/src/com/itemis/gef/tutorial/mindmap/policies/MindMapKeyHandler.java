@@ -19,6 +19,7 @@ import com.itemis.gef.tutorial.mindmap.model.MindMapNode;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel.Type;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapConnectionPart;
+import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -91,7 +92,7 @@ public class MindMapKeyHandler extends AbstractHandler implements IOnStrokeHandl
 	private void deleteNode() {
 		boolean flag = false;
 
-		// ((MindMapNodePart) getHost()).deleteColorContent();
+		((MindMapNodePart) getHost()).deleteColorContent();
 
 		// query DeletionPolicy for the removal of the host part
 		IRootPart<? extends Node> root = getHost().getRoot();
