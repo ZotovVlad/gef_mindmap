@@ -2,10 +2,10 @@ package com.itemis.gef.tutorial.mindmap.parts;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 import org.eclipse.gef.geometry.planar.Dimension;
 import org.eclipse.gef.geometry.planar.Rectangle;
@@ -30,21 +30,19 @@ import javafx.scene.transform.Translate;
 public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> implements
 		ITransformableContentPart<MindMapNodeVisual>, IResizableContentPart<MindMapNodeVisual>, PropertyChangeListener {
 
-	public static List<MindMapNodeVisual> mindMapNodeVisual = new ArrayList<>();
-	private static List<MindMapNode> mindMapNode = new ArrayList<>();
+	private static Set<MindMapNode> mindMapNode = new HashSet<>();
 
 	public int quantityRectangleConnection;
 	public boolean connectionOnlyRight;
-
-	private MindMapNode node;
 
 	public void deleteColorContent() {
 
 		// MindMapNodePart.mindMapNodeVisual =
 		// mindMapNodeVisual.stream().distinct().collect(Collectors.toList());
 
-		MindMapNodePart.mindMapNode = mindMapNode.stream().distinct().collect(Collectors.toList());
-		doRefreshVisual(mindMapNodeVisual.get(0));
+		// MindMapNodePart.mindMapNode =
+		// mindMapNode.stream().distinct().collect(Collectors.toList());
+		// doRefreshVisual(mindMapNodeVisual.get(0));
 		refreshVisual();
 	}
 
@@ -81,84 +79,24 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 	@Override
 	protected void doRefreshVisual(MindMapNodeVisual visual) {
 
-		// updating the visual's texts
 		MindMapNode node = getContent();
-		this.node = node;
 
 		visual.setTitle(node.getTitle());
 		visual.setDescription(node.getDescription());
-
-		if (node.isStarted() && node.isFinished()) {
-			visual.setColor(Color.GREENYELLOW);
-			node.setColor(Color.GREENYELLOW);
-		} else {
-			visual.setColor(node.getColor());
-			node.setColor(node.getColor());
-		}
-
-//		if (node.getTitle().equals("START")) {
-//			node.flagIncoming = true;
-//		}
-//		if (node.getTitle().equals("FINISH")) {
-//			node.flagOutcoming = true;
-//		}
-//
-//		if (node.getClass().getName().equals("com.itemis.gef.tutorial.mindmap.model.MindMapNode")) {
-//			List<MindMapConnection> incomingConnections = new ArrayList<>();
-//			List<MindMapConnection> outgoingConnections = new ArrayList<>();
-//
-//			MindMapNode nextNode = node;
-//			if (!nextNode.getIncomingConnections().isEmpty()) {
-//				while (true) {
-//					incomingConnections = nextNode.getIncomingConnections();
-//					nextNode = incomingConnections.get(0).getSource();
-//					if (nextNode.getTitle().equals("START")) {
-//						node.flagIncoming = true;
-//						break;
-//					}
-//				}
-//			}
-//			nextNode = node;
-//			for (int i = 0; i < MindMapNodePart.nodeDeleteColor.size(); i++) {
-//				if (nextNode.getTitle().equals(MindMapNodePart.nodeDeleteColor.get(i).getTitle())) {
-//					node.flagIncoming = false;
-//				}
-//			}
-//
-//			nextNode = node;
-//			if (!nextNode.getOutgoingConnections().isEmpty()) {
-//				while (true) {
-//					outgoingConnections = nextNode.getOutgoingConnections();
-//					nextNode = outgoingConnections.get(0).getTarget();
-//					if (nextNode.getTitle().equals("FINISH")) {
-//						node.flagOutcoming = true;
-//						break;
-//					}
-//				}
-//			}
-//			nextNode = node;
-//			for (int i = 0; i < MindMapNodePart.nodeDeleteColor.size(); i++) {
-//				if (nextNode.getTitle().equals(MindMapNodePart.nodeDeleteColor.get(i).getTitle())) {
-//					node.flagOutcoming = false;
-//				}
-//			}
-//
-//			if (node.flagIncoming && node.flagOutcoming) {
-//				visual.setColor(Color.GREENYELLOW);
-//				node.setColor(Color.GREENYELLOW);
-//			} else {
-//				visual.setColor(node.getColor());
-//				node.setColor(node.getColor());
-//			}
-//			node.flagIncoming = false;
-//			node.flagOutcoming = false;
-//		}
-
 		if (node.getImage() != null) {
 			visual.setImage(node.getImage());
 		}
 
-		MindMapNodePart.mindMapNodeVisual.add(visual);
+		for (MindMapNode mindMapNode : MindMapNodePart.mindMapNode) {
+			if (mindMapNode.isStarted() && mindMapNode.isFinished()) {
+				mindMapNode.setColor(Color.GREENYELLOW);
+				visual.setColor(Color.GREENYELLOW);
+			} else {
+//				mindMapNode.setColor(mindMapNode.);
+//				visual.setColor(mindMapNode.);
+//				System.out.println();
+			}
+		}
 
 		MindMapNodePart.mindMapNode.add(node);
 

@@ -46,7 +46,7 @@ public class MindMapNodeVisual extends Region {
 
 		// create background shape
 		shape = new GeometryNode<>(new RoundedRectangle(0, 0, NODE_WIDTH, NODE_HEIGH, 8, 8));
-		shape.setFill(Color.LIGHTGREEN);
+		shape.setFill(Color.PALEVIOLETRED);
 		shape.setStroke(Color.BLACK);
 
 		// create vertical box for title and description
