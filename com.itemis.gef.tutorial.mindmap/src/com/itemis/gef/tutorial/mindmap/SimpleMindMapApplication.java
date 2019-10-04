@@ -15,7 +15,6 @@ import com.itemis.gef.tutorial.mindmap.model.SimpleMindMapExampleFactory;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel.Type;
 import com.itemis.gef.tutorial.mindmap.parts.SimpleMindMapAnchorProvider;
-import com.itemis.gef.tutorial.mindmap.visuals.MindMapNodeVisual;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -83,14 +82,13 @@ public class SimpleMindMapApplication extends Application {
 	private Node createToolPalette() {
 		ItemCreationModel creationModel = getContentViewer().getAdapter(ItemCreationModel.class);
 
-		MindMapNodeVisual graphic = new MindMapNodeVisual(0, false);
-		graphic.setTitle("New Node");
-
 		// the toggleGroup makes sure, we only select one
 		ToggleGroup toggleGroup = new ToggleGroup();
 
-		ToggleButton createNode = new ToggleButton("", graphic);
+		ToggleButton createNode = new ToggleButton("New Node");
 		createNode.setToggleGroup(toggleGroup);
+		createNode.setMaxWidth(Double.MAX_VALUE);
+		createNode.setMinHeight(50);
 		createNode.selectedProperty().addListener((e, oldVal, newVal) -> {
 			creationModel.setType(newVal ? Type.Node : Type.None);
 		});
