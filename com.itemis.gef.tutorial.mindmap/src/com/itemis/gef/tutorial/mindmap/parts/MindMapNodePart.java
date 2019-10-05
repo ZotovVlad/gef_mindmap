@@ -31,6 +31,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		ITransformableContentPart<MindMapNodeVisual>, IResizableContentPart<MindMapNodeVisual>, PropertyChangeListener {
 
 	private static Set<MindMapNode> mindMapNode = new HashSet<>();
+	private static Set<MindMapNodeVisual> mindMapNodeVisual = new HashSet<>();
 
 	public int quantityRectangleConnection;
 	public boolean connectionOnlyRight;
@@ -90,7 +91,11 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		for (MindMapNode mindMapNode : MindMapNodePart.mindMapNode) {
 			if (mindMapNode.isStarted() && mindMapNode.isFinished()) {
 				mindMapNode.setColor(Color.GREENYELLOW);
-				visual.setColor(Color.GREENYELLOW);
+				for (MindMapNodeVisual mindMapNodeVisual : MindMapNodePart.mindMapNodeVisual) {
+					if (mindMapNodeVisual.getTitleText().getText().toString().equals(mindMapNode.getTitle())) {
+						mindMapNodeVisual.setColor(Color.GREENYELLOW);
+					}
+				}
 			} else {
 //				mindMapNode.setColor(mindMapNode.);
 //				visual.setColor(mindMapNode.);
@@ -99,6 +104,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		}
 
 		MindMapNodePart.mindMapNode.add(node);
+		MindMapNodePart.mindMapNodeVisual.add(visual);
 
 		// use the IResizableContentPart API to resize the visual
 		setVisualSize(getContentSize());
