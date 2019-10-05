@@ -33,11 +33,14 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 	private static Set<MindMapNode> mindMapNode = new HashSet<>();
 	private static Set<MindMapNodeVisual> mindMapNodeVisual = new HashSet<>();
 
+	private static Color greenNode = Color.GREENYELLOW;
+	private static Color redNode = Color.PALEVIOLETRED;
+
 	public int quantityRectangleConnection;
 	public boolean connectionOnlyRight;
 
 	public void deleteColorContent() {
-
+		System.out.println(this.getVisual().getTitleText().getText().toString());
 		// MindMapNodePart.mindMapNodeVisual =
 		// mindMapNodeVisual.stream().distinct().collect(Collectors.toList());
 
@@ -90,16 +93,20 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 
 		for (MindMapNode mindMapNode : MindMapNodePart.mindMapNode) {
 			if (mindMapNode.isStarted() && mindMapNode.isFinished()) {
-				mindMapNode.setColor(Color.GREENYELLOW);
+				mindMapNode.setColor(greenNode);
 				for (MindMapNodeVisual mindMapNodeVisual : MindMapNodePart.mindMapNodeVisual) {
 					if (mindMapNodeVisual.getTitleText().getText().toString().equals(mindMapNode.getTitle())) {
-						mindMapNodeVisual.setColor(Color.GREENYELLOW);
+						mindMapNodeVisual.setColor(greenNode);
 					}
 				}
 			} else {
-//				mindMapNode.setColor(mindMapNode.);
-//				visual.setColor(mindMapNode.);
-//				System.out.println();
+//				mindMapNode.setColor(mindMapNode.getColor());
+//				for (MindMapNodeVisual mindMapNodeVisual : MindMapNodePart.mindMapNodeVisual) {
+//					if (mindMapNodeVisual.getTitleText().getText().toString().equals(mindMapNode.getTitle())) {
+//						mindMapNodeVisual.setColor(greenNode);
+//					}
+//				}
+//				visual.setColor(mindMapNode.getColor());
 			}
 		}
 
