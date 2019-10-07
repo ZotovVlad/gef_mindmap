@@ -33,8 +33,8 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 	private static Set<MindMapNode> mindMapNode = new HashSet<>();
 	private static Set<MindMapNodeVisual> mindMapNodeVisual = new HashSet<>();
 
-	private static Color greenNode = Color.GREENYELLOW;
-	private static Color redNode = Color.PALEVIOLETRED;
+	private static Color greenNode = Color.GREENYELLOW; // the color of the node if it is in a chain
+	private static Color redNode = Color.PALEVIOLETRED; // the color of the node if it is not in a chain
 
 	public int quantityRectangleConnection;
 	public boolean connectionOnlyRight;
@@ -81,7 +81,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 			}
 		}
 		mindMapNode.remove(mindMapNodeDeleted); // update collections MindMapNode
-		refreshVisual();
+		refreshVisual(); // for update all nodes in collections
 	}
 
 	@Override
@@ -127,6 +127,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 
 		for (MindMapNode mindMapNode : MindMapNodePart.mindMapNode) {
 			if (mindMapNode.isStarted() && mindMapNode.isFinished()) {
+				// if the node is in the chain
 				mindMapNode.setColor(greenNode);
 				for (MindMapNodeVisual mindMapNodeVisual : MindMapNodePart.mindMapNodeVisual) {
 					if (mindMapNodeVisual.getTitleText().getText().toString().equals(mindMapNode.getTitle())) {
@@ -134,6 +135,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 					}
 				}
 			} else {
+				// if the node is not in the chain
 				mindMapNode.setColor(redNode);
 				for (MindMapNodeVisual mindMapNodeVisual : MindMapNodePart.mindMapNodeVisual) {
 					if (mindMapNodeVisual.getTitleText().getText().toString().equals(mindMapNode.getTitle())) {
@@ -143,7 +145,9 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 			}
 		}
 
+		// added each node in collection for update each node
 		MindMapNodePart.mindMapNode.add(node);
+		// added each node visual in collection for update each node visual
 		MindMapNodePart.mindMapNodeVisual.add(visual);
 
 		// use the IResizableContentPart API to resize the visual

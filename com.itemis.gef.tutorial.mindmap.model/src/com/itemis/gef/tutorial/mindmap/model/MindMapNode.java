@@ -97,23 +97,27 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	}
 
 	public void addTitleIncomingConnection(String titlesIncomingConnection) {
+		// add one title connection
 		this.titlesIncomingConnection.add(titlesIncomingConnection);
 	}
 
 	public void addTitleOutgoingConnection(String titlesOutgoingConnection) {
+		// add one title connection
 		this.titlesOutgoingConnection.add(titlesOutgoingConnection);
 	}
 
 	public void addTitlesIncomingConnection(Set<String> titlesIncomingConnection) {
+		// add collection title connection
 		this.titlesIncomingConnection.addAll(titlesIncomingConnection);
 	}
 
 	public void addTitlesOutgoingConnection(Set<String> titlesOutgoingConnection) {
+		// add collection title connection
 		this.titlesOutgoingConnection.addAll(titlesOutgoingConnection);
 	}
 
 	public void deleteTitleAtIncomingConnection() {
-		// delete START String
+		// deleting a string START in a collection
 		for (String mindMapConnectionString : titlesIncomingConnection) {
 			if (mindMapConnectionString.equals("START")) {
 				titlesIncomingConnection.remove("START");
@@ -122,7 +126,7 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	}
 
 	public void deleteTitleAtOutgoingConnection() {
-		// delete FINISH String
+		// deleting a string FINISH in a collection
 		for (String mindMapConnectionString : titlesOutgoingConnection) {
 			if (mindMapConnectionString.equals("FINISH")) {
 				titlesOutgoingConnection.remove("FINISH");
