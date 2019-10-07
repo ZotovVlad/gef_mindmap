@@ -40,31 +40,47 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 	public boolean connectionOnlyRight;
 
 	public void deleteColorContent() {
-		Set<String> titlesIncomingConnectionNode = null;
-		Set<String> titlesOutgoingConnectionNode = null;
+		MindMapNode mindMapNodeDeleted = null;
 		for (MindMapNode mindMapNode2 : MindMapNodePart.mindMapNode) {
 			if (this.getVisual().getTitleText().getText().toString().equals(mindMapNode2.getTitle())) {
-				MindMapNode mindMapNodeNext = mindMapNode2.getIncomingConnections().get(0).getSource();
-				;
-				while (true) {
-					if (mindMapNodeNext.getTitle().equals("START")) {
-						break;
-					} else {
-						mindMapNodeNext.deleteTitleAtOutgoingConnection();
-						mindMapNodeNext = mindMapNodeNext.getIncomingConnections().get(0).getSource();
+
+				mindMapNodeDeleted = mindMapNode2;
+
+				if (!(mindMapNode2.getIncomingConnections().isEmpty())) {
+					MindMapNode mindMapNodeNext = mindMapNode2.getIncomingConnections().get(0).getSource();
+					// reset all nodes until node START
+					while (true) {
+						if (mindMapNodeNext.getTitle().equals("START")
+								|| mindMapNodeNext.getIncomingConnections().isEmpty()) {
+							break;
+						} else {
+							mindMapNodeNext.deleteTitleAtOutgoingConnection();
+							if (!(mindMapNodeNext.getIncomingConnections().isEmpty())) {
+								mindMapNodeNext = mindMapNodeNext.getIncomingConnections().get(0).getSource();
+							}
+						}
 					}
 				}
-				mindMapNodeNext = mindMapNode2.getOutgoingConnections().get(0).getTarget();
-				while (true) {
-					if (mindMapNodeNext.getTitle().equals("FINISH")) {
-						break;
-					} else {
-						mindMapNodeNext.deleteTitleAtIncomingConnection();
-						mindMapNodeNext = mindMapNodeNext.getOutgoingConnections().get(0).getTarget();
+
+				if (!(mindMapNode2.getOutgoingConnections().isEmpty())) {
+					MindMapNode mindMapNodeNext = mindMapNode2.getOutgoingConnections().get(0).getTarget();
+					// reset all nodes until node FINISH
+					while (true) {
+						if (mindMapNodeNext.getTitle().equals("FINISH")
+								|| mindMapNodeNext.getOutgoingConnections().isEmpty()) {
+							break;
+						} else {
+							mindMapNodeNext.deleteTitleAtIncomingConnection();
+							if (!(mindMapNodeNext.getOutgoingConnections().isEmpty())) {
+								mindMapNodeNext = mindMapNodeNext.getOutgoingConnections().get(0).getTarget();
+							}
+						}
 					}
 				}
+
 			}
 		}
+		mindMapNode.remove(mindMapNodeDeleted); // update collections MindMapNode
 		refreshVisual();
 	}
 
@@ -135,6 +151,8 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 
 		// use the ITransformableContentPart API to position the visual
 		setVisualTransform(getContentTransform());
+
+		System.out.println(MindMapNodePart.mindMapNode.size());
 	}
 
 	@Override
