@@ -44,13 +44,25 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		Set<String> titlesOutgoingConnectionNode = null;
 		for (MindMapNode mindMapNode2 : MindMapNodePart.mindMapNode) {
 			if (this.getVisual().getTitleText().getText().toString().equals(mindMapNode2.getTitle())) {
-				MindMapNode mindMapNodeNext = null;
+				MindMapNode mindMapNodeNext = mindMapNode2.getIncomingConnections().get(0).getSource();
+				;
 				while (true) {
-					mindMapNode2.getIncomingConnections().get(0).getSource().deleteTitleAtOutgoingConnection();
+					if (mindMapNodeNext.getTitle().equals("START")) {
+						break;
+					} else {
+						mindMapNodeNext.deleteTitleAtOutgoingConnection();
+						mindMapNodeNext = mindMapNodeNext.getIncomingConnections().get(0).getSource();
+					}
 				}
-//				while (true) {
-//					mindMapNode2.getOutgoingConnections().get(0).getTarget().deleteTitleAtIncomingConnection();
-//				}
+				mindMapNodeNext = mindMapNode2.getOutgoingConnections().get(0).getTarget();
+				while (true) {
+					if (mindMapNodeNext.getTitle().equals("FINISH")) {
+						break;
+					} else {
+						mindMapNodeNext.deleteTitleAtIncomingConnection();
+						mindMapNodeNext = mindMapNodeNext.getOutgoingConnections().get(0).getTarget();
+					}
+				}
 			}
 		}
 		refreshVisual();
