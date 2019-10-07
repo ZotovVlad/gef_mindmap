@@ -40,13 +40,19 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 	public boolean connectionOnlyRight;
 
 	public void deleteColorContent() {
-		System.out.println(this.getVisual().getTitleText().getText().toString());
-		// MindMapNodePart.mindMapNodeVisual =
-		// mindMapNodeVisual.stream().distinct().collect(Collectors.toList());
-
-		// MindMapNodePart.mindMapNode =
-		// mindMapNode.stream().distinct().collect(Collectors.toList());
-		// doRefreshVisual(mindMapNodeVisual.get(0));
+		Set<String> titlesIncomingConnectionNode = null;
+		Set<String> titlesOutgoingConnectionNode = null;
+		for (MindMapNode mindMapNode2 : MindMapNodePart.mindMapNode) {
+			if (this.getVisual().getTitleText().getText().toString().equals(mindMapNode2.getTitle())) {
+				MindMapNode mindMapNodeNext = null;
+				while (true) {
+					mindMapNode2.getIncomingConnections().get(0).getSource().deleteTitleAtOutgoingConnection();
+				}
+//				while (true) {
+//					mindMapNode2.getOutgoingConnections().get(0).getTarget().deleteTitleAtIncomingConnection();
+//				}
+			}
+		}
 		refreshVisual();
 	}
 
@@ -100,13 +106,12 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 					}
 				}
 			} else {
-//				mindMapNode.setColor(mindMapNode.getColor());
-//				for (MindMapNodeVisual mindMapNodeVisual : MindMapNodePart.mindMapNodeVisual) {
-//					if (mindMapNodeVisual.getTitleText().getText().toString().equals(mindMapNode.getTitle())) {
-//						mindMapNodeVisual.setColor(greenNode);
-//					}
-//				}
-//				visual.setColor(mindMapNode.getColor());
+				mindMapNode.setColor(redNode);
+				for (MindMapNodeVisual mindMapNodeVisual : MindMapNodePart.mindMapNodeVisual) {
+					if (mindMapNodeVisual.getTitleText().getText().toString().equals(mindMapNode.getTitle())) {
+						mindMapNodeVisual.setColor(redNode);
+					}
+				}
 			}
 		}
 

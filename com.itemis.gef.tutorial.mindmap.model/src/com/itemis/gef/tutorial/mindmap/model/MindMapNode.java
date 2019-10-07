@@ -112,6 +112,24 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		this.titlesOutgoingConnection.addAll(titlesOutgoingConnection);
 	}
 
+	public void deleteTitleAtIncomingConnection() {
+		// delete START String
+		for (String mindMapConnectionString : titlesIncomingConnection) {
+			if (mindMapConnectionString.equals("START")) {
+				titlesIncomingConnection.remove("START");
+			}
+		}
+	}
+
+	public void deleteTitleAtOutgoingConnection() {
+		// delete FINISH String
+		for (String mindMapConnectionString : titlesOutgoingConnection) {
+			if (mindMapConnectionString.equals("FINISH")) {
+				titlesOutgoingConnection.remove("FINISH");
+			}
+		}
+	}
+
 	public Rectangle getBounds() {
 		return bounds;
 	}
