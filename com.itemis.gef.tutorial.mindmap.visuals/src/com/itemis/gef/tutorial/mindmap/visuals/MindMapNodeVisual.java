@@ -67,16 +67,6 @@ public class MindMapNodeVisual extends Region {
 		descriptionText = new Text();
 		descriptionText.setTextOrigin(VPos.TOP);
 
-//		try {
-//			descriptionImage = new Image(new FileInputStream(urlImage));
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-
-		// descriptionImage = new Image(urlImage);
-		// descriptionImage
-
 		// use TextFlow to enable wrapping of the description text within the
 		// label bounds
 		descriptionFlow = new TextFlow(descriptionText);

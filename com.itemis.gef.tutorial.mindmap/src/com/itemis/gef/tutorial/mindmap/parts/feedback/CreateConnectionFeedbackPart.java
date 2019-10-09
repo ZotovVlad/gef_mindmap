@@ -51,7 +51,6 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Connectio
 					getVisual().addControlPoint(index++,
 							FX2Geometry.toPoint(getVisual().sceneToLocal(event.getSceneX(), event.getSceneY())));
 					points.add(v);
-
 				}
 				connectionIsNotStart = true;
 			}

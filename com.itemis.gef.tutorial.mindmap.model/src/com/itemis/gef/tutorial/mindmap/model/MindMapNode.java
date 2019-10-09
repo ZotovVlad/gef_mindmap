@@ -121,6 +121,7 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		for (String mindMapConnectionString : titlesIncomingConnection) {
 			if (mindMapConnectionString.equals("START")) {
 				titlesIncomingConnection.remove("START");
+				break;
 			}
 		}
 	}
@@ -130,6 +131,7 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		for (String mindMapConnectionString : titlesOutgoingConnection) {
 			if (mindMapConnectionString.equals("FINISH")) {
 				titlesOutgoingConnection.remove("FINISH");
+				break;
 			}
 		}
 	}
