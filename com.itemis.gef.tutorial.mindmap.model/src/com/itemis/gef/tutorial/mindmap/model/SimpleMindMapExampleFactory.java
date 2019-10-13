@@ -33,11 +33,11 @@ public class SimpleMindMapExampleFactory {
 			child.get(i).setBounds(new Rectangle(300 + (i * 300), 250, WIDTH, HEIGHT));
 			mindMap.addChildElement(child.get(i));
 
-			if (i != 0) {
-				MindMapConnection conn = new MindMapConnection();
-				conn.connect(child.get(i - 1), child.get(i), null);
-				mindMap.addChildElement(conn);
-			}
+//			if (i != 0) {
+//				MindMapConnection conn = new MindMapConnection();
+//				conn.connect(child.get(i - 1), child.get(i), null);
+//				mindMap.addChildElement(conn);
+//			}
 		}
 
 		MindMapNode child2_1 = new MindMapNode();
@@ -52,6 +52,10 @@ public class SimpleMindMapExampleFactory {
 			e.printStackTrace();
 		}
 		mindMap.addChildElement(child2_1);
+
+//		MindMapConnection conn = new MindMapConnection();
+//		conn.connect(child2_1, child2_1, null);
+//		mindMap.addChildElement(conn);
 
 		MindMapNode child2_2 = new MindMapNode();
 		child2_2.setTitle("Association #4");

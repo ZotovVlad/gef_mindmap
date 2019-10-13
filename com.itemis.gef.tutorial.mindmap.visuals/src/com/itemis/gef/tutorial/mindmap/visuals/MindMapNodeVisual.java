@@ -95,6 +95,7 @@ public class MindMapNodeVisual extends Region {
 				switch (i) {
 				case 0:
 					rec = new Rectangle(points.get(i).x, points.get(i).y, SIZERECTANGLEBOX, SIZERECTANGLEBOX);
+					// rec.setOnMouseClicked(value);
 					break;
 				case 1:
 					rec = new Rectangle(points.get(i).x - SIZERECTANGLEBOX, points.get(i).y, SIZERECTANGLEBOX,

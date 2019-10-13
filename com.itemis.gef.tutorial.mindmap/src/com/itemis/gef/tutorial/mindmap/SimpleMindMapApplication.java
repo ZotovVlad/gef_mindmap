@@ -187,7 +187,6 @@ public class SimpleMindMapApplication extends Application {
 		SimpleMindMapExampleFactory fac = new SimpleMindMapExampleFactory();
 
 		SimpleMindMap mindMap = fac.createComplexExample();
-
 		IViewer viewer = getContentViewer();
 		viewer.getContents().setAll(mindMap);
 

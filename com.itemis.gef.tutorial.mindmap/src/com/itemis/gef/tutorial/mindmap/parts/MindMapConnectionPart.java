@@ -35,6 +35,9 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> {
 		// find a anchor provider, which must be registered in the module
 		// be aware to use the right interfaces (Provider is used a lot)
 		@SuppressWarnings("serial")
+		MindMapNodePart mg = (MindMapNodePart) anchorage;
+
+		// mg.get
 		Provider<? extends IAnchor> adapter = anchorage
 				.getAdapter(AdapterKey.get(new TypeToken<Provider<? extends IAnchor>>() {
 				}));
@@ -54,6 +57,7 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> {
 
 	@Override
 	protected Connection doCreateVisual() {
+		// Anchor anchor = adapter.get();
 		return new MindMapConnectionVisual(CreateConnectionFeedbackPart.points);
 	}
 

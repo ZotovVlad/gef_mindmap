@@ -30,8 +30,8 @@ import javafx.scene.transform.Translate;
 public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> implements
 		ITransformableContentPart<MindMapNodeVisual>, IResizableContentPart<MindMapNodeVisual>, PropertyChangeListener {
 
-	private static Set<MindMapNode> mindMapNode = new HashSet<>();
-	private static Set<MindMapNodeVisual> mindMapNodeVisual = new HashSet<>();
+	public static Set<MindMapNode> mindMapNode = new HashSet<>();
+	public static Set<MindMapNodeVisual> mindMapNodeVisual = new HashSet<>();
 
 	private static Color greenNode = Color.GREENYELLOW; // the color of the node if it is in a chain
 	private static Color redNode = Color.PALEVIOLETRED; // the color of the node if it is not in a chain
@@ -156,7 +156,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		// use the ITransformableContentPart API to position the visual
 		setVisualTransform(getContentTransform());
 
-		System.out.println(MindMapNodePart.mindMapNode.size());
+		// System.out.println(MindMapNodePart.mindMapNode.size());
 	}
 
 	@Override

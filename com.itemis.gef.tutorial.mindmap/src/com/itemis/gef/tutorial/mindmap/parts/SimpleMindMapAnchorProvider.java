@@ -31,6 +31,7 @@ public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPa
 	public static boolean flagPrimaryHandle;
 	private StaticAnchor staticAnchor;
 	private Point point = new Point();
+	private boolean flag = false;
 
 	@Override
 	public ReadOnlyObjectProperty<IVisualPart<? extends Node>> adaptableProperty() {
@@ -40,47 +41,22 @@ public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPa
 	@Override
 	public IAnchor get() {
 		// if (staticAnchor == null) {
-		// get the visual from the host (MindMapNodePart)
-		Node anchorage = getAdaptable().getVisual();
-		// create a new anchor instance2
-
-//		if (flagDefaultAnchor) {
-//			staticAnchor = new StaticAnchor(anchorage, ((MindMapNodeVisual) anchorage).getPoints().get(0));
-//		} else {
-//			Optional<String> result = null;
-//			do {
-//				TextInputDialog dialog = new TextInputDialog();
-//				dialog.setTitle("Укажите номер точки");
-//				dialog.setGraphic(null);
-//				dialog.setHeaderText("Укажите номер точки(от 1 до 8):");
-//
-//				result = dialog.showAndWait();
-//			} while ((Integer.parseInt(result.get()) > 8) || (Integer.parseInt(result.get()) < 1));
-//
-//			staticAnchor = new StaticAnchor(anchorage,
-//					((MindMapNodeVisual) anchorage).getPoints().get(Integer.parseInt(result.get()) - 1));
-//
-//		}
-		List<Rectangle> pointBox = ((MindMapNodeVisual) anchorage).getPointsBox();
+		MindMapNodeVisual anchorage = (MindMapNodeVisual) getAdaptable().getVisual();
+		List<Rectangle> pointBox = anchorage.getPointsBox();
 		for (Rectangle rectangle : pointBox) {
-//			rectangle.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//
-//				@Override
-//				public void handle(MouseEvent event) {
-//					// TODO Auto-generated method stub
-//					point = new Point();
-//					point.setLocation(event.getX(), event.getY());
-//					// point.setLocation(pointBox.get(5).getX() + 10 / 2, pointBox.get(5).getY() +
-//					// 10 / 2);
-//				}
-//			});
 			rectangle.setOnMouseEntered((event) -> {
-
-				point = new Point();
 				point.setLocation(event.getX(), event.getY());
-
+				flag = true;
 			});
-
+		}
+		if (!flag) {
+			if (anchorage.getTitleText().getText().toString().equals("START")) {
+				point.setLocation(170, 170 / 2);
+			} else if (anchorage.getTitleText().getText().toString().equals("FINISH")) {
+				point.setLocation(0, 170 / 2);
+			} else {
+				point.setLocation(0, 170 / 2);
+			}
 		}
 
 		staticAnchor = new StaticAnchor(anchorage, point);
