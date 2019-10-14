@@ -54,12 +54,10 @@ public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPa
 				point.setLocation(170, 170 / 2);
 			} else if (anchorage.getTitleText().getText().toString().equals("FINISH")) {
 				point.setLocation(0, 170 / 2);
-			} else {
-				point.setLocation(0, 170 / 2);
 			}
 		}
 
-		staticAnchor = new StaticAnchor(anchorage, point);
+		staticAnchor = new StaticAnchor(anchorage, point);// anchorage.pointConnection);
 
 		// }
 		return staticAnchor;

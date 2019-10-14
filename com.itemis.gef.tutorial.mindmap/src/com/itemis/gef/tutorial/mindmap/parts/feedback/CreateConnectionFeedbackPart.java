@@ -114,8 +114,7 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Connectio
 
 	@Override
 	protected void doRefreshVisual(Connection visual) {
-		// TODO Auto-generated method stub
-		System.out.println();
+		// TODO Auto-generated method stub ;
 	}
 
 	@Override

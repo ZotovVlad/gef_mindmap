@@ -19,7 +19,7 @@ public class MindMapConnection extends AbstractMindMapItem {
 	private ArrayList<Point> connectionPoints;
 
 	public MindMapConnection() {
-		System.out.println();
+
 	}
 
 	public void connect(MindMapNode source, MindMapNode target, ArrayList<Point> connectionPoints) {

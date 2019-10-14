@@ -41,6 +41,7 @@ public class MindMapNodeVisual extends Region {
 	private List<Point> points = new ArrayList<>();
 	private List<Rectangle> pointsBox = new ArrayList<>();
 	private Color color;
+	public Point pointConnection = new Point();
 
 	public MindMapNodeVisual(int quantityRectangleConnection, boolean connectionOnlyRight) {
 
@@ -95,27 +96,44 @@ public class MindMapNodeVisual extends Region {
 				switch (i) {
 				case 0:
 					rec = new Rectangle(points.get(i).x, points.get(i).y, SIZERECTANGLEBOX, SIZERECTANGLEBOX);
-					// rec.setOnMouseClicked(value);
+//					rec.setOnMouseEntered((event) -> {
+//						pointConnection.setLocation(event.getX(), event.getY());
+//					});
 					break;
 				case 1:
 					rec = new Rectangle(points.get(i).x - SIZERECTANGLEBOX, points.get(i).y, SIZERECTANGLEBOX,
 							SIZERECTANGLEBOX);
+//					rec.setOnMouseEntered((event) -> {
+//						pointConnection.setLocation(event.getX(), event.getY());
+//					});
 					break;
 				case 2:
 					rec = new Rectangle(points.get(i).x - SIZERECTANGLEBOX, points.get(i).y - SIZERECTANGLEBOX / 2,
 							SIZERECTANGLEBOX, SIZERECTANGLEBOX);
+//					rec.setOnMouseEntered((event) -> {
+//						pointConnection.setLocation(event.getX(), event.getY());
+//					});
 					break;
 				case 3:
 					rec = new Rectangle(points.get(i).x - SIZERECTANGLEBOX, points.get(i).y - SIZERECTANGLEBOX,
 							SIZERECTANGLEBOX, SIZERECTANGLEBOX);
+//					rec.setOnMouseEntered((event) -> {
+//						pointConnection.setLocation(event.getX(), event.getY());
+//					});
 					break;
 				case 4:
 					rec = new Rectangle(points.get(i).x, points.get(i).y - SIZERECTANGLEBOX, SIZERECTANGLEBOX,
 							SIZERECTANGLEBOX);
+//					rec.setOnMouseEntered((event) -> {
+//						pointConnection.setLocation(event.getX(), event.getY());
+//					});
 					break;
 				case 5:
 					rec = new Rectangle(points.get(i).x, points.get(i).y - SIZERECTANGLEBOX / 2, SIZERECTANGLEBOX,
 							SIZERECTANGLEBOX);
+//					rec.setOnMouseEntered((event) -> {
+//						pointConnection.setLocation(event.getX(), event.getY());
+//					});
 					break;
 				default:
 					break;
@@ -127,9 +145,15 @@ public class MindMapNodeVisual extends Region {
 			if (connectionOnlyRight) {
 				rec = new Rectangle(points.get(2).x - SIZERECTANGLEBOX, points.get(2).y - SIZERECTANGLEBOX,
 						SIZERECTANGLEBOX, SIZERECTANGLEBOX);
+//				rec.setOnMouseEntered((event) -> {
+//					pointConnection.setLocation(event.getX(), event.getY());
+//				});
 				pointsBox.add(rec);
 			} else {
 				rec = new Rectangle(points.get(5).x, points.get(5).y, SIZERECTANGLEBOX, SIZERECTANGLEBOX);
+//				rec.setOnMouseEntered((event) -> {
+//					pointConnection.setLocation(event.getX(), event.getY());
+//				});
 				pointsBox.add(rec);
 			}
 			getChildren().addAll(pointsBox);
