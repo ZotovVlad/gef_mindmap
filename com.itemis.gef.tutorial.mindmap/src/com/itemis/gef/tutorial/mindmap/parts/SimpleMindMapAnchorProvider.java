@@ -24,12 +24,8 @@ import javafx.scene.Node;
 public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPart<? extends Node>>
 		implements Provider<IAnchor> {
 
-	public static boolean flagDefaultAnchor;
-	public static boolean flagPrimaryHandle;
+	private static final int SIZERECTANGLEBOX = 10;
 	private StaticAnchor staticAnchor;
-	private Point point = new Point();
-	private boolean flag = false;
-	MindMapNodeVisual anchorage;
 
 	@Override
 	public ReadOnlyObjectProperty<IVisualPart<? extends Node>> adaptableProperty() {
@@ -38,17 +34,23 @@ public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPa
 
 	@Override
 	public IAnchor get() {
-		// if (staticAnchor == null) {
+		// get current MindMapNodeVisual
 		MindMapNodeVisual mindMapNodeVisual = (MindMapNodeVisual) getAdaptable().getVisual();
+
+		// default node visual "settings"
 		if (mindMapNodeVisual.getTitleText().getText().toString().equals("START")) {
 			mindMapNodeVisual.pointConnection.add(new Point(170, 170 / 2));
 		} else if (mindMapNodeVisual.getTitleText().getText().toString().equals("FINISH")) {
 			mindMapNodeVisual.pointConnection.add(new Point(0, 170 / 2));
 		}
+
+		// return staticAnchor
 		if (mindMapNodeVisual.pointConnection.size() == 0) {
+			// return default-staticAnchor
 			staticAnchor = new StaticAnchor(mindMapNodeVisual, new Point(5, 5));
 			return staticAnchor;
 		} else {
+			// return point-staticAnchor
 			staticAnchor = new StaticAnchor(mindMapNodeVisual,
 					mindMapNodeVisual.pointConnection.get(mindMapNodeVisual.pointConnection.size() - 1));
 			return staticAnchor;

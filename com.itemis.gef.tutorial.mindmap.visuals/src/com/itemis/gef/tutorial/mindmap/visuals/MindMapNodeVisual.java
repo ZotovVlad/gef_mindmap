@@ -143,14 +143,15 @@ public class MindMapNodeVisual extends Region {
 			getChildren().addAll(pointsBox);
 		} else if (quantityRectangleConnection == 1) {
 			if (connectionOnlyRight) {
-				rec = new Rectangle(points.get(2).x - SIZERECTANGLEBOX, points.get(2).y - SIZERECTANGLEBOX,
+				rec = new Rectangle(points.get(2).x - SIZERECTANGLEBOX, points.get(2).y - SIZERECTANGLEBOX / 2,
 						SIZERECTANGLEBOX, SIZERECTANGLEBOX);
 				rec.setOnMouseEntered((event) -> {
 					pointConnection.add(new Point(event.getX(), event.getY()));
 				});
 				pointsBox.add(rec);
 			} else {
-				rec = new Rectangle(points.get(5).x, points.get(5).y, SIZERECTANGLEBOX, SIZERECTANGLEBOX);
+				rec = new Rectangle(points.get(5).x, points.get(5).y - SIZERECTANGLEBOX / 2, SIZERECTANGLEBOX,
+						SIZERECTANGLEBOX);
 				rec.setOnMouseEntered((event) -> {
 					pointConnection.add(new Point(event.getX(), event.getY()));
 				});
