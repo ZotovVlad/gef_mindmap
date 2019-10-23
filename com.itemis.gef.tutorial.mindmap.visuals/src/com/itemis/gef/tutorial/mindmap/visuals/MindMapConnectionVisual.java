@@ -1,6 +1,6 @@
 package com.itemis.gef.tutorial.mindmap.visuals;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.eclipse.gef.fx.anchors.IAnchor;
 import org.eclipse.gef.fx.anchors.StaticAnchor;
@@ -24,7 +24,7 @@ public class MindMapConnectionVisual extends Connection {
 		setEndDecoration(endDecoration);
 	}
 
-	public MindMapConnectionVisual(List<Point> wayPoints) {
+	public MindMapConnectionVisual(ArrayList<Point> wayPoints) {
 		ArrowHead endDecoration = new ArrowHead();
 		if (!wayPoints.isEmpty()) {
 			for (int i = 0; i < wayPoints.size(); i++) {

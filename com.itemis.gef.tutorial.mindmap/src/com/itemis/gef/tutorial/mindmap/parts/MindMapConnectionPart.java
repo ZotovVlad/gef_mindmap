@@ -1,11 +1,13 @@
 package com.itemis.gef.tutorial.mindmap.parts;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.gef.common.adapt.AdapterKey;
 import org.eclipse.gef.fx.anchors.IAnchor;
 import org.eclipse.gef.fx.nodes.Connection;
+import org.eclipse.gef.geometry.planar.Point;
 import org.eclipse.gef.mvc.fx.parts.AbstractContentPart;
 import org.eclipse.gef.mvc.fx.parts.IVisualPart;
 
@@ -29,6 +31,8 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> {
 
 	private static final String START_ROLE = "START";
 	private static final String END_ROLE = "END";
+
+	ArrayList<Point> points_t = new ArrayList<>();
 
 	@Override
 	protected void doAttachToAnchorageVisual(IVisualPart<? extends Node> anchorage, String role) {
@@ -55,7 +59,12 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> {
 	@Override
 	protected Connection doCreateVisual() {
 		// Anchor anchor = adapter.get();
-		return new MindMapConnectionVisual(CreateConnectionFeedbackPart.points);
+		for (int i = 0; i < CreateConnectionFeedbackPart.points.size(); i++) {
+			points_t.add(CreateConnectionFeedbackPart.points.get(i));
+		}
+		CreateConnectionFeedbackPart.points.clear();
+		return new MindMapConnectionVisual(points_t);
+
 	}
 
 	@Override
