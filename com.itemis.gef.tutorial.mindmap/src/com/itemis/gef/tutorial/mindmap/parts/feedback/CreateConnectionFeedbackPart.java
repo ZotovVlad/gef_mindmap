@@ -6,6 +6,7 @@ import org.eclipse.gef.common.adapt.AdapterKey;
 import org.eclipse.gef.fx.anchors.IAnchor;
 import org.eclipse.gef.fx.anchors.StaticAnchor;
 import org.eclipse.gef.fx.nodes.Connection;
+import org.eclipse.gef.fx.nodes.OrthogonalRouter;
 import org.eclipse.gef.geometry.convert.fx.FX2Geometry;
 import org.eclipse.gef.geometry.convert.fx.Geometry2FX;
 import org.eclipse.gef.geometry.planar.Point;
@@ -81,11 +82,13 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Connectio
 		}
 		// set the start anchor
 		IAnchor anchor = adapter.get();
+		getVisual().setRouter(new OrthogonalRouter());
 		getVisual().setStartAnchor(anchor);
 
 		MousePositionAnchor endAnchor = new MousePositionAnchor(
 				FX2Geometry.toPoint(getVisual().localToScene(Geometry2FX.toFXPoint(getVisual().getStartPoint()))));
 		endAnchor.init();
+		getVisual().setRouter(new OrthogonalRouter());
 		getVisual().setEndAnchor(endAnchor);
 	}
 

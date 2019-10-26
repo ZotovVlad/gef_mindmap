@@ -1,6 +1,7 @@
 package com.itemis.gef.tutorial.mindmap.parts;
 
 import org.eclipse.gef.common.adapt.IAdaptable;
+import org.eclipse.gef.fx.anchors.DynamicAnchor;
 import org.eclipse.gef.fx.anchors.IAnchor;
 import org.eclipse.gef.fx.anchors.StaticAnchor;
 import org.eclipse.gef.geometry.planar.Point;
@@ -25,6 +26,7 @@ public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPa
 		implements Provider<IAnchor> {
 
 	private static final int SIZERECTANGLEBOX = 10;
+	private DynamicAnchor dynamicAnchor;
 	private StaticAnchor staticAnchor;
 
 	@Override
@@ -48,6 +50,7 @@ public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPa
 		if (mindMapNodeVisual.pointConnection.size() == 0) {
 			// return default-staticAnchor
 			staticAnchor = new StaticAnchor(mindMapNodeVisual, new Point(5, 5));
+			// OrthogonalProjectionStrategy());
 			return staticAnchor;
 		} else {
 			// return point-staticAnchor
@@ -55,5 +58,7 @@ public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPa
 					mindMapNodeVisual.pointConnection.get(mindMapNodeVisual.pointConnection.size() - 1));
 			return staticAnchor;
 		}
+//		return new DynamicAnchor(mindMapNodeVisual);// , new
+		// OrthogonalProjectionStrategy());
 	}
 }

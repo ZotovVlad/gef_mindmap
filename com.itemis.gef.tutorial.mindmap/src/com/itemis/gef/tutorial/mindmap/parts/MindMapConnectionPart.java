@@ -7,6 +7,7 @@ import java.util.List;
 import org.eclipse.gef.common.adapt.AdapterKey;
 import org.eclipse.gef.fx.anchors.IAnchor;
 import org.eclipse.gef.fx.nodes.Connection;
+import org.eclipse.gef.fx.nodes.OrthogonalRouter;
 import org.eclipse.gef.geometry.planar.Point;
 import org.eclipse.gef.mvc.fx.parts.AbstractContentPart;
 import org.eclipse.gef.mvc.fx.parts.IVisualPart;
@@ -48,8 +49,10 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> {
 		IAnchor anchor = adapter.get();
 
 		if (role.equals(START_ROLE)) {
-			getVisual().setStartAnchor(anchor);
+			getVisual().setRouter(new OrthogonalRouter());
+			getVisual().setStartAnchor(anchor);// , new OrthogonalProjectionStrategy());
 		} else if (role.equals(END_ROLE)) {
+			getVisual().setRouter(new OrthogonalRouter());
 			getVisual().setEndAnchor(anchor);
 		} else {
 			throw new IllegalArgumentException("Invalid role: " + role);
