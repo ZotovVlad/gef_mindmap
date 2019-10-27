@@ -45,7 +45,6 @@ public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPa
 		} else if (mindMapNodeVisual.getTitleText().getText().toString().equals("FINISH")) {
 			mindMapNodeVisual.pointConnection.add(new Point(0, 170 / 2));
 		}
-
 		// return staticAnchor
 		if (mindMapNodeVisual.pointConnection.size() == 0) {
 			// return default-staticAnchor
@@ -58,7 +57,6 @@ public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPa
 					mindMapNodeVisual.pointConnection.get(mindMapNodeVisual.pointConnection.size() - 1));
 			return staticAnchor;
 		}
-//		return new DynamicAnchor(mindMapNodeVisual);// , new
-		// OrthogonalProjectionStrategy());
+//		return new DynamicAnchor(mindMapNodeVisual, new OrthogonalProjectionStrategy());
 	}
 }

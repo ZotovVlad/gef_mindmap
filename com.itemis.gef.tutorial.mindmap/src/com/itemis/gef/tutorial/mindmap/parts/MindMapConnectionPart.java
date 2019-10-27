@@ -47,12 +47,10 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> {
 			throw new IllegalStateException("No adapter  found for <" + anchorage.getClass() + "> found.");
 		}
 		IAnchor anchor = adapter.get();
-
+		getVisual().setRouter(new OrthogonalRouter());
 		if (role.equals(START_ROLE)) {
-			getVisual().setRouter(new OrthogonalRouter());
 			getVisual().setStartAnchor(anchor);// , new OrthogonalProjectionStrategy());
 		} else if (role.equals(END_ROLE)) {
-			getVisual().setRouter(new OrthogonalRouter());
 			getVisual().setEndAnchor(anchor);
 		} else {
 			throw new IllegalArgumentException("Invalid role: " + role);
@@ -66,7 +64,9 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> {
 			points_t.add(CreateConnectionFeedbackPart.points.get(i));
 		}
 		CreateConnectionFeedbackPart.points.clear();
-		return new MindMapConnectionVisual(points_t);
+		MindMapConnectionVisual mmcv = new MindMapConnectionVisual(points_t);
+		//mmcv.setRouter(new OrthogonalRouter());
+		return mmcv;
 
 	}
 

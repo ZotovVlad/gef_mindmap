@@ -6,7 +6,6 @@ import org.eclipse.gef.common.adapt.AdapterKey;
 import org.eclipse.gef.fx.anchors.IAnchor;
 import org.eclipse.gef.fx.anchors.StaticAnchor;
 import org.eclipse.gef.fx.nodes.Connection;
-import org.eclipse.gef.fx.nodes.OrthogonalRouter;
 import org.eclipse.gef.geometry.convert.fx.FX2Geometry;
 import org.eclipse.gef.geometry.convert.fx.Geometry2FX;
 import org.eclipse.gef.geometry.planar.Point;
@@ -82,14 +81,16 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Connectio
 		}
 		// set the start anchor
 		IAnchor anchor = adapter.get();
-		getVisual().setRouter(new OrthogonalRouter());
-		getVisual().setStartAnchor(anchor);
 
+		// getVisual().setRouter(new OrthogonalRouter());
+		getVisual().setStartAnchor(anchor);
 		MousePositionAnchor endAnchor = new MousePositionAnchor(
 				FX2Geometry.toPoint(getVisual().localToScene(Geometry2FX.toFXPoint(getVisual().getStartPoint()))));
+		// getVisual().setRouter(new OrthogonalRouter());
 		endAnchor.init();
-		getVisual().setRouter(new OrthogonalRouter());
+		// getVisual().setRouter(new OrthogonalRouter());
 		getVisual().setEndAnchor(endAnchor);
+
 	}
 
 //	@Override
@@ -99,7 +100,9 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Connectio
 
 	@Override
 	protected Connection doCreateVisual() {
-		return new MindMapConnectionVisual(points);
+		MindMapConnectionVisual mmcv = new MindMapConnectionVisual(points);
+		// mmcv.setRouter(new OrthogonalRouter());
+		return mmcv;
 //		return null;
 	}
 
@@ -109,8 +112,10 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Connectio
 
 	@Override
 	protected void doDetachFromAnchorageVisual(IVisualPart<? extends Node> anchorage, String role) {
+		// getVisual().setRouter(new OrthogonalRouter());
 		getVisual().setStartPoint(getVisual().getStartPoint());
 		((MousePositionAnchor) getVisual().getEndAnchor()).dispose();
+		// getVisual().setRouter(new OrthogonalRouter());
 		getVisual().setEndPoint(getVisual().getEndPoint());
 
 	}
