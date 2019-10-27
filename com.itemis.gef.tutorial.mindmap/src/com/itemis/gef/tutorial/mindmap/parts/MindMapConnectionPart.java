@@ -65,7 +65,8 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> {
 		}
 		CreateConnectionFeedbackPart.points.clear();
 		MindMapConnectionVisual mmcv = new MindMapConnectionVisual(points_t);
-		//mmcv.setRouter(new OrthogonalRouter());
+		// mmcv.setRouter(new OrthogonalRouter());
+
 		return mmcv;
 
 	}
