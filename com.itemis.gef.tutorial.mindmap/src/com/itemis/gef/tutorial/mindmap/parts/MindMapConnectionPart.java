@@ -49,7 +49,8 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> {
 		IAnchor anchor = adapter.get();
 
 		if (!SimpleMindMapAnchorProvider.isStaticAnchor) {
-			getVisual().setRouter(new OrthogonalRouter());// !!!
+			getVisual().setRouter(new OrthogonalRouter());
+			// getVisual().setInterpolator(new PolyBezierInterpolator());
 		}
 		if (role.equals(START_ROLE)) {
 			getVisual().setStartAnchor(anchor);// , new OrthogonalProjectionStrategy());

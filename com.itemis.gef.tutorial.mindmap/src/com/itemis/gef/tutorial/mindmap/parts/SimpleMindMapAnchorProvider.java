@@ -65,6 +65,7 @@ public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPa
 		} else {
 			// return staticAnchor
 			dynamicAnchor = new DynamicAnchor(mindMapNodeVisual, new ProjectionStrategy());
+			// , new OrthogonalProjectionStrategy());
 			return dynamicAnchor;
 		}
 	}
