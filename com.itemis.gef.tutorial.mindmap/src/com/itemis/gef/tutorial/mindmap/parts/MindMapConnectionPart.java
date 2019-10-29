@@ -47,7 +47,10 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> {
 			throw new IllegalStateException("No adapter  found for <" + anchorage.getClass() + "> found.");
 		}
 		IAnchor anchor = adapter.get();
-		getVisual().setRouter(new OrthogonalRouter());
+
+		if (!SimpleMindMapAnchorProvider.isStaticAnchor) {
+			getVisual().setRouter(new OrthogonalRouter());// !!!
+		}
 		if (role.equals(START_ROLE)) {
 			getVisual().setStartAnchor(anchor);// , new OrthogonalProjectionStrategy());
 		} else if (role.equals(END_ROLE)) {
