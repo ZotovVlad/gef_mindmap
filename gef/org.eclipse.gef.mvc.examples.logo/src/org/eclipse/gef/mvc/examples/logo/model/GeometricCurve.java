@@ -62,7 +62,7 @@ public class GeometricCurve extends AbstractGeometricElement<ICurve> {
 	private final ObjectProperty<Decoration> targetDecorationProperty = new SimpleObjectProperty<>(this,
 			TARGET_DECORATION_PROPERTY, Decoration.NONE);
 	private final ObjectProperty<RoutingStyle> routingStyleProperty = new SimpleObjectProperty<>(this,
-			ROUTING_STYLE_PROPERTY, RoutingStyle.STRAIGHT);
+			ROUTING_STYLE_PROPERTY, RoutingStyle.ORTHOGONAL);
 	private final ReadOnlyListWrapperEx<Double> dashesProperty = new ReadOnlyListWrapperEx<>(this, DASHES_PROPERTY,
 			CollectionUtils.<Double> observableArrayList());
 	private final Set<AbstractGeometricElement<? extends IGeometry>> sourceAnchorages = new HashSet<>();
