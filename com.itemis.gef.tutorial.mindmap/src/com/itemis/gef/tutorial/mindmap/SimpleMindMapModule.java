@@ -6,6 +6,7 @@ import org.eclipse.gef.mvc.fx.MvcFxModule;
 import org.eclipse.gef.mvc.fx.behaviors.HoverIntentBehavior;
 import org.eclipse.gef.mvc.fx.behaviors.SelectionBehavior;
 import org.eclipse.gef.mvc.fx.handlers.BendFirstAnchorageOnSegmentHandleDragHandler;
+import org.eclipse.gef.mvc.fx.handlers.BendOnSegmentDragHandler;
 import org.eclipse.gef.mvc.fx.handlers.FocusAndSelectOnClickHandler;
 import org.eclipse.gef.mvc.fx.handlers.HoverOnHoverHandler;
 import org.eclipse.gef.mvc.fx.handlers.ResizeTranslateFirstAnchorageOnHandleDragHandler;
@@ -16,6 +17,7 @@ import org.eclipse.gef.mvc.fx.parts.DefaultSelectionFeedbackPartFactory;
 import org.eclipse.gef.mvc.fx.parts.DefaultSelectionHandlePartFactory;
 import org.eclipse.gef.mvc.fx.parts.RectangleSegmentHandlePart;
 import org.eclipse.gef.mvc.fx.parts.SquareSegmentHandlePart;
+import org.eclipse.gef.mvc.fx.policies.BendConnectionPolicy;
 import org.eclipse.gef.mvc.fx.policies.ResizePolicy;
 import org.eclipse.gef.mvc.fx.policies.TransformPolicy;
 import org.eclipse.gef.mvc.fx.providers.ShapeBoundsProvider;
@@ -63,6 +65,10 @@ public class SimpleMindMapModule extends MvcFxModule {
 
 	protected void bindDeleteMindMapNodeHandlePartAdapters(MapBinder<AdapterKey<?>, Object> adapterMapBinder) {
 		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(DeleteNodeOnHandleClickHandler.class);
+	}
+
+	protected void bindFXRectangleSegmentHandlePartAdapters(MapBinder<AdapterKey<?>, Object> adapterMapBinder) {
+		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(BendFirstAnchorageOnSegmentHandleDragHandler.class);
 	}
 
 	@Override
@@ -144,6 +150,19 @@ public class SimpleMindMapModule extends MvcFxModule {
 		// adding hotkeys handler
 		// working delete node on hotkeys
 		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(MindMapKeyHandler.class);
+
+		// transaction policy for resize + transform
+		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(ResizePolicy.class);
+
+		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(BendConnectionPolicy.class);
+
+		// interaction handler to relocate on drag
+		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(TranslateSelectedOnDragHandler.class);
+
+		// drag individual segments
+		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(BendOnSegmentDragHandler.class);
+
+		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(TransformPolicy.class);
 	}
 
 	protected void bindRectangleSegmentHandlePartAdapters(MapBinder<AdapterKey<?>, Object> adapterMapBinder) {
