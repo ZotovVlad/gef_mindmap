@@ -6,7 +6,6 @@ import org.eclipse.gef.mvc.fx.MvcFxModule;
 import org.eclipse.gef.mvc.fx.behaviors.HoverIntentBehavior;
 import org.eclipse.gef.mvc.fx.behaviors.SelectionBehavior;
 import org.eclipse.gef.mvc.fx.handlers.BendFirstAnchorageOnSegmentHandleDragHandler;
-import org.eclipse.gef.mvc.fx.handlers.BendOnSegmentDragHandler;
 import org.eclipse.gef.mvc.fx.handlers.FocusAndSelectOnClickHandler;
 import org.eclipse.gef.mvc.fx.handlers.HoverOnHoverHandler;
 import org.eclipse.gef.mvc.fx.handlers.ResizeTranslateFirstAnchorageOnHandleDragHandler;
@@ -151,18 +150,11 @@ public class SimpleMindMapModule extends MvcFxModule {
 		// working delete node on hotkeys
 		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(MindMapKeyHandler.class);
 
-		// transaction policy for resize + transform
-		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(ResizePolicy.class);
-
 		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(BendConnectionPolicy.class);
 
-		// interaction handler to relocate on drag
-		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(TranslateSelectedOnDragHandler.class);
+//		// drag individual segments
+//		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(BendOnSegmentDragHandler.class);
 
-		// drag individual segments
-		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(BendOnSegmentDragHandler.class);
-
-		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(TransformPolicy.class);
 	}
 
 	protected void bindRectangleSegmentHandlePartAdapters(MapBinder<AdapterKey<?>, Object> adapterMapBinder) {
