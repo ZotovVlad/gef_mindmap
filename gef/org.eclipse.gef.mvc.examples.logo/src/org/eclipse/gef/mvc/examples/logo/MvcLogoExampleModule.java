@@ -159,9 +159,11 @@ public class MvcLogoExampleModule extends MvcFxModule {
 		adapterMapBinder.addBinding(AdapterKey.role(PALETTE_VIEWER_ROLE)).to(IViewer.class);
 	}
 
-	protected void bindFXRectangleSegmentHandlePartAdapters(MapBinder<AdapterKey<?>, Object> adapterMapBinder) {
-		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(BendFirstAnchorageOnSegmentHandleDragHandler.class);
-	}
+	// protected void
+	// bindFXRectangleSegmentHandlePartAdapters(MapBinder<AdapterKey<?>, Object>
+	// adapterMapBinder) {
+	// adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(BendFirstAnchorageOnSegmentHandleDragHandler.class);
+	// }
 
 	protected void bindGeometricCurvePartAdaptersInContentViewerContext(
 			MapBinder<AdapterKey<?>, Object> adapterMapBinder) {

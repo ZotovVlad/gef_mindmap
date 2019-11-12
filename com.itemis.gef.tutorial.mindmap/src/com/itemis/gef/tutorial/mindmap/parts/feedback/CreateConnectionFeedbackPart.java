@@ -15,6 +15,7 @@ import org.eclipse.gef.mvc.fx.parts.IVisualPart;
 import com.google.common.reflect.TypeToken;
 import com.google.inject.Provider;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
+import com.itemis.gef.tutorial.mindmap.parts.SimpleMindMapAnchorProvider;
 import com.itemis.gef.tutorial.mindmap.visuals.MindMapConnectionVisual;
 
 import javafx.event.EventHandler;
@@ -82,15 +83,21 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Connectio
 		// set the start anchor
 		IAnchor anchor = adapter.get();
 
-		// getVisual().setRouter(new OrthogonalRouter());
+		if (!SimpleMindMapAnchorProvider.isStaticAnchor) {
+			// getVisual().setRouter(new OrthogonalRouter());// !!!
+			// getVisual().setInterpolator(new PolyBezierInterpolator());
+		}
+
 		getVisual().setStartAnchor(anchor);
+
+		// !!!! MousePositionAnchor is StaticAnchor!
 		MousePositionAnchor endAnchor = new MousePositionAnchor(
 				FX2Geometry.toPoint(getVisual().localToScene(Geometry2FX.toFXPoint(getVisual().getStartPoint()))));
 		// getVisual().setRouter(new OrthogonalRouter());
 		endAnchor.init();
 		// getVisual().setRouter(new OrthogonalRouter());
 		getVisual().setEndAnchor(endAnchor);
-
+		// !!!!
 	}
 
 //	@Override

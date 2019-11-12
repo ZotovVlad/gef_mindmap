@@ -27,6 +27,9 @@ public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPa
 		implements Provider<IAnchor> {
 
 	private static final int SIZERECTANGLEBOX = 10;
+
+	public static boolean isStaticAnchor = true;
+
 	private DynamicAnchor dynamicAnchor;
 	private StaticAnchor staticAnchor;
 
@@ -46,18 +49,24 @@ public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPa
 		} else if (mindMapNodeVisual.getTitleText().getText().toString().equals("FINISH")) {
 			mindMapNodeVisual.pointConnection.add(new Point(0, 170 / 2));
 		}
-		// return staticAnchor
-//		if (mindMapNodeVisual.pointConnection.size() == 0) {
-//			// return default-staticAnchor
-//			staticAnchor = new StaticAnchor(mindMapNodeVisual, new Point(5, 5));
-//			// OrthogonalProjectionStrategy());
-//			return staticAnchor;
-//		} else {
-//			// return point-staticAnchor
-//			staticAnchor = new StaticAnchor(mindMapNodeVisual,
-//					mindMapNodeVisual.pointConnection.get(mindMapNodeVisual.pointConnection.size() - 1));
-//			return staticAnchor;
-//		}
-		return new DynamicAnchor(mindMapNodeVisual, new ProjectionStrategy());
+
+		if (isStaticAnchor) {
+			// return staticAnchor
+			if (mindMapNodeVisual.pointConnection.size() == 0) {
+				// return default-staticAnchor
+				staticAnchor = new StaticAnchor(mindMapNodeVisual, new Point(5, 5));
+				return staticAnchor;
+			} else {
+				// return point-staticAnchor
+				staticAnchor = new StaticAnchor(mindMapNodeVisual,
+						mindMapNodeVisual.pointConnection.get(mindMapNodeVisual.pointConnection.size() - 1));
+				return staticAnchor;
+			}
+		} else {
+			// return staticAnchor
+			dynamicAnchor = new DynamicAnchor(mindMapNodeVisual, new ProjectionStrategy());
+			// , new OrthogonalProjectionStrategy());
+			return dynamicAnchor;
+		}
 	}
 }
