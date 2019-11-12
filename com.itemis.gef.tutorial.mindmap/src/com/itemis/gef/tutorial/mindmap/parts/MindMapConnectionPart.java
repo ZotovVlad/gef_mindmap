@@ -1,11 +1,15 @@
 package com.itemis.gef.tutorial.mindmap.parts;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.gef.common.adapt.AdapterKey;
+import org.eclipse.gef.common.collections.ObservableSetMultimap;
 import org.eclipse.gef.fx.anchors.IAnchor;
+import org.eclipse.gef.fx.anchors.StaticAnchor;
 import org.eclipse.gef.fx.nodes.Connection;
 import org.eclipse.gef.fx.nodes.OrthogonalRouter;
 import org.eclipse.gef.geometry.planar.Point;
@@ -73,11 +77,40 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> imple
 		}
 		CreateConnectionFeedbackPart.points.clear();
 		MindMapConnectionVisual mmcv = new MindMapConnectionVisual(points_t);
+		this.visual = mmcv;
 		// mmcv.setRouter(new OrthogonalRouter());
 
 		mmcv.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
 
-			doRefreshVisual(visual);
+			// System.out.println(getAnchoragesUnmodifiable());
+
+			// get MindMapNodeParts connection
+			ObservableSetMultimap<IVisualPart<? extends Node>, String> obs = getAnchoragesUnmodifiable();
+			Map<IVisualPart<? extends Node>, Collection<String>> map = obs.asMap();
+			String str1 = map.keySet().toString();
+			System.out.println(str1);
+
+			System.out.println(mmcv.getAnchor(0));
+			System.out.println(mmcv.getAnchor(1));
+			List<IAnchor> anchors = new ArrayList<>();
+			anchors.add(mmcv.getAnchor(0));
+			anchors.add(new StaticAnchor(,new Point(50, 5)));
+			mmcv.setAnchors(anchors);
+			System.out.println(anchors.toString());
+
+//			System.out.println(getVisualBendPoints());
+			// List<BendPoint> bp = getVisualBendPoints();
+			// bp.set(0, new BendPoint(bp.get(0).getContentAnchorage(), new Point(500,
+			// 500)));
+			// System.out.println(bp.toString());
+
+			System.out.println(getVisualBendPoints());
+
+			// not working
+			// setVisualBendPoints(getVisualBendPoints());
+
+			System.out.println();
+			doRefreshVisual(this.visual);
 
 		});
 
@@ -118,8 +151,10 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> imple
 
 		BendPoint bp = new BendPoint(new Point(100, 100));
 
+		// MindMapConnectionPart mmcp = (MindMapConnectionPart) visual;
+
 		// System.out.println(getContent());
-		System.out.println(bp.toString());
+		System.out.println();
 //		GeometricCurve content = getContent();
 //
 //		// TODO: extract router code and replace start/end/control point
@@ -311,4 +346,5 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> imple
 		// TODO Auto-generated method stub
 
 	}
+
 }
