@@ -9,7 +9,6 @@ import java.util.Map;
 import org.eclipse.gef.common.adapt.AdapterKey;
 import org.eclipse.gef.common.collections.ObservableSetMultimap;
 import org.eclipse.gef.fx.anchors.IAnchor;
-import org.eclipse.gef.fx.anchors.StaticAnchor;
 import org.eclipse.gef.fx.nodes.Connection;
 import org.eclipse.gef.fx.nodes.OrthogonalRouter;
 import org.eclipse.gef.geometry.planar.Point;
@@ -94,7 +93,8 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> imple
 			System.out.println(mmcv.getAnchor(1));
 			List<IAnchor> anchors = new ArrayList<>();
 			anchors.add(mmcv.getAnchor(0));
-			anchors.add(new StaticAnchor(,new Point(50, 5)));
+			// anchors.add(new StaticAnchor(,new Point(50, 5)));
+			anchors.add(mmcv.getAnchor(1));
 			mmcv.setAnchors(anchors);
 			System.out.println(anchors.toString());
 
