@@ -54,13 +54,18 @@ public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPa
 			// return staticAnchor
 			if (mindMapNodeVisual.pointConnection.size() == 0) {
 				// return default-staticAnchor
-				staticAnchor = new StaticAnchor(mindMapNodeVisual, new Point(5, 5));
-				return staticAnchor;
+				// staticAnchor = new StaticAnchor(mindMapNodeVisual, new Point(5, 5));
+				// return staticAnchor;
+				dynamicAnchor = new DynamicAnchor(mindMapNodeVisual);
+				return dynamicAnchor;
 			} else {
 				// return point-staticAnchor
-				staticAnchor = new StaticAnchor(mindMapNodeVisual,
-						mindMapNodeVisual.pointConnection.get(mindMapNodeVisual.pointConnection.size() - 1));
-				return staticAnchor;
+//				staticAnchor = new StaticAnchor(mindMapNodeVisual,
+//						mindMapNodeVisual.pointConnection.get(mindMapNodeVisual.pointConnection.size() - 1));
+//				return staticAnchor;
+
+				dynamicAnchor = new DynamicAnchor(mindMapNodeVisual);
+				return dynamicAnchor;
 			}
 		} else {
 			// return staticAnchor

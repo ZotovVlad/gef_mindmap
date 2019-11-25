@@ -31,6 +31,8 @@ public class MindMapConnectionVisual extends Connection {
 				this.addControlPoint(i, wayPoints.get(i));
 			}
 		}
+		// this.addControlAnchor(0, getStartAnchor());
+		// this.addControlAnchor(1, getEndAnchor());
 		endDecoration.setFill(Color.BLACK);
 		setEndDecoration(endDecoration);
 	}

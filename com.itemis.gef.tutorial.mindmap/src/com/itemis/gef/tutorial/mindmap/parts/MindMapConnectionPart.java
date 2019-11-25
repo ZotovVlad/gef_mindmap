@@ -38,8 +38,12 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> imple
 	private static final String START_ROLE = "START";
 	private static final String END_ROLE = "END";
 
-	ArrayList<Point> points_t = new ArrayList<>();
+	private static Point startMouse = new Point(0, 0);
+	private static Point endMouse = new Point(0, 0);
+	private static double deltaX = 0;
+	private static double deltaY = 0;
 
+	ArrayList<Point> points_t = new ArrayList<>();
 	private Connection visual = null;
 
 	@Override
@@ -81,6 +85,9 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> imple
 
 		mmcv.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> {
 
+			startMouse.setLocation(event.getSceneX(), event.getSceneY());
+			// MindMapConnectionPart.endMouse = MindMapConnectionPart.startMouse;
+
 			// System.out.println(getAnchoragesUnmodifiable());
 
 			// get MindMapNodeParts connection
@@ -92,9 +99,13 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> imple
 			System.out.println(mmcv.getAnchor(0));
 			System.out.println(mmcv.getAnchor(1));
 			List<IAnchor> anchors = new ArrayList<>();
-			anchors.add(mmcv.getAnchor(0));
+			for (int i = 0; i < mmcv.getAnchorsUnmodifiable().size(); i++) {
+				anchors.add(mmcv.getAnchor(i));
+			}
+//			anchors.add(mmcv.getAnchor(0));
 			// anchors.add(new StaticAnchor(,new Point(50, 5)));
-			anchors.add(mmcv.getAnchor(1));
+//			anchors.add(mmcv.getAnchor(1));
+//			anchors.add(mmcv.getAnchor(2));
 			mmcv.setAnchors(anchors);
 			System.out.println(anchors.toString());
 
@@ -110,6 +121,19 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> imple
 			// setVisualBendPoints(getVisualBendPoints());
 
 			System.out.println();
+			doRefreshVisual(this.visual);
+
+		});
+		mmcv.addEventHandler(MouseEvent.MOUSE_EXITED, event -> {
+
+			endMouse.setLocation(event.getSceneX(), event.getSceneY());
+			deltaX = startMouse.x - endMouse.x;
+			deltaY = startMouse.y - endMouse.y;
+			if (deltaX < 0 || deltaY < 0) {
+				System.out.println("right");
+			} else if (deltaX > 0 || deltaY > 0) {
+				System.out.println("left");
+			}
 			doRefreshVisual(this.visual);
 
 		});
@@ -154,7 +178,6 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> imple
 		// MindMapConnectionPart mmcp = (MindMapConnectionPart) visual;
 
 		// System.out.println(getContent());
-		System.out.println();
 //		GeometricCurve content = getContent();
 //
 //		// TODO: extract router code and replace start/end/control point
@@ -337,14 +360,71 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> imple
 	}
 
 	@Override
-	public MindMapConnectionVisual getVisual() {
-		return (MindMapConnectionVisual) super.getVisual();
-	}
-
-	@Override
 	public void setContentBendPoints(List<BendPoint> bendPoints) {
 		// TODO Auto-generated method stub
 
 	}
+
+//	@Override
+//	public List<BendPoint> getContentBendPoints() {
+//		List<BendPoint> bendPoints = new ArrayList<>();
+//		// use content way points for the positions
+//		List<Point> wayPoints = getContent().getWayPointsCopy();
+//		// if we have a source/target anchorage, create an attached bend point
+//		// for it
+//		Set<AbstractGeometricElement<? extends IGeometry>> sourceAnchorages = getContent().getSourceAnchorages();
+//		int startIndex = 0;
+//		if (sourceAnchorages != null && !sourceAnchorages.isEmpty()) {
+//			bendPoints.add(new BendPoint(sourceAnchorages.iterator().next(), wayPoints.get(startIndex++)));
+//		}
+//		Set<AbstractGeometricElement<? extends IGeometry>> targetAnchorages = getContent().getTargetAnchorages();
+//		int lastIndex = wayPoints.size() - 1;
+//		if (targetAnchorages != null && !targetAnchorages.isEmpty()) {
+//			bendPoints.add(new BendPoint(targetAnchorages.iterator().next(), wayPoints.get(lastIndex--)));
+//		}
+//		// add unattached bend-points for the rest of the way points
+//		for (int i = startIndex; i <= lastIndex; i++) {
+//			bendPoints.add(i, new BendPoint(wayPoints.get(i)));
+//		}
+//		return bendPoints;
+//	}
+//
+//	@Override
+//	public MindMapConnectionVisual getVisual() {
+//		return (MindMapConnectionVisual) super.getVisual();
+//	}
+//
+//	@SuppressWarnings("unchecked")
+//	@Override
+//	public void setContentBendPoints(List<BendPoint> bendPoints) {
+//		getContent().getSourceAnchorages().clear();
+//		getContent().getTargetAnchorages().clear();
+//		List<Point> waypoints = new ArrayList<>();
+//		for (int i = 0; i < bendPoints.size(); i++) {
+//			BendPoint bp = bendPoints.get(i);
+//			if (bp.isAttached()) {
+//				if (i == 0) {
+//					// update start anchorage
+//					// TODO: introduce setter so this is more concise
+//					getContent().addSourceAnchorage(
+//							(AbstractGeometricElement<? extends IGeometry>) bp.getContentAnchorage());
+//					// update start hint
+//					waypoints.add(bp.getPosition());
+//				}
+//				if (i == bendPoints.size() - 1) {
+//					// update end anchorage
+//					// TODO: introduce setter so this is more concise
+//					getContent().addTargetAnchorage(
+//							(AbstractGeometricElement<? extends IGeometry>) bp.getContentAnchorage());
+//					// update end point hint
+//					waypoints.add(bp.getPosition());
+//				}
+//			} else {
+//				waypoints.add(bp.getPosition());
+//			}
+//		}
+//		refreshContentAnchorages();
+//		getContent().setWayPoints(waypoints.toArray(new Point[] {}));
+//	}
 
 }

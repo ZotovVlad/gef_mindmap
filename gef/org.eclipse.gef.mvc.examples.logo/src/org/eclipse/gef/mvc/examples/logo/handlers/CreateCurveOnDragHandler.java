@@ -181,6 +181,7 @@ public class CreateCurveOnDragHandler extends AbstractHandler implements IOnDrag
 
 		// find bend target part
 		bendTargetPart = findBendTargetPart(curvePart, event.getTarget());
+		System.out.println(bendTargetPart);
 		if (bendTargetPart != null) {
 			dragPolicies = bendTargetPart.getAdapters(ClickDragGesture.ON_DRAG_POLICY_KEY);
 		}
