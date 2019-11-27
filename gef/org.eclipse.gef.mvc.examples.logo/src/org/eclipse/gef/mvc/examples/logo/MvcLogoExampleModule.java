@@ -28,9 +28,7 @@ import org.eclipse.gef.mvc.examples.logo.handlers.CreationMenuItemProvider;
 import org.eclipse.gef.mvc.examples.logo.handlers.CreationMenuOnClickHandler;
 import org.eclipse.gef.mvc.examples.logo.handlers.DeleteFirstAnchorageOnClickHandler;
 import org.eclipse.gef.mvc.examples.logo.handlers.RelocateLinkedOnDragHandler;
-import org.eclipse.gef.mvc.examples.logo.parts.GeometricCurveCreationHoverHandlePart;
 import org.eclipse.gef.mvc.examples.logo.parts.GeometricCurvePart;
-import org.eclipse.gef.mvc.examples.logo.parts.GeometricElementDeletionHandlePart;
 import org.eclipse.gef.mvc.examples.logo.parts.GeometricShapePart;
 import org.eclipse.gef.mvc.examples.logo.parts.MvcLogoExampleContentPartFactory;
 import org.eclipse.gef.mvc.examples.logo.parts.MvcLogoExampleHoverHandlePartFactory;
@@ -64,7 +62,6 @@ import org.eclipse.gef.mvc.fx.handlers.TraverseFocusOnTypeHandler;
 import org.eclipse.gef.mvc.fx.models.FocusModel;
 import org.eclipse.gef.mvc.fx.models.HoverModel;
 import org.eclipse.gef.mvc.fx.models.SelectionModel;
-import org.eclipse.gef.mvc.fx.parts.CircleSegmentHandlePart;
 import org.eclipse.gef.mvc.fx.parts.DefaultFocusFeedbackPartFactory;
 import org.eclipse.gef.mvc.fx.parts.DefaultHoverFeedbackPartFactory;
 import org.eclipse.gef.mvc.fx.parts.DefaultHoverIntentHandlePartFactory;
@@ -72,8 +69,6 @@ import org.eclipse.gef.mvc.fx.parts.DefaultSelectionFeedbackPartFactory;
 import org.eclipse.gef.mvc.fx.parts.DefaultSelectionHandlePartFactory;
 import org.eclipse.gef.mvc.fx.parts.IContentPartFactory;
 import org.eclipse.gef.mvc.fx.parts.IRootPart;
-import org.eclipse.gef.mvc.fx.parts.RectangleSegmentHandlePart;
-import org.eclipse.gef.mvc.fx.parts.SquareSegmentHandlePart;
 import org.eclipse.gef.mvc.fx.policies.BendConnectionPolicy;
 import org.eclipse.gef.mvc.fx.policies.ResizePolicy;
 import org.eclipse.gef.mvc.fx.policies.TransformPolicy;
@@ -482,23 +477,28 @@ public class MvcLogoExampleModule extends MvcFxModule {
 		// content viewer
 		bindGeometricShapePartAdaptersInContentViewerContext(AdapterMaps.getAdapterMapBinder(binder(),
 				GeometricShapePart.class, AdapterKey.get(IViewer.class, IDomain.CONTENT_VIEWER_ROLE)));
-		bindGeometricCurvePartAdaptersInContentViewerContext(AdapterMaps.getAdapterMapBinder(binder(),
-				GeometricCurvePart.class, AdapterKey.get(IViewer.class, IDomain.CONTENT_VIEWER_ROLE)));
+//		bindGeometricCurvePartAdaptersInContentViewerContext(AdapterMaps.getAdapterMapBinder(binder(),
+//				GeometricCurvePart.class, AdapterKey.get(IViewer.class, IDomain.CONTENT_VIEWER_ROLE)));
 
 		// node selection handles and multi selection handles
-		bindSquareSegmentHandlePartAdapters(AdapterMaps.getAdapterMapBinder(binder(), SquareSegmentHandlePart.class));
+		// bindSquareSegmentHandlePartAdapters(AdapterMaps.getAdapterMapBinder(binder(),
+		// SquareSegmentHandlePart.class));
 
 		// curve selection handles
-		bindCircleSegmentHandlePartAdapters(AdapterMaps.getAdapterMapBinder(binder(), CircleSegmentHandlePart.class));
+		// bindCircleSegmentHandlePartAdapters(AdapterMaps.getAdapterMapBinder(binder(),
+		// CircleSegmentHandlePart.class));
 
-		bindRectangleSegmentHandlePartAdapters(
-				AdapterMaps.getAdapterMapBinder(binder(), RectangleSegmentHandlePart.class));
+		// bindRectangleSegmentHandlePartAdapters(
+		// AdapterMaps.getAdapterMapBinder(binder(),
+		// RectangleSegmentHandlePart.class));
 
 		// hover handles
-		bindDeleteHandlePartAdapters(
-				AdapterMaps.getAdapterMapBinder(binder(), GeometricElementDeletionHandlePart.class));
-		bindCreateCurveHandlePartAdapters(
-				AdapterMaps.getAdapterMapBinder(binder(), GeometricCurveCreationHoverHandlePart.class));
+		// bindDeleteHandlePartAdapters(
+		// AdapterMaps.getAdapterMapBinder(binder(),
+		// GeometricElementDeletionHandlePart.class));
+		// bindCreateCurveHandlePartAdapters(
+		// AdapterMaps.getAdapterMapBinder(binder(),
+		// GeometricCurveCreationHoverHandlePart.class));
 
 		// palette
 		bindPaletteViewerAdapters(AdapterMaps.getAdapterMapBinder(binder(), IViewer.class,
