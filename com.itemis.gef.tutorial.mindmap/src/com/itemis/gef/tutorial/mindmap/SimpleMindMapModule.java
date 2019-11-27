@@ -7,16 +7,15 @@ import org.eclipse.gef.mvc.fx.behaviors.HoverIntentBehavior;
 import org.eclipse.gef.mvc.fx.behaviors.SelectionBehavior;
 import org.eclipse.gef.mvc.fx.domain.IDomain;
 import org.eclipse.gef.mvc.fx.handlers.BendFirstAnchorageOnSegmentHandleDragHandler;
+import org.eclipse.gef.mvc.fx.handlers.BendOnSegmentDragHandler;
 import org.eclipse.gef.mvc.fx.handlers.FocusAndSelectOnClickHandler;
 import org.eclipse.gef.mvc.fx.handlers.HoverOnHoverHandler;
 import org.eclipse.gef.mvc.fx.handlers.ResizeTranslateFirstAnchorageOnHandleDragHandler;
 import org.eclipse.gef.mvc.fx.handlers.TranslateSelectedOnDragHandler;
-import org.eclipse.gef.mvc.fx.parts.CircleSegmentHandlePart;
 import org.eclipse.gef.mvc.fx.parts.DefaultFocusFeedbackPartFactory;
 import org.eclipse.gef.mvc.fx.parts.DefaultHoverFeedbackPartFactory;
 import org.eclipse.gef.mvc.fx.parts.DefaultSelectionFeedbackPartFactory;
 import org.eclipse.gef.mvc.fx.parts.DefaultSelectionHandlePartFactory;
-import org.eclipse.gef.mvc.fx.parts.RectangleSegmentHandlePart;
 import org.eclipse.gef.mvc.fx.parts.SquareSegmentHandlePart;
 import org.eclipse.gef.mvc.fx.policies.BendConnectionPolicy;
 import org.eclipse.gef.mvc.fx.policies.ResizePolicy;
@@ -98,6 +97,22 @@ public class SimpleMindMapModule extends MvcFxModule {
 		// geometry provider for focus feedback
 		adapterMapBinder.addBinding(AdapterKey.role(DefaultFocusFeedbackPartFactory.FOCUS_FEEDBACK_GEOMETRY_PROVIDER))
 				.to(GeometricOutlineProvider.class);
+//
+//		// transaction policy for resize + transform
+//		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(ResizePolicy.class);
+
+//		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(BendConnectionPolicy.class);
+
+//		// interaction handler to relocate on drag
+//		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(TranslateSelectedOnDragHandler.class);
+
+		// drag individual segments
+		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(BendOnSegmentDragHandler.class);
+
+		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(TransformPolicy.class);
+
+//		// clickable area resizing
+//		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(ConnectionClickableAreaBehavior.class);
 
 	}
 
@@ -227,10 +242,10 @@ public class SimpleMindMapModule extends MvcFxModule {
 				MindMapConnectionPart.class, AdapterKey.get(IViewer.class, IDomain.CONTENT_VIEWER_ROLE)));
 
 		// curve selection handles
-		bindCircleSegmentHandlePartAdapters(AdapterMaps.getAdapterMapBinder(binder(), CircleSegmentHandlePart.class));
-
-		bindRectangleSegmentHandlePartAdapters(
-				AdapterMaps.getAdapterMapBinder(binder(), RectangleSegmentHandlePart.class));
+//		bindCircleSegmentHandlePartAdapters(AdapterMaps.getAdapterMapBinder(binder(), CircleSegmentHandlePart.class));
+//
+//		bindRectangleSegmentHandlePartAdapters(
+//				AdapterMaps.getAdapterMapBinder(binder(), RectangleSegmentHandlePart.class));
 
 	}
 }
