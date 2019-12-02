@@ -44,7 +44,9 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> imple
 	private static double deltaY = 0;
 
 	ArrayList<Point> points_t = new ArrayList<>();
-	private Connection visual = null;
+	private Connection visual = new Connection();
+
+	private List<BendPoint> wayBendPoints = new ArrayList<>();
 
 	@Override
 	protected void doAttachToAnchorageVisual(IVisualPart<? extends Node> anchorage, String role) {
@@ -182,7 +184,7 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> imple
 //
 //		// TODO: extract router code and replace start/end/control point
 //		// handling by calling
-//		// setVisualBendPoints(getContentBendPoints());
+		// setVisualBendPoints(getContentBendPoints());
 //
 //		List<Point> wayPoints = content.getWayPointsCopy();
 //
@@ -353,16 +355,30 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> imple
 		return (MindMapConnection) super.getContent();
 	}
 
+//	@Override
+//	public List<BendPoint> getContentBendPoints() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public void setContentBendPoints(List<BendPoint> bendPoints) {
+//		// TODO Auto-generated method stub
+//
+//	}
+
 	@Override
 	public List<BendPoint> getContentBendPoints() {
 		// TODO Auto-generated method stub
-		return null;
+		wayBendPoints.add(new BendPoint(new Point(100, 100)));
+		return wayBendPoints;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void setContentBendPoints(List<BendPoint> bendPoints) {
 		// TODO Auto-generated method stub
-
+		wayBendPoints = bendPoints;
 	}
 
 //	@Override
