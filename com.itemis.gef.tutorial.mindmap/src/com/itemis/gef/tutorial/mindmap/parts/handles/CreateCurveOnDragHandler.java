@@ -9,10 +9,6 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.gef.common.adapt.AdapterKey;
 import org.eclipse.gef.geometry.planar.Dimension;
 import org.eclipse.gef.geometry.planar.Point;
-import org.eclipse.gef.mvc.examples.logo.MvcLogoExample;
-import org.eclipse.gef.mvc.examples.logo.model.GeometricCurve;
-import org.eclipse.gef.mvc.examples.logo.parts.GeometricCurvePart;
-import org.eclipse.gef.mvc.examples.logo.parts.GeometricShapePart;
 import org.eclipse.gef.mvc.fx.gestures.ClickDragGesture;
 import org.eclipse.gef.mvc.fx.handlers.AbstractHandler;
 import org.eclipse.gef.mvc.fx.handlers.IOnDragHandler;
@@ -26,6 +22,7 @@ import org.eclipse.gef.mvc.fx.viewer.InfiniteCanvasViewer;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multiset;
+import com.itemis.gef.tutorial.mindmap.parts.MindMapConnectionPart;
 
 import javafx.event.EventTarget;
 import javafx.geometry.Point2D;
@@ -37,7 +34,7 @@ public class CreateCurveOnDragHandler extends AbstractHandler implements IOnDrag
 
 	private CircleSegmentHandlePart bendTargetPart;
 	private Map<AdapterKey<? extends IOnDragHandler>, IOnDragHandler> dragPolicies;
-	private GeometricCurvePart curvePart;
+	private MindMapConnectionPart curvePart;
 
 	@Override
 	public void abortDrag() {
@@ -91,7 +88,7 @@ public class CreateCurveOnDragHandler extends AbstractHandler implements IOnDrag
 		dragPolicies = null;
 	}
 
-	protected CircleSegmentHandlePart findBendTargetPart(GeometricCurvePart curvePart, EventTarget eventTarget) {
+	protected CircleSegmentHandlePart findBendTargetPart(MindMapConnectionPart curvePart, EventTarget eventTarget) {
 		// find last segment handle part
 		Multiset<IVisualPart<? extends Node>> anchoreds = curvePart.getAnchoredsUnmodifiable();
 		for (IVisualPart<? extends Node> anchored : anchoreds) {
@@ -146,7 +143,7 @@ public class CreateCurveOnDragHandler extends AbstractHandler implements IOnDrag
 		// create using CreationPolicy from root part
 		CreationPolicy creationPolicy = getHost().getRoot().getAdapter(CreationPolicy.class);
 		init(creationPolicy);
-		curvePart = (GeometricCurvePart) creationPolicy.create(curve, getHost().getRoot(),
+		curvePart = (MindMapConnectionPart) creationPolicy.create(curve, getHost().getRoot(),
 				HashMultimap.<IContentPart<? extends Node>, String>create());
 		commit(creationPolicy);
 

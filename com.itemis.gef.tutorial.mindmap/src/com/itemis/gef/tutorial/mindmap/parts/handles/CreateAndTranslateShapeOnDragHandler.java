@@ -22,7 +22,6 @@ import org.eclipse.gef.common.adapt.AdapterKey;
 import org.eclipse.gef.geometry.planar.Dimension;
 import org.eclipse.gef.geometry.planar.Point;
 import org.eclipse.gef.mvc.examples.logo.model.GeometricShape;
-import org.eclipse.gef.mvc.examples.logo.parts.GeometricShapePart;
 import org.eclipse.gef.mvc.fx.domain.IDomain;
 import org.eclipse.gef.mvc.fx.gestures.ClickDragGesture;
 import org.eclipse.gef.mvc.fx.handlers.AbstractHandler;
@@ -37,6 +36,7 @@ import org.eclipse.gef.mvc.fx.viewer.IViewer;
 import org.eclipse.gef.mvc.fx.viewer.InfiniteCanvasViewer;
 
 import com.google.common.collect.HashMultimap;
+import com.itemis.gef.tutorial.mindmap.parts.MindMapConnectionPart;
 
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -45,7 +45,7 @@ import javafx.scene.input.MouseEvent;
 
 public class CreateAndTranslateShapeOnDragHandler extends AbstractHandler implements IOnDragHandler {
 
-	private GeometricShapePart createdShapePart;
+	private MindMapConnectionPart createdShapePart;
 	private Map<AdapterKey<? extends IOnDragHandler>, IOnDragHandler> dragPolicies;
 
 	@Override
@@ -103,8 +103,8 @@ public class CreateAndTranslateShapeOnDragHandler extends AbstractHandler implem
 	}
 
 	@Override
-	public GeometricShapePart getHost() {
-		return (GeometricShapePart) super.getHost();
+	public MindMapConnectionPart getHost() {
+		return (MindMapConnectionPart) super.getHost();
 	}
 
 	protected Point getLocation(MouseEvent e) {
@@ -146,7 +146,7 @@ public class CreateAndTranslateShapeOnDragHandler extends AbstractHandler implem
 		// create copy of host's geometry using CreationPolicy from root part
 		CreationPolicy creationPolicy = contentRoot.getAdapter(CreationPolicy.class);
 		init(creationPolicy);
-		createdShapePart = (GeometricShapePart) creationPolicy.create(copy, contentRoot,
+		createdShapePart = (MindMapConnectionPart) creationPolicy.create(copy, contentRoot,
 				HashMultimap.<IContentPart<? extends Node>, String>create());
 		commit(creationPolicy);
 

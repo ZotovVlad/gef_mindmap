@@ -357,8 +357,8 @@ public class SimpleMindMapModule extends MvcFxModule {
 		bindRectangleSegmentHandlePartAdapters(
 				AdapterMaps.getAdapterMapBinder(binder(), RectangleSegmentHandlePart.class));
 
-		bindGeometricShapePartAdapterInPaletteViewerContext(AdapterMaps.getAdapterMapBinder(binder(),
-				GeometricShapePart.class, AdapterKey.get(IViewer.class, PALETTE_VIEWER_ROLE)));
+//		bindGeometricShapePartAdapterInPaletteViewerContext(
+//				AdapterMaps.getAdapterMapBinder(binder(), GeometricShapePart.class));
 
 	}
 }
