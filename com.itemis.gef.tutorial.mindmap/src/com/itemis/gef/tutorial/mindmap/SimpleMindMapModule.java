@@ -321,17 +321,6 @@ public class SimpleMindMapModule extends MvcFxModule {
 		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(ResizeTransformSelectedOnHandleDragHandler.class);
 	}
 
-	/**
-	 * Binds the parts of the selection handles (the squares in the corner) to
-	 * policies
-	 *
-	 * @param adapterMapBinder
-	 */
-	protected void bindSquareSegmentHandlePartPartAdapter(MapBinder<AdapterKey<?>, Object> adapterMapBinder) {
-		adapterMapBinder.addBinding(AdapterKey.defaultRole())
-				.to(ResizeTranslateFirstAnchorageOnHandleDragHandler.class);
-	}
-
 	@Override
 	protected void configure() {
 		// start the default configuration
@@ -340,8 +329,6 @@ public class SimpleMindMapModule extends MvcFxModule {
 		bindMindMapNodePartAdapters(AdapterMaps.getAdapterMapBinder(binder(), MindMapNodePart.class));
 
 		// with this binding we create the handles
-		bindSquareSegmentHandlePartPartAdapter(
-				AdapterMaps.getAdapterMapBinder(binder(), SquareSegmentHandlePart.class));
 		bindDeleteMindMapNodeHandlePartAdapters(
 				AdapterMaps.getAdapterMapBinder(binder(), DeleteMindMapNodeHandlePart.class));
 
@@ -359,6 +346,11 @@ public class SimpleMindMapModule extends MvcFxModule {
 
 //		bindGeometricShapePartAdapterInPaletteViewerContext(
 //				AdapterMaps.getAdapterMapBinder(binder(), GeometricShapePart.class));
+
+		bindCircleSegmentHandlePartAdapters(AdapterMaps.getAdapterMapBinder(binder(), CircleSegmentHandlePart.class));
+
+		bindRectangleSegmentHandlePartAdapters(
+				AdapterMaps.getAdapterMapBinder(binder(), RectangleSegmentHandlePart.class));
 
 	}
 }

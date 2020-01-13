@@ -1,33 +1,20 @@
 package com.itemis.gef.tutorial.mindmap.parts.handles;
 
-/*******************************************************************************
- * Copyright (c) 2016, 2017 itemis AG and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     Matthias Wienand (itemis AG) - initial API and implementation
- *
- *******************************************************************************/
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.gef.common.adapt.AdapterKey;
 import org.eclipse.gef.geometry.planar.Dimension;
 import org.eclipse.gef.geometry.planar.Point;
-import org.eclipse.gef.mvc.examples.logo.model.GeometricShape;
 import org.eclipse.gef.mvc.fx.domain.IDomain;
 import org.eclipse.gef.mvc.fx.gestures.ClickDragGesture;
 import org.eclipse.gef.mvc.fx.handlers.AbstractHandler;
 import org.eclipse.gef.mvc.fx.handlers.IOnDragHandler;
 import org.eclipse.gef.mvc.fx.models.SelectionModel;
 import org.eclipse.gef.mvc.fx.operations.DeselectOperation;
+import org.eclipse.gef.mvc.fx.parts.IBendableContentPart.BendPoint;
 import org.eclipse.gef.mvc.fx.parts.IContentPart;
 import org.eclipse.gef.mvc.fx.parts.IRootPart;
 import org.eclipse.gef.mvc.fx.parts.LayeredRootPart;
@@ -131,17 +118,20 @@ public class CreateAndTranslateShapeOnDragHandler extends AbstractHandler implem
 	public void startDrag(MouseEvent event) {
 		// find model part
 		IRootPart<? extends Node> contentRoot = getContentViewer().getRootPart();
-
 		// copy the prototype
-		GeometricShape copy = getHost().getContent().getCopy();
+		MindMapConnectionPart copy = getHost();// .getContent();
 		// determine coordinates of prototype's origin in model coordinates
 		Point2D localToScene = getHost().getVisual().localToScene(0, 0);
 		Point2D originInModel = ((LayeredRootPart) getContentViewer().getRootPart()).getContentLayer()
 				.sceneToLocal(localToScene.getX(), localToScene.getY());
 		// initially move to the originInModel
-		double[] matrix = copy.getTransform().getMatrix();
-		copy.getTransform().setTransform(matrix[0], matrix[1], matrix[2], matrix[3], originInModel.getX(),
-				originInModel.getY());
+		List<BendPoint> matrix = copy.getVisualBendPoints();
+		// getTransform().getMatrix();
+
+		copy.setVisualBendPoints(matrix);
+		// getTransform().setTransform(matrix[0], matrix[1], matrix[2], matrix[3],
+		// originInModel.getX(),
+//				originInModel.getY());
 
 		// create copy of host's geometry using CreationPolicy from root part
 		CreationPolicy creationPolicy = contentRoot.getAdapter(CreationPolicy.class);
@@ -162,8 +152,9 @@ public class CreateAndTranslateShapeOnDragHandler extends AbstractHandler implem
 		// execute on stack
 		try {
 			getHost().getRoot().getViewer().getDomain().execute(deselectOperation, new NullProgressMonitor());
-		} catch (ExecutionException e) {
-			throw new RuntimeException(e);
+		} catch (org.eclipse.core.commands.ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		// find drag target part
