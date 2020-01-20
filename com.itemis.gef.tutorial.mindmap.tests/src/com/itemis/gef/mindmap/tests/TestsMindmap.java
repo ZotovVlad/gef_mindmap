@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 class TestsMindmap {
 
 	@Test
-	void test() {		
+	void test() {
 		assertEquals("It works!", "It works!");
 	}
 
