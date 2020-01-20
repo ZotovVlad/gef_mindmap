@@ -487,10 +487,10 @@ public class MvcLogoExampleModule extends MvcFxModule {
 		bindSquareSegmentHandlePartAdapters(AdapterMaps.getAdapterMapBinder(binder(), SquareSegmentHandlePart.class));
 
 		// curve selection handles
-//		bindCircleSegmentHandlePartAdapters(AdapterMaps.getAdapterMapBinder(binder(), CircleSegmentHandlePart.class));
-//
-//		bindRectangleSegmentHandlePartAdapters(
-//				AdapterMaps.getAdapterMapBinder(binder(), RectangleSegmentHandlePart.class));
+		bindCircleSegmentHandlePartAdapters(AdapterMaps.getAdapterMapBinder(binder(), CircleSegmentHandlePart.class));
+
+		bindRectangleSegmentHandlePartAdapters(
+				AdapterMaps.getAdapterMapBinder(binder(), RectangleSegmentHandlePart.class));
 
 		// hover handles
 		bindDeleteHandlePartAdapters(

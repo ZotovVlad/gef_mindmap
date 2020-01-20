@@ -3,6 +3,8 @@ package com.itemis.gef.tutorial.mindmap;
 import java.util.Arrays;
 
 import org.eclipse.gef.common.adapt.AdapterKey;
+import org.eclipse.gef.common.adapt.inject.AdapterInjectionSupport;
+import org.eclipse.gef.common.adapt.inject.AdapterInjectionSupport.LoggingMode;
 import org.eclipse.gef.common.adapt.inject.AdapterMaps;
 import org.eclipse.gef.mvc.fx.MvcFxModule;
 import org.eclipse.gef.mvc.fx.behaviors.HoverIntentBehavior;
@@ -319,6 +321,8 @@ public class SimpleMindMapModule extends MvcFxModule {
 
 		// multi selection: scale relocate on handle drag without modifier
 		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(ResizeTransformSelectedOnHandleDragHandler.class);
+
+		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(ResizeTransformSelectedOnHandleDragHandler.class);
 	}
 
 	@Override
@@ -353,4 +357,10 @@ public class SimpleMindMapModule extends MvcFxModule {
 				AdapterMaps.getAdapterMapBinder(binder(), RectangleSegmentHandlePart.class));
 
 	}
+
+	@Override
+	protected void enableAdapterMapInjection() {
+		install(new AdapterInjectionSupport(LoggingMode.PRODUCTION));
+	}
+
 }
