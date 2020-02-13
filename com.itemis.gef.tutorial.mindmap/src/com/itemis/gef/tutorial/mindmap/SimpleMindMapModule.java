@@ -322,7 +322,6 @@ public class SimpleMindMapModule extends MvcFxModule {
 		// multi selection: scale relocate on handle drag without modifier
 		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(ResizeTransformSelectedOnHandleDragHandler.class);
 
-		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(ResizeTransformSelectedOnHandleDragHandler.class);
 	}
 
 	@Override

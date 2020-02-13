@@ -72,6 +72,7 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> imple
 		} else {
 			throw new IllegalArgumentException("Invalid role: " + role);
 		}
+
 	}
 
 	@Override
@@ -175,7 +176,8 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> imple
 
 		this.visual = visual;
 
-		BendPoint bp = new BendPoint(new Point(100, 100));
+		// List bp = (List) visual.getoutingConstraint();// new BendPoint(new Point(100,
+		// 100));
 
 		// MindMapConnectionPart mmcp = (MindMapConnectionPart) visual;
 
@@ -355,6 +357,13 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> imple
 		return (MindMapConnection) super.getContent();
 	}
 
+	@Override
+	public List<BendPoint> getContentBendPoints() {
+		// TODO Auto-generated method stub
+		wayBendPoints.add(new BendPoint(new Point(100, 100)));
+		return wayBendPoints;
+	}
+
 //	@Override
 //	public List<BendPoint> getContentBendPoints() {
 //		// TODO Auto-generated method stub
@@ -366,13 +375,6 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> imple
 //		// TODO Auto-generated method stub
 //
 //	}
-
-	@Override
-	public List<BendPoint> getContentBendPoints() {
-		// TODO Auto-generated method stub
-		wayBendPoints.add(new BendPoint(new Point(100, 100)));
-		return wayBendPoints;
-	}
 
 	@SuppressWarnings("unchecked")
 	@Override
