@@ -179,6 +179,7 @@ public class SimpleMindMapModule extends MvcFxModule {
 		// geometry provider for hover feedback
 		adapterMapBinder.addBinding(AdapterKey.role(DefaultHoverFeedbackPartFactory.HOVER_FEEDBACK_GEOMETRY_PROVIDER))
 				.to(ShapeBoundsProvider.class);
+
 		// geometry provider for hover handles
 		adapterMapBinder
 				.addBinding(AdapterKey.role(DefaultHoverIntentHandlePartFactory.HOVER_INTENT_HANDLES_GEOMETRY_PROVIDER))
@@ -244,6 +245,7 @@ public class SimpleMindMapModule extends MvcFxModule {
 	@Override
 	protected void bindIViewerAdaptersForContentViewer(MapBinder<AdapterKey<?>, Object> adapterMapBinder) {
 		super.bindIViewerAdaptersForContentViewer(adapterMapBinder);
+
 		// add ItemCreationModel adapter binding
 		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(ItemCreationModel.class);
 
