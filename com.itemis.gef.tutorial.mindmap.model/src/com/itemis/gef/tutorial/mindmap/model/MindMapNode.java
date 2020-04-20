@@ -71,6 +71,11 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	 */
 	private Rectangle bounds;
 
+	private String nodeCustomJSON = userDir + File.separator + "files" + File.separator + "nodes" + File.separator;
+	private String nodeAllJSON = userDir + File.separator + "files" + File.separator;
+	private String nodeCode = userDir + File.separator + "files" + File.separator + "nodes" + File.separator;
+	private String nodeDirectory = userDir + File.separator + "files" + File.separator + "nodes" + File.separator;
+
 	public List<MindMapConnection> incomingConnections = Lists.newArrayList();
 
 	public List<MindMapConnection> outgoingConnections = Lists.newArrayList();
@@ -78,12 +83,17 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	public MindMapNode() {
 		super();
 
-		File f = new File(userDir + File.separator + "Files" + File.separator + this.hashCode() + ".txt");
-		try {
-			f.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.nodeCustomJSON += this.hashCode() + File.separator + this.hashCode() + ".json";
+		this.nodeAllJSON += "properties" + File.separator + "allPropertiesJSON" + ".json";
+		this.nodeCode += this.hashCode() + File.separator + this.hashCode() + ".txt";
+		this.nodeDirectory += this.hashCode();
+
+		File file = new File(this.nodeDirectory);
+		file.mkdir();
+
+		createFile(nodeCustomJSON);
+		createFile(nodeAllJSON);
+		createFile(nodeCode);
 	}
 
 	public void addIncomingConnection(MindMapConnection conn) {
@@ -114,6 +124,15 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	public void addTitlesOutgoingConnection(Set<String> titlesOutgoingConnection) {
 		// add collection title connection
 		this.titlesOutgoingConnection.addAll(titlesOutgoingConnection);
+	}
+
+	private void createFile(String path) {
+		File file = new File(path);
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void deleteTitleAtIncomingConnection() {

@@ -198,12 +198,8 @@ public class GeometricCurvePart extends AbstractGeometricElementPart<Connection>
 
 	@Override
 	protected void doRefreshVisual(Connection visual) {
-
 		GeometricCurve content = getContent();
 
-		// content.getWayPoints().get(0).x = 100;
-		// content.getWayPoints().get(0).y = 200;
-		System.out.println(content.getWayPoints());
 		// TODO: extract router code and replace start/end/control point
 		// handling by calling
 		// setVisualBendPoints(getContentBendPoints());

@@ -15,7 +15,6 @@ import org.eclipse.gef.mvc.fx.parts.IVisualPart;
 import com.google.common.reflect.TypeToken;
 import com.google.inject.Provider;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
-import com.itemis.gef.tutorial.mindmap.parts.SimpleMindMapAnchorProvider;
 import com.itemis.gef.tutorial.mindmap.visuals.MindMapConnectionVisual;
 
 import javafx.event.EventHandler;
@@ -82,22 +81,12 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Connectio
 		}
 		// set the start anchor
 		IAnchor anchor = adapter.get();
-
-		if (!SimpleMindMapAnchorProvider.isStaticAnchor) {
-			// getVisual().setRouter(new OrthogonalRouter());// !!!
-			// getVisual().setInterpolator(new PolyBezierInterpolator());
-		}
-
 		getVisual().setStartAnchor(anchor);
 
-		// !!!! MousePositionAnchor is StaticAnchor!
 		MousePositionAnchor endAnchor = new MousePositionAnchor(
 				FX2Geometry.toPoint(getVisual().localToScene(Geometry2FX.toFXPoint(getVisual().getStartPoint()))));
-		// getVisual().setRouter(new OrthogonalRouter());
 		endAnchor.init();
-		// getVisual().setRouter(new OrthogonalRouter());
 		getVisual().setEndAnchor(endAnchor);
-		// !!!!
 	}
 
 //	@Override
@@ -107,9 +96,7 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Connectio
 
 	@Override
 	protected Connection doCreateVisual() {
-		MindMapConnectionVisual mmcv = new MindMapConnectionVisual(points);
-		// mmcv.setRouter(new OrthogonalRouter());
-		return mmcv;
+		return new MindMapConnectionVisual(points);
 //		return null;
 	}
 
@@ -119,10 +106,8 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Connectio
 
 	@Override
 	protected void doDetachFromAnchorageVisual(IVisualPart<? extends Node> anchorage, String role) {
-		// getVisual().setRouter(new OrthogonalRouter());
 		getVisual().setStartPoint(getVisual().getStartPoint());
 		((MousePositionAnchor) getVisual().getEndAnchor()).dispose();
-		// getVisual().setRouter(new OrthogonalRouter());
 		getVisual().setEndPoint(getVisual().getEndPoint());
 
 	}

@@ -3,6 +3,8 @@ package com.itemis.gef.tutorial.mindmap.policies;
 import java.util.Collections;
 
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.gef.common.adapt.AdapterKey;
+import org.eclipse.gef.fx.anchors.IAnchor;
 import org.eclipse.gef.mvc.fx.handlers.AbstractHandler;
 import org.eclipse.gef.mvc.fx.handlers.IOnClickHandler;
 import org.eclipse.gef.mvc.fx.handlers.IOnHoverHandler;
@@ -13,6 +15,8 @@ import org.eclipse.gef.mvc.fx.policies.CreationPolicy;
 import org.eclipse.gef.mvc.fx.viewer.IViewer;
 
 import com.google.common.collect.HashMultimap;
+import com.google.common.reflect.TypeToken;
+import com.google.inject.Provider;
 import com.itemis.gef.tutorial.mindmap.model.MindMapConnection;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel.Type;
@@ -94,24 +98,24 @@ public class CreateNewConnectionOnClickHandler extends AbstractHandler implement
 
 	@Override
 	public void hover(MouseEvent e) {
-//		IViewer viewer = getHost().getRoot().getViewer();
-//		ItemCreationModel creationModel = viewer.getAdapter(ItemCreationModel.class);
-//		MindMapNodePart source = null;
-//		MindMapNodePart target = null;
+		IViewer viewer = getHost().getRoot().getViewer();
+		ItemCreationModel creationModel = viewer.getAdapter(ItemCreationModel.class);
+		MindMapNodePart source = null;
+		MindMapNodePart target = null;
 //		source = creationModel.getSource();
-//		target = (MindMapNodePart) getHost();
+		target = (MindMapNodePart) getHost();
 //		if (!(source == null)) {
 //			Provider<? extends IAnchor> adapterSource = source
 //					.getAdapter(AdapterKey.get(new TypeToken<Provider<? extends IAnchor>>() {
 //					}));
 //			adapterSource.get();
 //		}
-//		if (!(target == null)) {
-//			Provider<? extends IAnchor> adapterTarget = target
-//					.getAdapter(AdapterKey.get(new TypeToken<Provider<? extends IAnchor>>() {
-//					}));
-//			adapterTarget.get();
-//		}
+		if (!(target == null)) {
+			Provider<? extends IAnchor> adapterTarget = target
+					.getAdapter(AdapterKey.get(new TypeToken<Provider<? extends IAnchor>>() {
+					}));
+			adapterTarget.get();
+		}
 
 	}
 

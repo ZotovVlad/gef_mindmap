@@ -20,7 +20,6 @@ import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel.Type;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapConnectionPart;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
-import com.itemis.gef.tutorial.mindmap.parts.SimpleMindMapAnchorProvider;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -124,11 +123,6 @@ public class MindMapKeyHandler extends AbstractHandler implements IOnStrokeHandl
 			deleteNode();
 			break;
 		}
-		case SHIFT: {
-			// - Orthogonal connection
-			SimpleMindMapAnchorProvider.isStaticAnchor = false;
-			break;
-		}
 		default: {
 			break;
 		}
@@ -137,31 +131,23 @@ public class MindMapKeyHandler extends AbstractHandler implements IOnStrokeHandl
 
 	@Override
 	public void initialPress(KeyEvent event) {
-		if (event.isShiftDown()) {
-			// - Orthogonal connection
-			SimpleMindMapAnchorProvider.isStaticAnchor = false;
-		} else {
-			// - Normal connection
-			SimpleMindMapAnchorProvider.isStaticAnchor = true;
-		}
+
 	}
 
 	@Override
 	public void press(KeyEvent event) {
-
-//		if (event.isShiftDown() && event.isControlDown()) {
-//			switch (event.getCode()) {
-//			case Z: {
-//				// - Pressed (Ctrl + Shift + z)
-//				System.out.println("// - (Ctrl + Shift + z)");
-//				break;
-//			}
-//			default: {
-//				break;
-//			}
-//			}
-//		} else
-		if (event.isControlDown()) {
+		if (event.isShiftDown() && event.isControlDown()) {
+			switch (event.getCode()) {
+			case Z: {
+				// - Pressed (Ctrl + Shift + z)
+				System.out.println("// - (Ctrl + Shift + z)");
+				break;
+			}
+			default: {
+				break;
+			}
+			}
+		} else if (event.isControlDown()) {
 			switch (event.getCode()) {
 
 			case X: {

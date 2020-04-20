@@ -125,7 +125,7 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Information");
 			alert.setHeaderText(null);
-			String pathFile = "File this node locates in the folder: " + MindMapNode.userDir + File.separator + "Files"
+			String pathFile = "File this node locates in the folder: " + MindMapNode.userDir + File.separator + "files"
 					+ File.separator + node.hashCode() + ".txt";
 			alert.setContentText(pathFile);
 			alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);

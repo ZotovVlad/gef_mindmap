@@ -1,5 +1,6 @@
 package com.itemis.gef.tutorial.mindmap.model;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ public class SimpleMindMapExampleFactory {
 
 	public SimpleMindMap createComplexExample() {
 		SimpleMindMap mindMap = new SimpleMindMap();
+		SimpleMindMap.cleanDirectory(
+				new File(System.getProperty("user.dir") + File.separator + "files" + File.separator + "nodes"));
 
 		List<MindMapNode> child = new ArrayList<>();
 		for (int i = 0; i < 3; i++) {

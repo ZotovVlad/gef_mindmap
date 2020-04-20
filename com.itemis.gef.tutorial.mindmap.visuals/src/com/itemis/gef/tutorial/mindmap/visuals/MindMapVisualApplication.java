@@ -1,8 +1,8 @@
 package com.itemis.gef.tutorial.mindmap.visuals;
 
+import org.eclipse.gef.fx.anchors.ChopBoxStrategy;
 import org.eclipse.gef.fx.anchors.DynamicAnchor;
 import org.eclipse.gef.fx.nodes.Connection;
-import org.eclipse.gef.fx.nodes.OrthogonalRouter;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -49,14 +49,9 @@ public class MindMapVisualApplication extends Application {
 		System.out.println(node2.hashCode());
 
 		Connection conn = new MindMapConnectionVisual();
-		conn.setRouter(new OrthogonalRouter());
-		conn.setStartAnchor(new DynamicAnchor(node));// , new OrthogonalProjectionStrategy()));// , new
-														// ChopBoxStrategy()));
-
-		// OrthogonalProjectionStrategy,
-		// ProjectionStrategy
-		conn.setEndAnchor(new DynamicAnchor(node2));// , new OrthogonalProjectionStrategy()));// , new
-													// ChopBoxStrategy()));
+		conn.setStartAnchor(new DynamicAnchor(node, new ChopBoxStrategy())); // OrthogonalProjectionStrategy,
+																				// ProjectionStrategy
+		conn.setEndAnchor(new DynamicAnchor(node2, new ChopBoxStrategy()));
 
 		// root.getChildren().add(iv1);
 		root.getChildren().addAll(conn, node, node2);

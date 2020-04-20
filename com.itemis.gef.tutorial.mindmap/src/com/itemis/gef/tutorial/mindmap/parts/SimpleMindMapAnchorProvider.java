@@ -1,9 +1,7 @@
 package com.itemis.gef.tutorial.mindmap.parts;
 
 import org.eclipse.gef.common.adapt.IAdaptable;
-import org.eclipse.gef.fx.anchors.DynamicAnchor;
 import org.eclipse.gef.fx.anchors.IAnchor;
-import org.eclipse.gef.fx.anchors.ProjectionStrategy;
 import org.eclipse.gef.fx.anchors.StaticAnchor;
 import org.eclipse.gef.geometry.planar.Point;
 import org.eclipse.gef.mvc.fx.parts.IVisualPart;
@@ -27,10 +25,6 @@ public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPa
 		implements Provider<IAnchor> {
 
 	private static final int SIZERECTANGLEBOX = 10;
-
-	public static boolean isStaticAnchor = true;
-
-	private DynamicAnchor dynamicAnchor;
 	private StaticAnchor staticAnchor;
 
 	@Override
@@ -50,28 +44,16 @@ public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPa
 			mindMapNodeVisual.pointConnection.add(new Point(0, 170 / 2));
 		}
 
-		if (isStaticAnchor) {
-			// return staticAnchor
-			if (mindMapNodeVisual.pointConnection.size() == 0) {
-				// return default-staticAnchor
-				// staticAnchor = new StaticAnchor(mindMapNodeVisual, new Point(5, 5));
-				// return staticAnchor;
-				dynamicAnchor = new DynamicAnchor(mindMapNodeVisual);
-				return dynamicAnchor;
-			} else {
-				// return point-staticAnchor
-//				staticAnchor = new StaticAnchor(mindMapNodeVisual,
-//						mindMapNodeVisual.pointConnection.get(mindMapNodeVisual.pointConnection.size() - 1));
-//				return staticAnchor;
-
-				dynamicAnchor = new DynamicAnchor(mindMapNodeVisual);
-				return dynamicAnchor;
-			}
+		// return staticAnchor
+		if (mindMapNodeVisual.pointConnection.size() == 0) {
+			// return default-staticAnchor
+			staticAnchor = new StaticAnchor(mindMapNodeVisual, new Point(5, 5));
+			return staticAnchor;
 		} else {
-			// return staticAnchor
-			dynamicAnchor = new DynamicAnchor(mindMapNodeVisual, new ProjectionStrategy());
-			// , new OrthogonalProjectionStrategy());
-			return dynamicAnchor;
+			// return point-staticAnchor
+			staticAnchor = new StaticAnchor(mindMapNodeVisual,
+					mindMapNodeVisual.pointConnection.get(mindMapNodeVisual.pointConnection.size() - 1));
+			return staticAnchor;
 		}
 	}
 }
