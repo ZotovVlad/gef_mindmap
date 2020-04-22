@@ -143,7 +143,7 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 
 		try {
 			myWriter = new FileWriter(file);
-			myWriter.write("/*It's file with code at this node*/\n");
+			myWriter.write("//This is the file with the node code.\n");
 			myWriter.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

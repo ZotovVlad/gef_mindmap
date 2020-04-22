@@ -1,1 +1,1 @@
-/*It's file with code at this node*/
+//This is the file with the node code.*/
