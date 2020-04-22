@@ -1,6 +1,7 @@
 package com.itemis.gef.tutorial.mindmap.model;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -38,7 +39,16 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	public static final String PROP_QUANTITYANCHORS = "quantityAnchors";
 	public static final String PROP_ANCHORS = "anchors";
 
+	private String nodeCustomJSON = userDir + File.separator + "files" + File.separator + "nodes" + File.separator;
+
+	private String nodeAllJSON = userDir + File.separator + "files" + File.separator;
+
+	private String nodeCode = userDir + File.separator + "files" + File.separator + "nodes" + File.separator;
+
+	private String nodeDirectory = userDir + File.separator + "files" + File.separator + "nodes" + File.separator;
+
 	private Set<String> titlesIncomingConnection = new HashSet<>();
+
 	private Set<String> titlesOutgoingConnection = new HashSet<>();
 
 	/**
@@ -55,26 +65,18 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	 * The background color of the node
 	 */
 	private Color color;
-
 	/**
 	 * The file of the node
 	 */
 	private File file;
-
 	/**
 	 * The image of the node
 	 */
 	private Image image;
-
 	/**
 	 * The size and position of the visual representation
 	 */
 	private Rectangle bounds;
-
-	private String nodeCustomJSON = userDir + File.separator + "files" + File.separator + "nodes" + File.separator;
-	private String nodeAllJSON = userDir + File.separator + "files" + File.separator;
-	private String nodeCode = userDir + File.separator + "files" + File.separator + "nodes" + File.separator;
-	private String nodeDirectory = userDir + File.separator + "files" + File.separator + "nodes" + File.separator;
 
 	public List<MindMapConnection> incomingConnections = Lists.newArrayList();
 
@@ -93,7 +95,7 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 
 		createFile(nodeCustomJSON);
 		createFile(nodeAllJSON);
-		createFile(nodeCode);
+		createFileCode(nodeCode);
 	}
 
 	public void addIncomingConnection(MindMapConnection conn) {
@@ -131,6 +133,27 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		try {
 			file.createNewFile();
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void createFileCode(String path) {
+		File file = new File(path);
+		FileWriter myWriter;
+
+		try {
+			myWriter = new FileWriter(file);
+			myWriter.write("/*It's file with code at this node*/\n");
+			myWriter.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -177,6 +200,22 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 
 	public List<MindMapConnection> getIncomingConnections() {
 		return incomingConnections;
+	}
+
+	public String getNodeAllJSON() {
+		return nodeAllJSON;
+	}
+
+	public String getNodeCode() {
+		return nodeCode;
+	}
+
+	public String getNodeCustomJSON() {
+		return nodeCustomJSON;
+	}
+
+	public String getNodeDirectory() {
+		return nodeDirectory;
 	}
 
 	public List<MindMapConnection> getOutgoingConnections() {
@@ -243,6 +282,22 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 
 	public void setImage(Image image) {
 		pcs.firePropertyChange(PROP_IMAGE, this.image, (this.image = image));
+	}
+
+	public void setNodeAllJSON(String nodeAllJSON) {
+		this.nodeAllJSON = nodeAllJSON;
+	}
+
+	public void setNodeCode(String nodeCode) {
+		this.nodeCode = nodeCode;
+	}
+
+	public void setNodeCustomJSON(String nodeCustomJSON) {
+		this.nodeCustomJSON = nodeCustomJSON;
+	}
+
+	public void setNodeDirectory(String nodeDirectory) {
+		this.nodeDirectory = nodeDirectory;
 	}
 
 	public void setTitle(String title) {

@@ -1,8 +1,10 @@
 package com.itemis.gef.tutorial.mindmap.policies;
 
+import java.awt.Desktop;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -52,6 +54,32 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 
 	@Override
 	public void click(MouseEvent event) {
+		if (event.getClickCount() == 2) {
+			MindMapNodePart host = (MindMapNodePart) getHost();
+			MindMapNode node = host.getContent();
+
+			File file = new File(node.getNodeCode());
+			if (!Desktop.isDesktopSupported()) {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Information");
+				alert.setHeaderText(null);
+				alert.setContentText("Desktop is not supported open txt files");
+				alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+				alert.showAndWait();
+				return;
+			}
+
+			Desktop desktop = Desktop.getDesktop();
+			if (file.exists()) {
+				try {
+					desktop.open(file);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		}
+
 		if (!event.isSecondaryButtonDown()) {
 			return; // only listen to secondary buttons
 		}
