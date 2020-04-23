@@ -10,6 +10,8 @@ import org.eclipse.gef.mvc.fx.domain.IDomain;
 import org.eclipse.gef.mvc.fx.viewer.IViewer;
 
 import com.google.inject.Guice;
+import com.itemis.gef.tutorial.mindmap.JSON.ControllerJSON;
+import com.itemis.gef.tutorial.mindmap.model.AbstractMindMapItem;
 import com.itemis.gef.tutorial.mindmap.model.SimpleMindMap;
 import com.itemis.gef.tutorial.mindmap.model.SimpleMindMapExampleFactory;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel;
@@ -184,6 +186,12 @@ public class SimpleMindMapApplication extends Application {
 		SimpleMindMapExampleFactory fac = new SimpleMindMapExampleFactory();
 
 		SimpleMindMap mindMap = fac.createComplexExample();
+
+		ControllerJSON controllerJSON = new ControllerJSON();
+		for (AbstractMindMapItem abstractMindMapItem : mindMap.getChildElements()) {
+			abstractMindMapItem.addPropertyChangeListener(controllerJSON);
+		}
+
 		IViewer viewer = getContentViewer();
 		viewer.getContents().setAll(mindMap);
 	}

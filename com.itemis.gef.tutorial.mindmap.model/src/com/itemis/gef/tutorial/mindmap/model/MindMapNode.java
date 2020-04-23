@@ -274,6 +274,7 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 
 	public void setDescription(String description) {
 		pcs.firePropertyChange(PROP_DESCRIPTION, this.description, (this.description = description));
+		System.out.println(description);
 	}
 
 	public void setFile(File file) {

@@ -12,6 +12,7 @@ import org.eclipse.gef.mvc.fx.policies.CreationPolicy;
 import org.eclipse.gef.mvc.fx.viewer.IViewer;
 
 import com.google.common.collect.HashMultimap;
+import com.itemis.gef.tutorial.mindmap.JSON.ControllerJSON;
 import com.itemis.gef.tutorial.mindmap.model.MindMapNode;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel.Type;
@@ -55,6 +56,8 @@ public class CreateNewNodeOnClickHandler extends AbstractHandler implements IOnC
 			// determine coordinates of new nodes origin in model coordinates
 			Point2D mouseInLocal = part.getVisual().sceneToLocal(e.getSceneX(), e.getSceneY());
 
+			ControllerJSON controllerJSON = new ControllerJSON();
+
 			MindMapNode newNode = new MindMapNode();
 			newNode.setTitle("Node" + i++);
 			newNode.setDescription("no description");
@@ -66,6 +69,7 @@ public class CreateNewNodeOnClickHandler extends AbstractHandler implements IOnC
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			newNode.addPropertyChangeListener(controllerJSON);
 
 			// GEF provides the CreatePolicy to add a new element to the model
 			CreationPolicy creationPolicy = getHost().getRoot().getAdapter(CreationPolicy.class);
