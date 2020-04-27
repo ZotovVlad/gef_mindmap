@@ -65,6 +65,7 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	 * The background color of the node
 	 */
 	private Color color;
+
 	/**
 	 * The file of the node
 	 */
@@ -77,7 +78,6 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	 * The size and position of the visual representation
 	 */
 	private Rectangle bounds;
-
 	public List<MindMapConnection> incomingConnections = Lists.newArrayList();
 
 	public List<MindMapConnection> outgoingConnections = Lists.newArrayList();
