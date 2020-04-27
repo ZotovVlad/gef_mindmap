@@ -185,9 +185,9 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 
 		MindMapNodePart host = (MindMapNodePart) getHost();
 
-		MenuItem titleItem = new MenuItem("Title ...");
-		titleItem.setOnAction((e) -> {
-			ControllerJSON.read(MindMapNode.PROP_TITLE);
+		Menu titleItem = new Menu("Title ...");
+		MenuItem titleEnter = new MenuItem("Title enter...");
+		titleEnter.setOnAction((e) -> {
 			try {
 				String newTitle = showDialog(host.getContent().getTitle(), "Enter new Title...");
 				ITransactionalOperation op = new SetMindMapNodeTitleOperation(host, newTitle);
@@ -195,11 +195,27 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 			} catch (ExecutionException e1) {
 				e1.printStackTrace();
 			}
-
 		});
+		Menu titleExample = new Menu("Title example ...");
+		ArrayList<String> titles = ControllerJSON.read(MindMapNode.PROP_TITLE);
+		for (String string : titles) {
+			MenuItem titleExampleItem = new MenuItem(string);
+			titleExampleItem.setOnAction((e) -> {
+				ITransactionalOperation op = new SetMindMapNodeTitleOperation(host,
+						titleExampleItem.getText().toString());
+				try {
+					host.getRoot().getViewer().getDomain().execute(op, null);
+				} catch (ExecutionException e1) {
+					e1.printStackTrace();
+				}
+			});
+			titleExample.getItems().add(titleExampleItem);
+		}
+		titleItem.getItems().addAll(titleEnter, titleExample);
 
-		MenuItem descrItem = new MenuItem("Description ...");
-		descrItem.setOnAction((e) -> {
+		Menu descrItem = new Menu("Description ...");
+		MenuItem descrEnter = new MenuItem("Description enter...");
+		descrEnter.setOnAction((e) -> {
 			try {
 				String newDescription = showDialog(host.getContent().getDescription(), "Enter new Description...");
 				ITransactionalOperation op = new SetMindMapNodeDescriptionOperation(host, newDescription);
@@ -208,6 +224,22 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 				e1.printStackTrace();
 			}
 		});
+		Menu descrExample = new Menu("Description example ...");
+		ArrayList<String> descriptions = ControllerJSON.read(MindMapNode.PROP_DESCRIPTION);
+		for (String string : descriptions) {
+			MenuItem descrExampleItem = new MenuItem(string);
+			descrExampleItem.setOnAction((e) -> {
+				ITransactionalOperation op = new SetMindMapNodeDescriptionOperation(host,
+						descrExampleItem.getText().toString());
+				try {
+					host.getRoot().getViewer().getDomain().execute(op, null);
+				} catch (ExecutionException e1) {
+					e1.printStackTrace();
+				}
+			});
+			descrExample.getItems().add(descrExampleItem);
+		}
+		descrItem.getItems().addAll(descrEnter, descrExample);
 
 		textsMenu.getItems().addAll(titleItem, descrItem);
 

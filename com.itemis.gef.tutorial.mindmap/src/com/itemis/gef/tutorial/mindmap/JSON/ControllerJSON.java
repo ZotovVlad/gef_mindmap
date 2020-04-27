@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -42,7 +41,7 @@ public class ControllerJSON implements PropertyChangeListener {
 		}
 	}
 
-	public static List<String> read(String property) {
+	public static ArrayList<String> read(String property) {
 		ArrayList<String> properties = new ArrayList<>();
 		try {
 			Reader reader = new FileReader(((MindMapNode) mindMapNodes.get(0)).getNodeAllJSON());
