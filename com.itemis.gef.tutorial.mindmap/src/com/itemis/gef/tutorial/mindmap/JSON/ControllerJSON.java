@@ -2,13 +2,17 @@ package com.itemis.gef.tutorial.mindmap.JSON;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import com.itemis.gef.tutorial.mindmap.model.AbstractMindMapItem;
 import com.itemis.gef.tutorial.mindmap.model.MindMapNode;
@@ -38,8 +42,20 @@ public class ControllerJSON implements PropertyChangeListener {
 		}
 	}
 
-	public static void read() {
-		// TODO read JSON file node
+	public static List<String> read(String property) {
+		ArrayList<String> properties = new ArrayList<>();
+		try {
+			Reader reader = new FileReader(((MindMapNode) mindMapNodes.get(0)).getNodeAllJSON());
+			JSONTokener parser = new JSONTokener(reader);
+			JSONObject root = new JSONObject(parser);
+			JSONArray array = (JSONArray) root.get(property);
+			for (int i = 0; i < array.length(); i++) {
+				properties.add((String) array.get(i));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return properties;
 	}
 
 	public static void writeExample() {

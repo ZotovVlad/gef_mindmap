@@ -20,6 +20,7 @@ import org.eclipse.gef.mvc.fx.parts.IRootPart;
 import org.eclipse.gef.mvc.fx.parts.IVisualPart;
 import org.eclipse.gef.mvc.fx.policies.DeletionPolicy;
 
+import com.itemis.gef.tutorial.mindmap.JSON.ControllerJSON;
 import com.itemis.gef.tutorial.mindmap.model.MindMapNode;
 import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeColorOperation;
 import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeDescriptionOperation;
@@ -186,6 +187,7 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 
 		MenuItem titleItem = new MenuItem("Title ...");
 		titleItem.setOnAction((e) -> {
+			ControllerJSON.read(MindMapNode.PROP_TITLE);
 			try {
 				String newTitle = showDialog(host.getContent().getTitle(), "Enter new Title...");
 				ITransactionalOperation op = new SetMindMapNodeTitleOperation(host, newTitle);
