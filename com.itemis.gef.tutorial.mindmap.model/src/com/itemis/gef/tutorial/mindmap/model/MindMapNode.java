@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.gef.geometry.planar.Rectangle;
@@ -51,15 +53,25 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 
 	private Set<String> titlesOutgoingConnection = new HashSet<>();
 
+	private String name;
+	private String description;
+	private String function_hex_field;
+	private String number_of_inputs;
+	private String number_of_outputs;
+	private String input1;
+	private String input2;
+	private String output1;
+	private String output2;
+	private String output3;
+	private String output4;
+	Map<String, String> inputs = new HashMap<>();
+	Map<String, String> outputs = new HashMap<>();
+	private String end;
+
 	/**
 	 * The title of the node
 	 */
 	private String title;
-
-	/**
-	 * he description of the node, which is optional
-	 */
-	private String description;
 
 	/**
 	 * The background color of the node
@@ -70,14 +82,17 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	 * The file of the node
 	 */
 	private File file;
+
 	/**
 	 * The image of the node
 	 */
 	private Image image;
+
 	/**
 	 * The size and position of the visual representation
 	 */
 	private Rectangle bounds;
+
 	public List<MindMapConnection> incomingConnections = Lists.newArrayList();
 
 	public List<MindMapConnection> outgoingConnections = Lists.newArrayList();
@@ -190,8 +205,16 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		return description;
 	}
 
+	public String getEnd() {
+		return end;
+	}
+
 	public File getFile() {
 		return file;
+	}
+
+	public String getFunction_hex_field() {
+		return function_hex_field;
 	}
 
 	public Image getImage() {
@@ -200,6 +223,22 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 
 	public List<MindMapConnection> getIncomingConnections() {
 		return incomingConnections;
+	}
+
+	public String getInput1() {
+		return input1;
+	}
+
+	public String getInput2() {
+		return input2;
+	}
+
+	public Map<String, String> getInputs() {
+		return inputs;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public String getNodeAllJSON() {
@@ -218,8 +257,36 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		return nodeDirectory;
 	}
 
+	public String getNumber_of_inputs() {
+		return number_of_inputs;
+	}
+
+	public String getNumber_of_outputs() {
+		return number_of_outputs;
+	}
+
 	public List<MindMapConnection> getOutgoingConnections() {
 		return outgoingConnections;
+	}
+
+	public String getOutput1() {
+		return output1;
+	}
+
+	public String getOutput2() {
+		return output2;
+	}
+
+	public String getOutput3() {
+		return output3;
+	}
+
+	public String getOutput4() {
+		return output4;
+	}
+
+	public Map<String, String> getOutputs() {
+		return outputs;
 	}
 
 	public String getTitle() {
@@ -277,12 +344,36 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		System.out.println(description);
 	}
 
+	public void setEnd(String end) {
+		this.end = end;
+	}
+
 	public void setFile(File file) {
 		pcs.firePropertyChange(PROP_FILE, this.file, (this.file = file));
 	}
 
+	public void setFunction_hex_field(String function_hex_field) {
+		this.function_hex_field = function_hex_field;
+	}
+
 	public void setImage(Image image) {
 		pcs.firePropertyChange(PROP_IMAGE, this.image, (this.image = image));
+	}
+
+	public void setInput1(String input1) {
+		this.input1 = input1;
+	}
+
+	public void setInput2(String input2) {
+		this.input2 = input2;
+	}
+
+	public void setInputs(Map<String, String> inputs) {
+		this.inputs = inputs;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public void setNodeAllJSON(String nodeAllJSON) {
@@ -299,6 +390,34 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 
 	public void setNodeDirectory(String nodeDirectory) {
 		this.nodeDirectory = nodeDirectory;
+	}
+
+	public void setNumber_of_inputs(String number_of_inputs) {
+		this.number_of_inputs = number_of_inputs;
+	}
+
+	public void setNumber_of_outputs(String number_of_outputs) {
+		this.number_of_outputs = number_of_outputs;
+	}
+
+	public void setOutput1(String output1) {
+		this.output1 = output1;
+	}
+
+	public void setOutput2(String output2) {
+		this.output2 = output2;
+	}
+
+	public void setOutput3(String output3) {
+		this.output3 = output3;
+	}
+
+	public void setOutput4(String output4) {
+		this.output4 = output4;
+	}
+
+	public void setOutputs(Map<String, String> outputs) {
+		this.outputs = outputs;
 	}
 
 	public void setTitle(String title) {
