@@ -33,6 +33,7 @@ public class MindMapNodeVisual extends Region {
 	private Text titleText;
 	private TextFlow descriptionFlow;
 	private Text descriptionText;
+	private Text nameText;
 	private GeometryNode<RoundedRectangle> shape;
 	private VBox labelVBox;
 	private Image descriptionImage;
@@ -64,6 +65,10 @@ public class MindMapNodeVisual extends Region {
 		titleText = new Text();
 		titleText.setTextOrigin(VPos.TOP);
 
+		// create title text
+		nameText = new Text();
+		nameText.setTextOrigin(VPos.TOP);
+
 		// create description text
 		descriptionText = new Text();
 		descriptionText.setTextOrigin(VPos.TOP);
@@ -76,7 +81,7 @@ public class MindMapNodeVisual extends Region {
 		descriptionFlow.maxWidthProperty().bind(shape.widthProperty().subtract(HORIZONTAL_PADDING * 2));
 
 		// vertically lay out title and description
-		labelVBox.getChildren().addAll(titleText, descriptionFlow);
+		labelVBox.getChildren().addAll(titleText, nameText, descriptionFlow);
 
 		// ensure title is always visible (see also #computeMinWidth(double) and
 		// #computeMinHeight(double) methods)
@@ -207,6 +212,10 @@ public class MindMapNodeVisual extends Region {
 		return descriptionImage;
 	}
 
+	public Text getNameText() {
+		return nameText;
+	}
+
 	public List<Point> getPoints() {
 		return points;
 	}
@@ -244,6 +253,10 @@ public class MindMapNodeVisual extends Region {
 			labelVBox.getChildren().add(iv1);
 			this.descriptionImage = image;
 		}
+	}
+
+	public void setName(String name) {
+		this.nameText.setText(name);
 	}
 
 	public void setTitle(String title) {

@@ -1,5 +1,7 @@
 package com.itemis.gef.tutorial.mindmap.operations;
 
+import java.util.Map;
+
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.AbstractOperation;
 import org.eclipse.core.runtime.IAdaptable;
@@ -11,27 +13,27 @@ import org.eclipse.gef.mvc.fx.operations.ITransactionalOperation;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
 
 /**
- * operation to change the Title property of a MindMapNode
+ * operation to change the Inputs property of a MindMapNode
  *
  * @author bajurus
  *
  */
-public class SetMindMapNodeTitleOperation extends AbstractOperation implements ITransactionalOperation {
+public class SetMindMapNodeInputsOperation extends AbstractOperation implements ITransactionalOperation {
 
 	private final MindMapNodePart nodePart;
-	private final String oldTitle;
-	private final String newTitle;
+	private final Map<String, String> oldInputs;
+	private final Map<String, String> newInputs;
 
-	public SetMindMapNodeTitleOperation(MindMapNodePart nodePart, String newTitle) {
+	public SetMindMapNodeInputsOperation(MindMapNodePart nodePart, Map<String, String> newInputs) {
 		super("Change color");
 		this.nodePart = nodePart;
-		this.newTitle = newTitle;
-		this.oldTitle = nodePart.getContent().getTitle();
+		this.newInputs = newInputs;
+		this.oldInputs = nodePart.getContent().getInputs();
 	}
 
 	@Override
 	public IStatus execute(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
-		nodePart.getContent().setTitle(newTitle);
+		nodePart.getContent().setInputs(newInputs);
 		return Status.OK_STATUS;
 	}
 
@@ -43,7 +45,7 @@ public class SetMindMapNodeTitleOperation extends AbstractOperation implements I
 
 	@Override
 	public boolean isNoOp() {
-		return newTitle.equals(oldTitle);
+		return newInputs.equals(oldInputs);
 	}
 
 	@Override
@@ -53,7 +55,7 @@ public class SetMindMapNodeTitleOperation extends AbstractOperation implements I
 
 	@Override
 	public IStatus undo(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
-		nodePart.getContent().setTitle(oldTitle);
+		nodePart.getContent().setInputs(oldInputs);
 		return Status.OK_STATUS;
 	}
 }

@@ -1,5 +1,7 @@
 package com.itemis.gef.tutorial.mindmap.operations;
 
+import java.util.Map;
+
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.AbstractOperation;
 import org.eclipse.core.runtime.IAdaptable;
@@ -11,27 +13,27 @@ import org.eclipse.gef.mvc.fx.operations.ITransactionalOperation;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
 
 /**
- * operation to change the Title property of a MindMapNode
+ * operation to change the Outputs property of a MindMapNode
  *
  * @author bajurus
  *
  */
-public class SetMindMapNodeTitleOperation extends AbstractOperation implements ITransactionalOperation {
+public class SetMindMapNodeOutputsOperation extends AbstractOperation implements ITransactionalOperation {
 
 	private final MindMapNodePart nodePart;
-	private final String oldTitle;
-	private final String newTitle;
+	private final Map<String, String> oldOutputs;
+	private final Map<String, String> newOutputs;
 
-	public SetMindMapNodeTitleOperation(MindMapNodePart nodePart, String newTitle) {
+	public SetMindMapNodeOutputsOperation(MindMapNodePart nodePart, Map<String, String> newOutputs) {
 		super("Change color");
 		this.nodePart = nodePart;
-		this.newTitle = newTitle;
-		this.oldTitle = nodePart.getContent().getTitle();
+		this.newOutputs = newOutputs;
+		this.oldOutputs = nodePart.getContent().getOutputs();
 	}
 
 	@Override
 	public IStatus execute(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
-		nodePart.getContent().setTitle(newTitle);
+		nodePart.getContent().setOutputs(newOutputs);
 		return Status.OK_STATUS;
 	}
 
@@ -43,7 +45,7 @@ public class SetMindMapNodeTitleOperation extends AbstractOperation implements I
 
 	@Override
 	public boolean isNoOp() {
-		return newTitle.equals(oldTitle);
+		return newOutputs.equals(oldOutputs);
 	}
 
 	@Override
@@ -53,7 +55,7 @@ public class SetMindMapNodeTitleOperation extends AbstractOperation implements I
 
 	@Override
 	public IStatus undo(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
-		nodePart.getContent().setTitle(oldTitle);
+		nodePart.getContent().setOutputs(oldOutputs);
 		return Status.OK_STATUS;
 	}
 }

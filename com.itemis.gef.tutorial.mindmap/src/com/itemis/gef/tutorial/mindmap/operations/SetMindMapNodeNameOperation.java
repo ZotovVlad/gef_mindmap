@@ -11,27 +11,27 @@ import org.eclipse.gef.mvc.fx.operations.ITransactionalOperation;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
 
 /**
- * operation to change the Title property of a MindMapNode
+ * operation to change the Name property of a MindMapNode
  *
  * @author bajurus
  *
  */
-public class SetMindMapNodeTitleOperation extends AbstractOperation implements ITransactionalOperation {
+public class SetMindMapNodeNameOperation extends AbstractOperation implements ITransactionalOperation {
 
 	private final MindMapNodePart nodePart;
-	private final String oldTitle;
-	private final String newTitle;
+	private final String oldName;
+	private final String newName;
 
-	public SetMindMapNodeTitleOperation(MindMapNodePart nodePart, String newTitle) {
+	public SetMindMapNodeNameOperation(MindMapNodePart nodePart, String newName) {
 		super("Change color");
 		this.nodePart = nodePart;
-		this.newTitle = newTitle;
-		this.oldTitle = nodePart.getContent().getTitle();
+		this.newName = newName;
+		this.oldName = nodePart.getContent().getName();
 	}
 
 	@Override
 	public IStatus execute(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
-		nodePart.getContent().setTitle(newTitle);
+		nodePart.getContent().setName(newName);
 		return Status.OK_STATUS;
 	}
 
@@ -43,7 +43,7 @@ public class SetMindMapNodeTitleOperation extends AbstractOperation implements I
 
 	@Override
 	public boolean isNoOp() {
-		return newTitle.equals(oldTitle);
+		return newName.equals(oldName);
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class SetMindMapNodeTitleOperation extends AbstractOperation implements I
 
 	@Override
 	public IStatus undo(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
-		nodePart.getContent().setTitle(oldTitle);
+		nodePart.getContent().setName(oldName);
 		return Status.OK_STATUS;
 	}
 }

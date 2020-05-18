@@ -12,6 +12,12 @@ import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
 
 import javafx.scene.image.Image;
 
+/**
+ * operation to change the Image property of a MindMapNode
+ *
+ * @author bajurus
+ *
+ */
 public class SetMindMapNodeImageOperation extends AbstractOperation implements ITransactionalOperation {
 
 	private final MindMapNodePart nodePart;

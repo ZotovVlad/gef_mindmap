@@ -220,7 +220,7 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		return file;
 	}
 
-	public String getFunction_hex_field() {
+	public String getFunctionHexField() {
 		return function_hex_field;
 	}
 
@@ -264,11 +264,11 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		return nodeDirectory;
 	}
 
-	public String getNumber_of_inputs() {
+	public String getNumberOfInputs() {
 		return number_of_inputs;
 	}
 
-	public String getNumber_of_outputs() {
+	public String getNumberOfOutputs() {
 		return number_of_outputs;
 	}
 
@@ -359,7 +359,7 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		pcs.firePropertyChange(PROP_FILE, this.file, (this.file = file));
 	}
 
-	public void setFunction_hex_field(String function_hex_field) {
+	public void setFunctionHexField(String function_hex_field) {
 		pcs.firePropertyChange(PROP_FUNCTION_HEX_FIELD, this.function_hex_field,
 				(this.function_hex_field = function_hex_field));
 	}
@@ -400,12 +400,12 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		this.nodeDirectory = nodeDirectory;
 	}
 
-	public void setNumber_of_inputs(String number_of_inputs) {
+	public void setNumberOfInputs(String number_of_inputs) {
 		pcs.firePropertyChange(PROP_NUMBER_OF_INPUTS, this.number_of_inputs,
 				(this.number_of_inputs = number_of_inputs));
 	}
 
-	public void setNumber_of_outputs(String number_of_outputs) {
+	public void setNumberOfOutputs(String number_of_outputs) {
 		pcs.firePropertyChange(PROP_NUMBER_OF_OUTPUTS, this.number_of_outputs,
 				(this.number_of_outputs = number_of_outputs));
 	}
