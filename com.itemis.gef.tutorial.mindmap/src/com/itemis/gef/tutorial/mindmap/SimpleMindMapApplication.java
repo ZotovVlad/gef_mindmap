@@ -114,6 +114,10 @@ public class SimpleMindMapApplication extends Application {
 			}
 		});
 
+		for (int i = 0; i < 10; i++) {
+
+		}
+
 		return new VBox(20, createNode, createConn);
 	}
 

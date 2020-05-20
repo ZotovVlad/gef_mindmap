@@ -1,42 +1,115 @@
 [
   {
-    "name":"inv1",
-    "description":"Invertor 1",
-    "function_hex_field":"inv1_field.hex",
-    "number_of_inputs":"1",
-    "number_of_outputs":"1",
-    "input1":["PIN_0","PIN_1"],
-    "input2":"",
-    "output1":["PAD_Out0","PAD_Out1","PAD_Out2","PAD_Out3"],
-    "output2":"",
-    "output3":"",
-    "output4":"",
-    "inputs":{"PIN_0":"inv1_pin_0_field.hex",
-              "PIN_1":"inv1_pin_1_field.hex"},
-    "outputs":{"PAD_Out0":"inv1_pad_out0_field.hex",
-               "PAD_Out1":"inv1_pad_out1_field.hex",
-               "PAD_Out2":"inv1_pad_out2_field.hex",
-               "PAD_Out3":"inv1_pad_out3_field.hex"},
-    "end":"inv1_flash_read_end_field.hex"
+    "name": "inv1",
+    "description": "Invertor 1",
+    "function_hex_field": "inv1_field.hex",
+    "number_of_inputs": "1",
+    "number_of_outputs": "1",
+    "inputs_name": {
+      "input1": [
+        "PIN_0",
+        "PIN_1"
+      ],
+      "input2": [
+        ""
+      ]
+    },
+    "outputs_name": {
+      "output1": [
+        "PAD_Out0",
+        "PAD_Out1",
+        "PAD_Out2",
+        "PAD_Out3"
+      ],
+      "output2": [
+        ""
+      ],
+      "output3": [
+        ""
+      ],
+      "output4": [
+        ""
+      ]
+    },
+    "inputs": {
+      "input1": {
+        "PIN_0": "inv1_pin_0_field.hex"
+      },
+      "input2": {
+        "PIN_1": "inv1_pin_1_field.hex"
+      }
+    },
+    "outputs": {
+      "output1": {
+        "PAD_Out0": "inv1_pad_out0_field.hex"
+      },
+      "output2": {
+        "PAD_Out1": "inv1_pad_out1_field.hex"
+      },
+      "output3": {
+        "PAD_Out2": "inv1_pad_out2_field.hex"
+      },
+      "output4": {
+        "PAD_Out3": "inv1_pad_out3_field.hex"
+      }
+    },
+    "end": "inv1_flash_read_end_field.hex"
   },
- {
-    "name":"and1",
-    "description":"And",
-    "function_hex_field":"and1_field.hex",
-    "number_of_inputs":"2",
-    "number_of_outputs":"1",
-    "input1":["PIN_0","PIN_1"],
-    "input2":["PIN_0","PIN_1"],
-    "output1":["PAD_Out0","PAD_Out1","PAD_Out2","PAD_Out3"],
-    "output2":"",
-    "output3":"",
-    "output4":"",
-    "inputs":{"PIN_0":"and1_pin_0_field.hex",
-              "PIN_1":"and1_pin_1_field.hex"},
-    "outputs":{"PAD_Out0":"and1_pad_out0_field.hex",
-               "PAD_Out1":"and1_pad_out1_field.hex",
-               "PAD_Out2":"and1_pad_out2_field.hex",
-               "PAD_Out3":"and1_pad_out3_field.hex"},
-    "end":"and1_flash_read_end_field.hex"
+  {
+    "name": "and1",
+    "description": "And",
+    "function_hex_field": "and1_field.hex",
+    "number_of_inputs": "2",
+    "number_of_outputs": "1",
+    "inputs_name": {
+      "input1": [
+        "PIN_0",
+        "PIN_1"
+      ],
+      "input2": [
+        "PIN_0",
+        "PIN_1"
+      ]
+    },
+    "outputs_name": {
+      "output1": [
+        "PAD_Out0",
+        "PAD_Out1",
+        "PAD_Out2",
+        "PAD_Out3"
+      ],
+      "output2": [
+        ""
+      ],
+      "output3": [
+        ""
+      ],
+      "output4": [
+        ""
+      ]
+    },
+    "inputs": {
+      "input1": {
+        "PIN_0": "and1_pin_0_field.hex"
+      },
+      "input2": {
+        "PIN_1": "and1_pin_1_field.hex"
+      }
+    },
+    "outputs": {
+      "output1": {
+        "PAD_Out0": "and1_pad_out0_field.hex"
+      },
+      "output2": {
+        "PAD_Out1": "and1_pad_out1_field.hex"
+      },
+      "output3": {
+        "PAD_Out2": "and1_pad_out2_field.hex"
+      },
+      "output4": {
+        "PAD_Out3": "and1_pad_out3_field.hex"
+      }
+    },
+    "end": "and1_flash_read_end_field.hex"
   }
 ]

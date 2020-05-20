@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -44,12 +45,8 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	public static final String PROP_FUNCTION_HEX_FIELD = "function_hex_field"; // for functional node
 	public static final String PROP_NUMBER_OF_INPUTS = "number_of_inputs"; // for functional node
 	public static final String PROP_NUMBER_OF_OUTPUTS = "number_of_outputs"; // for functional node
-	public static final String PROP_INPUT1 = "input1"; // for functional node
-	public static final String PROP_INPUT2 = "input2"; // for functional node
-	public static final String PROP_OUTPUT1 = "output1"; // for functional node
-	public static final String PROP_OUTPUT2 = "output2"; // for functional node
-	public static final String PROP_OUTPUT3 = "output3"; // for functional node
-	public static final String PROP_OUTPUT4 = "output4"; // for functional node
+	public static final String PROP_INPUTS_NAME = "inputs_name"; // for functional node
+	public static final String PROP_OUTPUTS_NAME = "outputs_name"; // for functional node
 	public static final String PROP_INPUTS = "inputs"; // for functional node
 	public static final String PROP_OUTPUTS = "outputs"; // for functional node
 	public static final String PROP_END = "end"; // for functional node
@@ -65,14 +62,10 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	private String function_hex_field; // for functional node
 	private String number_of_inputs; // for functional node
 	private String number_of_outputs; // for functional node
-	private String input1; // for functional node
-	private String input2; // for functional node
-	private String output1; // for functional node
-	private String output2; // for functional node
-	private String output3; // for functional node
-	private String output4; // for functional node
-	Map<String, String> inputs = new HashMap<>(); // for functional node
-	Map<String, String> outputs = new HashMap<>(); // for functional node
+	private List<Map<String, List<String>>> inputs_name = new ArrayList<>(); // for functional node
+	private List<Map<String, List<String>>> outputs_name = new ArrayList<>(); // for functional node
+	private Map<String, String> inputs = new HashMap<>(); // for functional node
+	private Map<String, String> outputs = new HashMap<>(); // for functional node
 	private String end; // for functional node
 
 	/**
@@ -232,16 +225,12 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		return incomingConnections;
 	}
 
-	public String getInput1() {
-		return input1;
-	}
-
-	public String getInput2() {
-		return input2;
-	}
-
 	public Map<String, String> getInputs() {
 		return inputs;
+	}
+
+	public List<Map<String, List<String>>> getInputsName() {
+		return inputs_name;
 	}
 
 	public String getName() {
@@ -276,24 +265,12 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		return outgoingConnections;
 	}
 
-	public String getOutput1() {
-		return output1;
-	}
-
-	public String getOutput2() {
-		return output2;
-	}
-
-	public String getOutput3() {
-		return output3;
-	}
-
-	public String getOutput4() {
-		return output4;
-	}
-
 	public Map<String, String> getOutputs() {
 		return outputs;
+	}
+
+	public List<Map<String, List<String>>> getOutputsName() {
+		return outputs_name;
 	}
 
 	public String getTitle() {
@@ -368,16 +345,12 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		pcs.firePropertyChange(PROP_IMAGE, this.image, (this.image = image));
 	}
 
-	public void setInput1(String input1) {
-		pcs.firePropertyChange(PROP_INPUT1, this.input1, (this.input1 = input1));
-	}
-
-	public void setInput2(String input2) {
-		pcs.firePropertyChange(PROP_INPUT2, this.input2, (this.input2 = input2));
-	}
-
 	public void setInputs(Map<String, String> inputs) {
 		pcs.firePropertyChange(PROP_INPUTS, this.inputs, (this.inputs = inputs));
+	}
+
+	public void setInputsName(List<Map<String, List<String>>> inputs_name) {
+		pcs.firePropertyChange(PROP_INPUTS_NAME, this.inputs_name, (this.inputs_name = inputs_name));
 	}
 
 	public void setName(String name) {
@@ -410,24 +383,12 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 				(this.number_of_outputs = number_of_outputs));
 	}
 
-	public void setOutput1(String output1) {
-		pcs.firePropertyChange(PROP_OUTPUT1, this.output1, (this.output1 = output1));
-	}
-
-	public void setOutput2(String output2) {
-		pcs.firePropertyChange(PROP_OUTPUT2, this.output2, (this.output2 = output2));
-	}
-
-	public void setOutput3(String output3) {
-		pcs.firePropertyChange(PROP_OUTPUT3, this.output3, (this.output3 = output3));
-	}
-
-	public void setOutput4(String output4) {
-		pcs.firePropertyChange(PROP_OUTPUT4, this.output4, (this.output4 = output4));
-	}
-
 	public void setOutputs(Map<String, String> outputs) {
 		pcs.firePropertyChange(PROP_OUTPUTS, this.outputs, (this.outputs = outputs));
+	}
+
+	public void setOutputsName(List<Map<String, List<String>>> outputs_name) {
+		pcs.firePropertyChange(PROP_OUTPUTS_NAME, this.outputs_name, (this.outputs_name = outputs_name));
 	}
 
 	public void setTitle(String title) {
