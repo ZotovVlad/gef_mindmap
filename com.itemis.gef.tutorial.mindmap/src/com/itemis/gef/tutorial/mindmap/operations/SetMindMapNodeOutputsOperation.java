@@ -1,6 +1,6 @@
 package com.itemis.gef.tutorial.mindmap.operations;
 
-import java.util.Map;
+import java.util.HashMap;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.AbstractOperation;
@@ -21,10 +21,11 @@ import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
 public class SetMindMapNodeOutputsOperation extends AbstractOperation implements ITransactionalOperation {
 
 	private final MindMapNodePart nodePart;
-	private final Map<String, String> oldOutputs;
-	private final Map<String, String> newOutputs;
+	private final HashMap<String, HashMap<String, String>> oldOutputs;
+	private final HashMap<String, HashMap<String, String>> newOutputs;
 
-	public SetMindMapNodeOutputsOperation(MindMapNodePart nodePart, Map<String, String> newOutputs) {
+	public SetMindMapNodeOutputsOperation(MindMapNodePart nodePart,
+			HashMap<String, HashMap<String, String>> newOutputs) {
 		super("Change color");
 		this.nodePart = nodePart;
 		this.newOutputs = newOutputs;

@@ -102,6 +102,17 @@ public class SimpleMindMapApplication extends Application {
 			creationModel.setType(newVal ? Type.Connection : Type.None);
 		});
 
+		ControllerJSON.readMindMapNodeLib();
+		/*
+		 * List<ToggleButton> nodes = new ArrayList<>();
+		 *
+		 * ToggleButton createNode = new ToggleButton("New Node");
+		 * createNode.setToggleGroup(toggleGroup);
+		 * createNode.setMaxWidth(Double.MAX_VALUE); createNode.setMinHeight(50);
+		 * createNode.selectedProperty().addListener((e, oldVal, newVal) -> {
+		 * creationModel.setType(newVal ? Type.Node : Type.None); });
+		 */
+
 		// now listen to changes in the model, and deactivate buttons, if
 		// necessary
 		creationModel.getTypeProperty().addListener((e, oldVal, newVal) -> {
@@ -197,7 +208,7 @@ public class SimpleMindMapApplication extends Application {
 			ControllerJSON.mindMapNodes.add(abstractMindMapItem);
 		}
 
-		ControllerJSON.writeExample();
+		// ControllerJSON.writeAllPropertiesJSON();
 
 		IViewer viewer = getContentViewer();
 		viewer.getContents().setAll(mindMap);

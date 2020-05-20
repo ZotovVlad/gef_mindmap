@@ -4,6 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="E:/projects/java/gef_mindmap/com.itemis.gef.tutorial.mindmap/json-20190722.jar"/>
+	<classpathentry kind="lib" path="E:/projects/java/gef_mindmap/com.itemis.gef.tutorial.mindmap/json-20190722.jar" sourcepath="C:/Users/Bajurus/.m2/repository/org/json/json/20190722/json-20190722-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

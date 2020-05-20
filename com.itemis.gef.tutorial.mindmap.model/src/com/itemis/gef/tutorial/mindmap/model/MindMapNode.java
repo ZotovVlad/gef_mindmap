@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.gef.geometry.planar.Rectangle;
@@ -62,10 +61,17 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	private String function_hex_field; // for functional node
 	private String number_of_inputs; // for functional node
 	private String number_of_outputs; // for functional node
-	private List<Map<String, List<String>>> inputs_name = new ArrayList<>(); // for functional node
-	private List<Map<String, List<String>>> outputs_name = new ArrayList<>(); // for functional node
-	private Map<String, String> inputs = new HashMap<>(); // for functional node
-	private Map<String, String> outputs = new HashMap<>(); // for functional node
+	private HashMap<String, ArrayList<String>> inputs_name = new HashMap<>(); // for functional
+																				// node
+	private HashMap<String, ArrayList<String>> outputs_name = new HashMap<>(); // for
+																				// functional
+																				// node
+	private HashMap<String, HashMap<String, String>> inputs = new HashMap<>(); // for
+																				// functional
+																				// node
+	private HashMap<String, HashMap<String, String>> outputs = new HashMap<>(); // for
+																				// functional
+																				// node
 	private String end; // for functional node
 
 	/**
@@ -101,16 +107,52 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		super();
 
 		this.nodeCustomJSON += this.hashCode() + File.separator + this.hashCode() + ".json";
-		this.nodeAllJSON += "properties" + File.separator + "allPropertiesJSON" + ".json";
+		this.nodeAllJSON += "properties" + File.separator + "allProperties" + ".json";
 		this.nodeCode += this.hashCode() + File.separator + this.hashCode() + ".txt";
 		this.nodeDirectory += this.hashCode();
 
 		File file = new File(this.nodeDirectory);
 		file.mkdir();
 
-		createFile(nodeCustomJSON);
-		createFile(nodeAllJSON);
-		createFileCode(nodeCode);
+		createFile(nodeCustomJSON, "");
+		createFile(nodeAllJSON, "[\r\n" + "  {\r\n" + "    \"name\": \"inv1\",\r\n"
+				+ "    \"description\": \"Invertor 1\",\r\n" + "    \"function_hex_field\": \"inv1_field.hex\",\r\n"
+				+ "    \"number_of_inputs\": \"1\",\r\n" + "    \"number_of_outputs\": \"1\",\r\n"
+				+ "    \"inputs_name\": {\r\n" + "      \"input1\": [\r\n" + "        \"PIN_0\",\r\n"
+				+ "        \"PIN_1\"\r\n" + "      ],\r\n" + "      \"input2\": [\r\n" + "        \"\"\r\n"
+				+ "      ]\r\n" + "    },\r\n" + "    \"outputs_name\": {\r\n" + "      \"output1\": [\r\n"
+				+ "        \"PAD_Out0\",\r\n" + "        \"PAD_Out1\",\r\n" + "        \"PAD_Out2\",\r\n"
+				+ "        \"PAD_Out3\"\r\n" + "      ],\r\n" + "      \"output2\": [\r\n" + "        \"\"\r\n"
+				+ "      ],\r\n" + "      \"output3\": [\r\n" + "        \"\"\r\n" + "      ],\r\n"
+				+ "      \"output4\": [\r\n" + "        \"\"\r\n" + "      ]\r\n" + "    },\r\n"
+				+ "    \"inputs\": {\r\n" + "      \"input1\": {\r\n"
+				+ "        \"PIN_0\": \"inv1_pin_0_field.hex\"\r\n" + "      },\r\n" + "      \"input2\": {\r\n"
+				+ "        \"PIN_1\": \"inv1_pin_1_field.hex\"\r\n" + "      }\r\n" + "    },\r\n"
+				+ "    \"outputs\": {\r\n" + "      \"output1\": {\r\n"
+				+ "        \"PAD_Out0\": \"inv1_pad_out0_field.hex\"\r\n" + "      },\r\n" + "      \"output2\": {\r\n"
+				+ "        \"PAD_Out1\": \"inv1_pad_out1_field.hex\"\r\n" + "      },\r\n" + "      \"output3\": {\r\n"
+				+ "        \"PAD_Out2\": \"inv1_pad_out2_field.hex\"\r\n" + "      },\r\n" + "      \"output4\": {\r\n"
+				+ "        \"PAD_Out3\": \"inv1_pad_out3_field.hex\"\r\n" + "      }\r\n" + "    },\r\n"
+				+ "    \"end\": \"inv1_flash_read_end_field.hex\"\r\n" + "  },\r\n" + "  {\r\n"
+				+ "    \"name\": \"and1\",\r\n" + "    \"description\": \"And\",\r\n"
+				+ "    \"function_hex_field\": \"and1_field.hex\",\r\n" + "    \"number_of_inputs\": \"2\",\r\n"
+				+ "    \"number_of_outputs\": \"1\",\r\n" + "    \"inputs_name\": {\r\n" + "      \"input1\": [\r\n"
+				+ "        \"PIN_0\",\r\n" + "        \"PIN_1\"\r\n" + "      ],\r\n" + "      \"input2\": [\r\n"
+				+ "        \"PIN_0\",\r\n" + "        \"PIN_1\"\r\n" + "      ]\r\n" + "    },\r\n"
+				+ "    \"outputs_name\": {\r\n" + "      \"output1\": [\r\n" + "        \"PAD_Out0\",\r\n"
+				+ "        \"PAD_Out1\",\r\n" + "        \"PAD_Out2\",\r\n" + "        \"PAD_Out3\"\r\n"
+				+ "      ],\r\n" + "      \"output2\": [\r\n" + "        \"\"\r\n" + "      ],\r\n"
+				+ "      \"output3\": [\r\n" + "        \"\"\r\n" + "      ],\r\n" + "      \"output4\": [\r\n"
+				+ "        \"\"\r\n" + "      ]\r\n" + "    },\r\n" + "    \"inputs\": {\r\n"
+				+ "      \"input1\": {\r\n" + "        \"PIN_0\": \"and1_pin_0_field.hex\"\r\n" + "      },\r\n"
+				+ "      \"input2\": {\r\n" + "        \"PIN_1\": \"and1_pin_1_field.hex\"\r\n" + "      }\r\n"
+				+ "    },\r\n" + "    \"outputs\": {\r\n" + "      \"output1\": {\r\n"
+				+ "        \"PAD_Out0\": \"and1_pad_out0_field.hex\"\r\n" + "      },\r\n" + "      \"output2\": {\r\n"
+				+ "        \"PAD_Out1\": \"and1_pad_out1_field.hex\"\r\n" + "      },\r\n" + "      \"output3\": {\r\n"
+				+ "        \"PAD_Out2\": \"and1_pad_out2_field.hex\"\r\n" + "      },\r\n" + "      \"output4\": {\r\n"
+				+ "        \"PAD_Out3\": \"and1_pad_out3_field.hex\"\r\n" + "      }\r\n" + "    },\r\n"
+				+ "    \"end\": \"and1_flash_read_end_field.hex\"\r\n" + "  }\r\n" + "]");
+		createFile(nodeCode, "//This is the file with the node code.\n");
 	}
 
 	public void addIncomingConnection(MindMapConnection conn) {
@@ -143,30 +185,20 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		this.titlesOutgoingConnection.addAll(titlesOutgoingConnection);
 	}
 
-	private void createFile(String path) {
-		File file = new File(path);
-		try {
-			file.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void createFileCode(String path) {
+	private void createFile(String path, String stringToFile) {
 		File file = new File(path);
 		FileWriter myWriter;
 
 		try {
-			myWriter = new FileWriter(file);
-			myWriter.write("//This is the file with the node code.\n");
-			myWriter.close();
+			file.createNewFile();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		try {
-			file.createNewFile();
+			myWriter = new FileWriter(file);
+			myWriter.write(stringToFile);
+			myWriter.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -225,11 +257,11 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		return incomingConnections;
 	}
 
-	public Map<String, String> getInputs() {
+	public HashMap<String, HashMap<String, String>> getInputs() {
 		return inputs;
 	}
 
-	public List<Map<String, List<String>>> getInputsName() {
+	public HashMap<String, ArrayList<String>> getInputsName() {
 		return inputs_name;
 	}
 
@@ -265,11 +297,11 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		return outgoingConnections;
 	}
 
-	public Map<String, String> getOutputs() {
+	public HashMap<String, HashMap<String, String>> getOutputs() {
 		return outputs;
 	}
 
-	public List<Map<String, List<String>>> getOutputsName() {
+	public HashMap<String, ArrayList<String>> getOutputsName() {
 		return outputs_name;
 	}
 
@@ -345,11 +377,11 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		pcs.firePropertyChange(PROP_IMAGE, this.image, (this.image = image));
 	}
 
-	public void setInputs(Map<String, String> inputs) {
+	public void setInputs(HashMap<String, HashMap<String, String>> inputs) {
 		pcs.firePropertyChange(PROP_INPUTS, this.inputs, (this.inputs = inputs));
 	}
 
-	public void setInputsName(List<Map<String, List<String>>> inputs_name) {
+	public void setInputsName(HashMap<String, ArrayList<String>> inputs_name) {
 		pcs.firePropertyChange(PROP_INPUTS_NAME, this.inputs_name, (this.inputs_name = inputs_name));
 	}
 
@@ -383,11 +415,11 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 				(this.number_of_outputs = number_of_outputs));
 	}
 
-	public void setOutputs(Map<String, String> outputs) {
+	public void setOutputs(HashMap<String, HashMap<String, String>> outputs) {
 		pcs.firePropertyChange(PROP_OUTPUTS, this.outputs, (this.outputs = outputs));
 	}
 
-	public void setOutputsName(List<Map<String, List<String>>> outputs_name) {
+	public void setOutputsName(HashMap<String, ArrayList<String>> outputs_name) {
 		pcs.firePropertyChange(PROP_OUTPUTS_NAME, this.outputs_name, (this.outputs_name = outputs_name));
 	}
 
