@@ -67,7 +67,7 @@ public class ControllerJSON implements PropertyChangeListener {
 		return properties;
 	}
 
-	public static void readMindMapNodeLib() {
+	public static List<MindMapNode> readMindMapNodeLib() {
 		try {
 			Reader reader = new FileReader(nodeAllJSON);
 			JSONTokener parser = new JSONTokener(reader);
@@ -131,6 +131,7 @@ public class ControllerJSON implements PropertyChangeListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return mindMapNodeLib;
 	}
 
 	public static void writeAllPropertiesJSON() {

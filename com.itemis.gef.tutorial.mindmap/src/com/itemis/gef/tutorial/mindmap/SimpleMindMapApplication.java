@@ -1,6 +1,8 @@
 package com.itemis.gef.tutorial.mindmap;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.IUndoContext;
@@ -12,6 +14,7 @@ import org.eclipse.gef.mvc.fx.viewer.IViewer;
 import com.google.inject.Guice;
 import com.itemis.gef.tutorial.mindmap.JSON.ControllerJSON;
 import com.itemis.gef.tutorial.mindmap.model.AbstractMindMapItem;
+import com.itemis.gef.tutorial.mindmap.model.MindMapNode;
 import com.itemis.gef.tutorial.mindmap.model.SimpleMindMap;
 import com.itemis.gef.tutorial.mindmap.model.SimpleMindMapExampleFactory;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel;
@@ -19,6 +22,7 @@ import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel.Type;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -29,6 +33,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -83,6 +88,8 @@ public class SimpleMindMapApplication extends Application {
 	private Node createToolPalette() {
 		ItemCreationModel creationModel = getContentViewer().getAdapter(ItemCreationModel.class);
 
+		VBox vBox = new VBox(20);
+
 		// the toggleGroup makes sure, we only select one
 		ToggleGroup toggleGroup = new ToggleGroup();
 
@@ -93,6 +100,7 @@ public class SimpleMindMapApplication extends Application {
 		createNode.selectedProperty().addListener((e, oldVal, newVal) -> {
 			creationModel.setType(newVal ? Type.Node : Type.None);
 		});
+		vBox.getChildren().add(createNode);
 
 		ToggleButton createConn = new ToggleButton("New Connection");
 		createConn.setToggleGroup(toggleGroup);
@@ -101,17 +109,29 @@ public class SimpleMindMapApplication extends Application {
 		createConn.selectedProperty().addListener((e, oldVal, newVal) -> {
 			creationModel.setType(newVal ? Type.Connection : Type.None);
 		});
+		vBox.getChildren().add(createConn);
 
-		ControllerJSON.readMindMapNodeLib();
-		/*
-		 * List<ToggleButton> nodes = new ArrayList<>();
-		 *
-		 * ToggleButton createNode = new ToggleButton("New Node");
-		 * createNode.setToggleGroup(toggleGroup);
-		 * createNode.setMaxWidth(Double.MAX_VALUE); createNode.setMinHeight(50);
-		 * createNode.selectedProperty().addListener((e, oldVal, newVal) -> {
-		 * creationModel.setType(newVal ? Type.Node : Type.None); });
-		 */
+		Text text = new Text("Nodes in library:");
+		vBox.getChildren().add(text);
+		VBox.setMargin(vBox.getChildren().get(2), new Insets(50, 0, 0, 0));
+
+		List<MindMapNode> nodeLib = ControllerJSON.readMindMapNodeLib();
+		List<ToggleButton> nodeLibButton = new ArrayList<>();
+		for (int i = 0; i < nodeLib.size(); i++) {
+			ToggleButton oneNodeLibButton = new ToggleButton(nodeLib.get(i).getName());
+			oneNodeLibButton.setToggleGroup(toggleGroup);
+			oneNodeLibButton.setMaxWidth(Double.MAX_VALUE);
+			oneNodeLibButton.setMinHeight(50);
+			oneNodeLibButton.selectedProperty().addListener((e, oldVal, newVal) -> {
+				creationModel.setType(newVal ? Type.Node : Type.None);
+			});
+			vBox.getChildren().add(oneNodeLibButton);
+			nodeLibButton.add(oneNodeLibButton);
+		}
+
+		// ListView list = new ListView();
+		// VBox.setVgrow(list, Priority.ALWAYS);
+		// vBox.getChildren().add(list);
 
 		// now listen to changes in the model, and deactivate buttons, if
 		// necessary
@@ -125,11 +145,7 @@ public class SimpleMindMapApplication extends Application {
 			}
 		});
 
-		for (int i = 0; i < 10; i++) {
-
-		}
-
-		return new VBox(20, createNode, createConn);
+		return vBox;
 	}
 
 	/**
