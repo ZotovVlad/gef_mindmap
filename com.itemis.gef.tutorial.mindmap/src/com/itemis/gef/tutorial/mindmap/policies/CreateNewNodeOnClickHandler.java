@@ -46,8 +46,10 @@ public class CreateNewNodeOnClickHandler extends AbstractHandler implements IOnC
 		}
 
 		if (creationModel.getType() != Type.Node) {
-			// don't want to create a node
-			return;
+			if (Type.Node.getString() == "") {
+				// don't want to create a node
+				return;
+			}
 		}
 
 		IVisualPart<? extends Node> part = viewer.getRootPart().getChildrenUnmodifiable().get(0);
@@ -57,9 +59,11 @@ public class CreateNewNodeOnClickHandler extends AbstractHandler implements IOnC
 			Point2D mouseInLocal = part.getVisual().sceneToLocal(e.getSceneX(), e.getSceneY());
 
 			ControllerJSON controllerJSON = new ControllerJSON();
+//			MindMapNode newNode = ControllerJSON.mindMapNodeLib.get(0);
 
 			MindMapNode newNode = new MindMapNode();
 			newNode.setTitle("Node" + i++);
+			newNode.setName(Type.Node.getString());
 			newNode.setDescription("no description");
 			newNode.setColor(Color.PALEVIOLETRED);
 			newNode.setBounds(new Rectangle(mouseInLocal.getX(), mouseInLocal.getY(), 170, 170));
@@ -82,6 +86,7 @@ public class CreateNewNodeOnClickHandler extends AbstractHandler implements IOnC
 		}
 
 		// reset creation state
+		Type.Node.setString("");
 		creationModel.setType(Type.None);
 	}
 }

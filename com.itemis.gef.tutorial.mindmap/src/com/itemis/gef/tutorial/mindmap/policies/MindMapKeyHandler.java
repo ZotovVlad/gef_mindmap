@@ -81,8 +81,8 @@ public class MindMapKeyHandler extends AbstractHandler implements IOnStrokeHandl
 	private MindMapNode createMindMapNode() {
 		Scene scene = getHost().getVisual().getScene();
 		MindMapNode newNode = new MindMapNode();
-		newNode.setTitle("New node");
-		newNode.setDescription("no description");
+		newNode.setTitle("Title");
+		newNode.setDescription("Description");
 		newNode.setColor(Color.PALEVIOLETRED);
 		newNode.setBounds(new Rectangle(scene.getWidth() / 2 - 120 / 2, scene.getHeight() / 2 - 80 / 2, 120, 80));
 

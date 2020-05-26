@@ -65,7 +65,7 @@ public class MindMapNodeVisual extends Region {
 		titleText = new Text();
 		titleText.setTextOrigin(VPos.TOP);
 
-		// create title text
+		// create name text
 		nameText = new Text();
 		nameText.setTextOrigin(VPos.TOP);
 

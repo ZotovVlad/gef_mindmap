@@ -21,6 +21,7 @@ import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel;
 import com.itemis.gef.tutorial.mindmap.models.ItemCreationModel.Type;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -122,11 +123,31 @@ public class SimpleMindMapApplication extends Application {
 			oneNodeLibButton.setToggleGroup(toggleGroup);
 			oneNodeLibButton.setMaxWidth(Double.MAX_VALUE);
 			oneNodeLibButton.setMinHeight(50);
+			oneNodeLibButton.setOnAction(new EventHandler<ActionEvent>() {
+
+				boolean flag = true;
+
+				@Override
+				public void handle(ActionEvent arg0) {
+					Type.Node.setString(((ToggleButton) arg0.getSource()).getText().toString());
+					flag = !flag;
+					// creationModel.setType(arg0 ? Type.Node : Type.None);
+					// TODO Auto-generated method stub
+				}
+			});
+
 			oneNodeLibButton.selectedProperty().addListener((e, oldVal, newVal) -> {
 				creationModel.setType(newVal ? Type.Node : Type.None);
 			});
+
 			vBox.getChildren().add(oneNodeLibButton);
 			nodeLibButton.add(oneNodeLibButton);
+		}
+
+		if (nodeLib.size() == 0) {
+			Text textEmptyLib = new Text("Not library!");
+			vBox.getChildren().add(textEmptyLib);
+			VBox.setMargin(vBox.getChildren().get(3), new Insets(-20, 0, 0, 0));
 		}
 
 		// ListView list = new ListView();
@@ -222,6 +243,7 @@ public class SimpleMindMapApplication extends Application {
 		for (AbstractMindMapItem abstractMindMapItem : mindMap.getChildElements()) {
 			abstractMindMapItem.addPropertyChangeListener(controllerJSON);
 			ControllerJSON.mindMapNodes.add(abstractMindMapItem);
+			mindMap.addChildElement(abstractMindMapItem);
 		}
 
 		// ControllerJSON.writeAllPropertiesJSON();

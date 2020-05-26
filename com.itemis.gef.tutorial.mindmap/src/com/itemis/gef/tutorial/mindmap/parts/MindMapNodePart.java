@@ -188,6 +188,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 
 	private void propertySet() {
 		MindMapNode node = getContent();
+		// if (!(node.getTitle() == null)) {
 		switch (node.getTitle()) {
 		case "START":
 			quantityRectangleConnection = 1;
@@ -207,6 +208,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 			quantityRectangleConnection = 6;
 			break;
 		}
+		// }
 	}
 
 	@Override
