@@ -22,7 +22,8 @@ import com.itemis.gef.tutorial.mindmap.model.AbstractMindMapItem;
 import com.itemis.gef.tutorial.mindmap.model.MindMapNode;
 
 public class ControllerJSON implements PropertyChangeListener {
-	static public List<AbstractMindMapItem> mindMapNodes = new ArrayList<>();
+	static public List<AbstractMindMapItem> mindMapNodesAtField = new ArrayList<>();
+	static public List<JSONObject> mindMapNodeJSON = new ArrayList<>();
 	static public List<MindMapNode> mindMapNodeLib = new ArrayList<>();
 
 	public static final String userDir = System.getProperty("user.dir");
@@ -41,12 +42,8 @@ public class ControllerJSON implements PropertyChangeListener {
 	public static final String PROP_QUANTITYANCHORS = "quantityAnchors";
 	public static final String PROP_ANCHORS = "anchors";
 
-	private static void parseMindMapNode(JSONObject mindMapNode) {
-
-	}
-
 	public static void printAllMindMapNodes() {
-		for (AbstractMindMapItem mindMapNode : mindMapNodes) {
+		for (AbstractMindMapItem mindMapNode : mindMapNodesAtField) {
 			System.out.println(mindMapNode);
 		}
 	}
@@ -126,6 +123,15 @@ public class ControllerJSON implements PropertyChangeListener {
 				}
 				mmn.setOutputsName(outputsName);
 
+				try {
+					Writer file = new FileWriter(mmn.getNodeCustomJSON());
+					file.write(root.toString());
+					file.flush();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+				mindMapNodeJSON.add(root);
 				mindMapNodeLib.add(mmn);
 			}
 		} catch (IOException e) {
@@ -134,20 +140,31 @@ public class ControllerJSON implements PropertyChangeListener {
 		return mindMapNodeLib;
 	}
 
-	public static void writeAllPropertiesJSON() {
+	public static MindMapNode search(String search) {
+		if (search.equals("")) {
+			return null;
+		}
+		for (MindMapNode mindMapNode : mindMapNodeLib) {
+			if (mindMapNode.getName().equals(search)) {
+				return mindMapNode;
+			}
+		}
+		return null;
+	}
+
+	public static void writeCustomJSON(MindMapNode mindMapNode) {
 		JSONObject root = new JSONObject();
 
-		JSONArray titles = new JSONArray();
-		titles.put("Title # 1");
-		titles.put("Title # 2");
-		titles.put("Title # 3");
-		root.put(MindMapNode.PROP_TITLE, titles);
-
-		JSONArray descriptions = new JSONArray();
-		descriptions.put("Description # 1");
-		descriptions.put("Description # 2");
-		descriptions.put("Description # 3");
-		root.put(MindMapNode.PROP_DESCRIPTION, descriptions);
+		root.put(MindMapNode.PROP_NAME, mindMapNode.getName());
+		root.put(MindMapNode.PROP_DESCRIPTION,
+				mindMapNode.getDescription() == null ? "" : mindMapNode.getDescription());
+		root.put(MindMapNode.PROP_FUNCTION_HEX_FIELD,
+				mindMapNode.getFunctionHexField() == null ? "" : mindMapNode.getFunctionHexField());
+		root.put(MindMapNode.PROP_NUMBER_OF_INPUTS,
+				mindMapNode.getNumberOfInputs() == null ? "" : mindMapNode.getNumberOfInputs());
+		root.put(MindMapNode.PROP_NUMBER_OF_OUTPUTS,
+				mindMapNode.getNumberOfOutputs() == null ? "" : mindMapNode.getNumberOfInputs());
+		root.put(MindMapNode.PROP_END, mindMapNode.getEnd() == null ? "" : mindMapNode.getEnd());
 
 		JSONArray colors = new JSONArray();
 		colors.put("Color # 1");
@@ -156,12 +173,14 @@ public class ControllerJSON implements PropertyChangeListener {
 		root.put(MindMapNode.PROP_COLOR, colors);
 
 		try {
-			Writer file = new FileWriter(nodeAllJSON);
+			Writer file = new FileWriter(mindMapNode.getNodeCustomJSON());
 			file.write(root.toString());
 			file.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		System.out.println();
 
 	}
 

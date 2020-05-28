@@ -59,20 +59,35 @@ public class CreateNewNodeOnClickHandler extends AbstractHandler implements IOnC
 			Point2D mouseInLocal = part.getVisual().sceneToLocal(e.getSceneX(), e.getSceneY());
 
 			ControllerJSON controllerJSON = new ControllerJSON();
-//			MindMapNode newNode = ControllerJSON.mindMapNodeLib.get(0);
 
 			MindMapNode newNode = new MindMapNode();
-			newNode.setTitle("Node" + i++);
-			newNode.setName(Type.Node.getString());
-			newNode.setDescription("no description");
+
+			MindMapNode customNode = ControllerJSON.search(Type.Node.getString());
+			if (!(customNode == null)) {
+				newNode.setName(customNode.getName());
+				newNode.setDescription(customNode.getDescription());
+				newNode.setFunctionHexField(customNode.getFunctionHexField());
+				newNode.setNumberOfInputs(customNode.getNumberOfInputs());
+				newNode.setNumberOfOutputs(customNode.getNumberOfOutputs());
+				newNode.setInputsName(customNode.getInputsName());
+				newNode.setOutputsName(customNode.getOutputsName());
+				newNode.setInputs(customNode.getInputs());
+				newNode.setOutputs(customNode.getOutputs());
+				newNode.setEnd(customNode.getEnd());
+			} else {
+				newNode.setTitle("Node" + i++);
+				newNode.setDescription("no description");
+				try {
+					newNode.setImage(new Image(new FileInputStream("Icons/" + "icon0" + ".png")));
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
 			newNode.setColor(Color.PALEVIOLETRED);
 			newNode.setBounds(new Rectangle(mouseInLocal.getX(), mouseInLocal.getY(), 170, 170));
-			try {
-				newNode.setImage(new Image(new FileInputStream("Icons/" + "icon0" + ".png")));
-			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+
+			ControllerJSON.writeCustomJSON(newNode);
 			newNode.addPropertyChangeListener(controllerJSON);
 
 			// GEF provides the CreatePolicy to add a new element to the model

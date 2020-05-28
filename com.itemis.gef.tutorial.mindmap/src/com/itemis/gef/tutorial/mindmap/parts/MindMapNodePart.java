@@ -188,27 +188,27 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 
 	private void propertySet() {
 		MindMapNode node = getContent();
-		// if (!(node.getTitle() == null)) {
-		switch (node.getTitle()) {
-		case "START":
-			quantityRectangleConnection = 1;
-			connectionOnlyRight = true;
-			break;
-		case "FINISH":
-			quantityRectangleConnection = 1;
-			connectionOnlyRight = false;
-			break;
-		case "New Node":
-			quantityRectangleConnection = 0;
-			break;
-		case "New Connection":
-			quantityRectangleConnection = 0;
-			break;
-		default:
-			quantityRectangleConnection = 6;
-			break;
+		if (!(node.getTitle() == null)) {
+			switch (node.getTitle()) {
+			case "START":
+				quantityRectangleConnection = 1;
+				connectionOnlyRight = true;
+				break;
+			case "FINISH":
+				quantityRectangleConnection = 1;
+				connectionOnlyRight = false;
+				break;
+			case "New Node":
+				quantityRectangleConnection = 0;
+				break;
+			case "New Connection":
+				quantityRectangleConnection = 0;
+				break;
+			default:
+				quantityRectangleConnection = 6;
+				break;
+			}
 		}
-		// }
 	}
 
 	@Override

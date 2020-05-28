@@ -242,7 +242,7 @@ public class SimpleMindMapApplication extends Application {
 		ControllerJSON controllerJSON = new ControllerJSON();
 		for (AbstractMindMapItem abstractMindMapItem : mindMap.getChildElements()) {
 			abstractMindMapItem.addPropertyChangeListener(controllerJSON);
-			ControllerJSON.mindMapNodes.add(abstractMindMapItem);
+			ControllerJSON.mindMapNodesAtField.add(abstractMindMapItem);
 			mindMap.addChildElement(abstractMindMapItem);
 		}
 
