@@ -226,7 +226,8 @@ public class ControllerJSON implements PropertyChangeListener {
 
 		try {
 			Writer file = new FileWriter(mindMapNode.getNodeCustomJSON());
-			file.write(root.toString());
+
+			file.write(root.toString(2));
 			file.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
