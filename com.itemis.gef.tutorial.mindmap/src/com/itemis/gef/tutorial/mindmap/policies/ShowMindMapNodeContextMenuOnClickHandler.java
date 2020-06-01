@@ -25,7 +25,7 @@ import com.itemis.gef.tutorial.mindmap.model.MindMapNode;
 import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeColorOperation;
 import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeDescriptionOperation;
 import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeImageOperation;
-import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeTitleOperation;
+import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeNameOperation;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapConnectionPart;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
 
@@ -185,33 +185,33 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 
 		MindMapNodePart host = (MindMapNodePart) getHost();
 
-		Menu titleItem = new Menu("Title ...");
-		MenuItem titleEnter = new MenuItem("Title enter...");
-		titleEnter.setOnAction((e) -> {
+		Menu nameItem = new Menu("Name ...");
+		MenuItem nameEnter = new MenuItem("Name enter...");
+		nameEnter.setOnAction((e) -> {
 			try {
-				String newTitle = showDialog(host.getContent().getTitle(), "Enter new Title...");
-				ITransactionalOperation op = new SetMindMapNodeTitleOperation(host, newTitle);
+				String newName = showDialog(host.getContent().getName(), "Enter new Name...");
+				ITransactionalOperation op = new SetMindMapNodeNameOperation(host, newName);
 				host.getRoot().getViewer().getDomain().execute(op, null);
 			} catch (ExecutionException e1) {
 				e1.printStackTrace();
 			}
 		});
-		Menu titleExample = new Menu("Title example ...");
-		ArrayList<String> titles = ControllerJSON.read(MindMapNode.PROP_TITLE);
-		for (String string : titles) {
-			MenuItem titleExampleItem = new MenuItem(string);
-			titleExampleItem.setOnAction((e) -> {
-				ITransactionalOperation op = new SetMindMapNodeTitleOperation(host,
-						titleExampleItem.getText().toString());
+		Menu nameExample = new Menu("Name example ...");
+		ArrayList<String> names = ControllerJSON.read(host.getContent(), MindMapNode.PROP_NAME);
+		for (String string : names) {
+			MenuItem nameExampleItem = new MenuItem(string);
+			nameExampleItem.setOnAction((e) -> {
+				ITransactionalOperation op = new SetMindMapNodeNameOperation(host,
+						nameExampleItem.getText().toString());
 				try {
 					host.getRoot().getViewer().getDomain().execute(op, null);
 				} catch (ExecutionException e1) {
 					e1.printStackTrace();
 				}
 			});
-			titleExample.getItems().add(titleExampleItem);
+			nameExample.getItems().add(nameExampleItem);
 		}
-		titleItem.getItems().addAll(titleEnter, titleExample);
+		nameItem.getItems().addAll(nameEnter, nameExample);
 
 		Menu descrItem = new Menu("Description ...");
 		MenuItem descrEnter = new MenuItem("Description enter...");
@@ -225,7 +225,7 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 			}
 		});
 		Menu descrExample = new Menu("Description example ...");
-		ArrayList<String> descriptions = ControllerJSON.read(MindMapNode.PROP_DESCRIPTION);
+		ArrayList<String> descriptions = ControllerJSON.read(host.getContent(), MindMapNode.PROP_DESCRIPTION);
 		for (String string : descriptions) {
 			MenuItem descrExampleItem = new MenuItem(string);
 			descrExampleItem.setOnAction((e) -> {
@@ -241,7 +241,7 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 		}
 		descrItem.getItems().addAll(descrEnter, descrExample);
 
-		textsMenu.getItems().addAll(titleItem, descrItem);
+		textsMenu.getItems().addAll(nameItem, descrItem);
 
 		return textsMenu;
 	}

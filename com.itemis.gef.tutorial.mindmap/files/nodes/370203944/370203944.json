@@ -30,7 +30,7 @@
     "input2": {"PIN_1": "inv1_pin_1_field.hex"},
     "input1": {"PIN_0": "inv1_pin_0_field.hex"}
   },
-  "name": "inv1",
-  "description": "Invertor 1",
+  "name": "qwedfgd",
+  "description": "qwe",
   "end": "inv1_flash_read_end_field.hex"
 }

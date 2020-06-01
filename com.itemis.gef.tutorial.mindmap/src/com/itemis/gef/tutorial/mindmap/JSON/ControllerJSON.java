@@ -48,15 +48,18 @@ public class ControllerJSON implements PropertyChangeListener {
 		}
 	}
 
-	public static ArrayList<String> read(String property) {
+	public static ArrayList<String> read(MindMapNode mindMapNode, String property) {
 		ArrayList<String> properties = new ArrayList<>();
 		try {
 			Reader reader = new FileReader(nodeAllJSON);
 			JSONTokener parser = new JSONTokener(reader);
-			JSONObject root = new JSONObject(parser);
-			JSONArray array = (JSONArray) root.get(property);
+			JSONArray array = new JSONArray(parser);
 			for (int i = 0; i < array.length(); i++) {
-				properties.add((String) array.get(i));
+				// if ((String) array.get(i))
+				JSONObject root = (JSONObject) array.get(i);
+				if (root.get("name").toString().equals(mindMapNode.getName())) {
+					properties.add((String) root.get(property));
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -239,7 +242,7 @@ public class ControllerJSON implements PropertyChangeListener {
 	}
 
 	private void change(MindMapNode mindMapNode, String propertyName) {
-		// TODO change JSON file this node
+		ControllerJSON.writeCustomJSON(mindMapNode);
 	}
 
 	@Override
