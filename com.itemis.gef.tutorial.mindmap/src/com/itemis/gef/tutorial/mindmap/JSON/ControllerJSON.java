@@ -51,16 +51,18 @@ public class ControllerJSON implements PropertyChangeListener {
 	public static ArrayList<String> read(MindMapNode mindMapNode, String property) {
 		ArrayList<String> properties = new ArrayList<>();
 		try {
-			Reader reader = new FileReader(nodeAllJSON);
+			Reader reader = new FileReader(mindMapNode.getNodeCustomJSON());
 			JSONTokener parser = new JSONTokener(reader);
-			JSONArray array = new JSONArray(parser);
-			for (int i = 0; i < array.length(); i++) {
-				// if ((String) array.get(i))
-				JSONObject root = (JSONObject) array.get(i);
-				if (root.get("name").toString().equals(mindMapNode.getName())) {
-					properties.add((String) root.get(property));
-				}
-			}
+//			JSONArray array = new JSONArray(parser);
+//			for (int i = 0; i < array.length(); i++) {
+//				// if ((String) array.get(i))
+//				JSONObject root = (JSONObject) array.get(i);
+//				if (root.get("name").toString().equals(mindMapNode.getName())) {
+//					properties.add((String) root.get(property));
+//				}
+//			}
+			JSONObject root = new JSONObject(parser);
+			properties.add(root.get(property).toString());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -166,7 +168,7 @@ public class ControllerJSON implements PropertyChangeListener {
 		root.put(MindMapNode.PROP_NUMBER_OF_INPUTS,
 				mindMapNode.getNumberOfInputs() == null ? "" : mindMapNode.getNumberOfInputs());
 		root.put(MindMapNode.PROP_NUMBER_OF_OUTPUTS,
-				mindMapNode.getNumberOfOutputs() == null ? "" : mindMapNode.getNumberOfInputs());
+				mindMapNode.getNumberOfOutputs() == null ? "" : mindMapNode.getNumberOfOutputs());
 		root.put(MindMapNode.PROP_END, mindMapNode.getEnd() == null ? "" : mindMapNode.getEnd());
 
 		JSONObject root_inputs_name = new JSONObject();
@@ -242,6 +244,7 @@ public class ControllerJSON implements PropertyChangeListener {
 	}
 
 	private void change(MindMapNode mindMapNode, String propertyName) {
+
 		ControllerJSON.writeCustomJSON(mindMapNode);
 	}
 
