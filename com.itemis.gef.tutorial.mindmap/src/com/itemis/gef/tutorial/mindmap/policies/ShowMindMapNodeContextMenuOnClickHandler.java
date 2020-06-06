@@ -24,6 +24,8 @@ import com.itemis.gef.tutorial.mindmap.JSON.ControllerJSON;
 import com.itemis.gef.tutorial.mindmap.model.MindMapNode;
 import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeColorOperation;
 import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeDescriptionOperation;
+import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeEndOperation;
+import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeFunctionHexFieldOperation;
 import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeImageOperation;
 import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeNameOperation;
 import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeNumberOfInputsOperation;
@@ -90,12 +92,13 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 		MenuItem imageNodeItem = createImageNodeItem();
 		Menu textMenu = createChangeTextsMenu();
 		Menu numberMenu = createChangeNumbersMenu();
+		Menu functionMenu = createChangeFunctionsMenu();
 		Menu colorMenu = createChangeColorMenu();
 		MenuItem deleteNodeItem = createDeleteNodeItem();
 		MenuItem getPathSource = getPathSource();
 
-		ContextMenu ctxMenu = new ContextMenu(imageNodeItem, textMenu, numberMenu, colorMenu, deleteNodeItem,
-				getPathSource);
+		ContextMenu ctxMenu = new ContextMenu(imageNodeItem, textMenu, numberMenu, functionMenu, colorMenu,
+				deleteNodeItem, getPathSource);
 
 		// show the menu at the mouse position
 		ctxMenu.show((Node) event.getTarget(), event.getScreenX(), event.getScreenY());
@@ -111,6 +114,72 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 			colorMenu.getItems().add(getColorMenuItem(names[i], colors[i]));
 		}
 		return colorMenu;
+	}
+
+	private Menu createChangeFunctionsMenu() {
+		Menu textsMenu = new Menu("Change Functions");
+
+		MindMapNodePart host = (MindMapNodePart) getHost();
+
+		Menu nameItem = new Menu("Function Hex Field ...");
+		MenuItem nameEnter = new MenuItem("Function enter...");
+		nameEnter.setOnAction((e) -> {
+			try {
+				String newName = showDialog(host.getContent().getName(), "Enter new Function...");
+				ITransactionalOperation op = new SetMindMapNodeFunctionHexFieldOperation(host, newName);
+				host.getRoot().getViewer().getDomain().execute(op, null);
+			} catch (ExecutionException e1) {
+				e1.printStackTrace();
+			}
+		});
+		Menu nameExample = new Menu("Function example ...");
+		ArrayList<String> names = ControllerJSON.read(host.getContent(), MindMapNode.PROP_FUNCTION_HEX_FIELD);
+		for (String string : names) {
+			MenuItem nameExampleItem = new MenuItem(string);
+			nameExampleItem.setOnAction((e) -> {
+				ITransactionalOperation op = new SetMindMapNodeFunctionHexFieldOperation(host,
+						nameExampleItem.getText().toString());
+				try {
+					host.getRoot().getViewer().getDomain().execute(op, null);
+				} catch (ExecutionException e1) {
+					e1.printStackTrace();
+				}
+			});
+			nameExample.getItems().add(nameExampleItem);
+		}
+		nameItem.getItems().addAll(nameEnter, nameExample);
+
+		Menu descrItem = new Menu("End ...");
+		MenuItem descrEnter = new MenuItem("End enter...");
+		descrEnter.setOnAction((e) -> {
+			try {
+				String newDescription = showDialog(host.getContent().getDescription(), "Enter new End...");
+				ITransactionalOperation op = new SetMindMapNodeEndOperation(host, newDescription);
+				host.getRoot().getViewer().getDomain().execute(op, null);
+			} catch (ExecutionException e1) {
+				e1.printStackTrace();
+			}
+		});
+		Menu descrExample = new Menu("End example ...");
+		ArrayList<String> descriptions = ControllerJSON.read(host.getContent(), MindMapNode.PROP_END);
+		for (String string : descriptions) {
+			MenuItem descrExampleItem = new MenuItem(string);
+			descrExampleItem.setOnAction((e) -> {
+				ITransactionalOperation op = new SetMindMapNodeEndOperation(host,
+						descrExampleItem.getText().toString());
+				try {
+					host.getRoot().getViewer().getDomain().execute(op, null);
+				} catch (ExecutionException e1) {
+					e1.printStackTrace();
+				}
+			});
+			descrExample.getItems().add(descrExampleItem);
+		}
+		descrItem.getItems().addAll(descrEnter, descrExample);
+
+		textsMenu.getItems().addAll(nameItem, descrItem);
+
+		return textsMenu;
 	}
 
 	private Menu createChangeNumbersMenu() {
