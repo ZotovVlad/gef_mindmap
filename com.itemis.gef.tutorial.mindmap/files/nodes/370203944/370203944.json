@@ -18,7 +18,7 @@
     ],
     "output2": [""]
   },
-  "number_of_inputs": "1",
+  "number_of_inputs": "5",
   "inputs_name": {
     "input2": [""],
     "input1": [
@@ -32,5 +32,5 @@
   },
   "name": "inv1",
   "description": "Invertor 1",
-  "end": "wetrer.hex"
+  "end": "inv1_flash_read_end_field.hex"
 }

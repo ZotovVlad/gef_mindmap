@@ -117,13 +117,13 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 	}
 
 	private Menu createChangeFunctionsMenu() {
-		Menu textsMenu = new Menu("Change Functions");
+		Menu functionsMenu = new Menu("Change Functions");
 
 		MindMapNodePart host = (MindMapNodePart) getHost();
 
-		Menu nameItem = new Menu("Function Hex Field ...");
-		MenuItem nameEnter = new MenuItem("Function enter...");
-		nameEnter.setOnAction((e) -> {
+		Menu functionItem = new Menu("Function Hex Field ...");
+		MenuItem functionEnter = new MenuItem("Function enter...");
+		functionEnter.setOnAction((e) -> {
 			try {
 				FileChooser fileChooser = new FileChooser();
 				FileChooser.ExtensionFilter extFilterHEX = new FileChooser.ExtensionFilter("HEX files (*.hex)",
@@ -140,26 +140,26 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 				alert.showAndWait();
 			}
 		});
-		Menu nameExample = new Menu("Function example ...");
+		Menu functionExample = new Menu("Function example ...");
 		ArrayList<String> names = ControllerJSON.read(host.getContent(), MindMapNode.PROP_FUNCTION_HEX_FIELD);
 		for (String string : names) {
-			MenuItem nameExampleItem = new MenuItem(string);
-			nameExampleItem.setOnAction((e) -> {
+			MenuItem functionExampleItem = new MenuItem(string);
+			functionExampleItem.setOnAction((e) -> {
 				ITransactionalOperation op = new SetMindMapNodeFunctionHexFieldOperation(host,
-						nameExampleItem.getText().toString());
+						functionExampleItem.getText().toString());
 				try {
 					host.getRoot().getViewer().getDomain().execute(op, null);
 				} catch (ExecutionException e1) {
 					e1.printStackTrace();
 				}
 			});
-			nameExample.getItems().add(nameExampleItem);
+			functionExample.getItems().add(functionExampleItem);
 		}
-		nameItem.getItems().addAll(nameEnter, nameExample);
+		functionItem.getItems().addAll(functionEnter, functionExample);
 
-		Menu descrItem = new Menu("End ...");
-		MenuItem descrEnter = new MenuItem("End enter...");
-		descrEnter.setOnAction((e) -> {
+		Menu endItem = new Menu("End ...");
+		MenuItem endEnter = new MenuItem("End enter...");
+		endEnter.setOnAction((e) -> {
 			try {
 				FileChooser fileChooser = new FileChooser();
 				FileChooser.ExtensionFilter extFilterHEX = new FileChooser.ExtensionFilter("HEX files (*.hex)",
@@ -176,92 +176,92 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 				alert.showAndWait();
 			}
 		});
-		Menu descrExample = new Menu("End example ...");
+		Menu endExample = new Menu("End example ...");
 		ArrayList<String> descriptions = ControllerJSON.read(host.getContent(), MindMapNode.PROP_END);
 		for (String string : descriptions) {
-			MenuItem descrExampleItem = new MenuItem(string);
-			descrExampleItem.setOnAction((e) -> {
+			MenuItem endExampleItem = new MenuItem(string);
+			endExampleItem.setOnAction((e) -> {
 				ITransactionalOperation op = new SetMindMapNodeEndOperation(host,
-						descrExampleItem.getText().toString());
+						endExampleItem.getText().toString());
 				try {
 					host.getRoot().getViewer().getDomain().execute(op, null);
 				} catch (ExecutionException e1) {
 					e1.printStackTrace();
 				}
 			});
-			descrExample.getItems().add(descrExampleItem);
+			endExample.getItems().add(endExampleItem);
 		}
-		descrItem.getItems().addAll(descrEnter, descrExample);
+		endItem.getItems().addAll(endEnter, endExample);
 
-		textsMenu.getItems().addAll(nameItem, descrItem);
+		functionsMenu.getItems().addAll(functionItem, endItem);
 
-		return textsMenu;
+		return functionsMenu;
 	}
 
 	private Menu createChangeNumbersMenu() {
-		Menu textsMenu = new Menu("Change Numbers");
+		Menu numbersMenu = new Menu("Change Numbers");
 
 		MindMapNodePart host = (MindMapNodePart) getHost();
 
-		Menu nameItem = new Menu("Number of Input ...");
-		MenuItem nameEnter = new MenuItem("Number enter...");
-		nameEnter.setOnAction((e) -> {
+		Menu inputItem = new Menu("Number of Input ...");
+		MenuItem inputEnter = new MenuItem("Number enter...");
+		inputEnter.setOnAction((e) -> {
 			try {
-				String newName = showDialog(host.getContent().getName(), "Enter new Number of Input...");
-				ITransactionalOperation op = new SetMindMapNodeNumberOfInputsOperation(host, newName);
+				String newInput = showDialog(host.getContent().getName(), "Enter new Number of Input...");
+				ITransactionalOperation op = new SetMindMapNodeNumberOfInputsOperation(host, newInput);
 				host.getRoot().getViewer().getDomain().execute(op, null);
 			} catch (ExecutionException e1) {
 				e1.printStackTrace();
 			}
 		});
-		Menu nameExample = new Menu("Number example ...");
-		ArrayList<String> names = ControllerJSON.read(host.getContent(), MindMapNode.PROP_NUMBER_OF_INPUTS);
-		for (String string : names) {
-			MenuItem nameExampleItem = new MenuItem(string);
-			nameExampleItem.setOnAction((e) -> {
+		Menu inputExample = new Menu("Number example ...");
+		ArrayList<String> inputs = ControllerJSON.read(host.getContent(), MindMapNode.PROP_NUMBER_OF_INPUTS);
+		for (String input : inputs) {
+			MenuItem inputExampleItem = new MenuItem(input);
+			inputExampleItem.setOnAction((e) -> {
 				ITransactionalOperation op = new SetMindMapNodeNumberOfInputsOperation(host,
-						nameExampleItem.getText().toString());
+						inputExampleItem.getText().toString());
 				try {
 					host.getRoot().getViewer().getDomain().execute(op, null);
 				} catch (ExecutionException e1) {
 					e1.printStackTrace();
 				}
 			});
-			nameExample.getItems().add(nameExampleItem);
+			inputExample.getItems().add(inputExampleItem);
 		}
-		nameItem.getItems().addAll(nameEnter, nameExample);
+		inputItem.getItems().addAll(inputEnter, inputExample);
 
-		Menu descrItem = new Menu("Number of Output ...");
-		MenuItem descrEnter = new MenuItem("Output enter...");
-		descrEnter.setOnAction((e) -> {
+		Menu outputItem = new Menu("Number of Output ...");
+		MenuItem outputEnter = new MenuItem("Output enter...");
+		outputEnter.setOnAction((e) -> {
 			try {
-				String newDescription = showDialog(host.getContent().getDescription(), "Enter new Number of Output...");
-				ITransactionalOperation op = new SetMindMapNodeNumberOfOutputsOperation(host, newDescription);
+				String newOutput = showDialog(host.getContent().getDescription(), "Enter new Number of Output...");
+				ITransactionalOperation op = new SetMindMapNodeNumberOfOutputsOperation(host, newOutput);
 				host.getRoot().getViewer().getDomain().execute(op, null);
 			} catch (ExecutionException e1) {
 				e1.printStackTrace();
 			}
 		});
-		Menu descrExample = new Menu("Output example ...");
-		ArrayList<String> descriptions = ControllerJSON.read(host.getContent(), MindMapNode.PROP_NUMBER_OF_OUTPUTS);
-		for (String string : descriptions) {
-			MenuItem descrExampleItem = new MenuItem(string);
-			descrExampleItem.setOnAction((e) -> {
+		Menu outputExample = new Menu("Output example ...");
+		ArrayList<String> outputs = ControllerJSON.read(host.getContent(), MindMapNode.PROP_NUMBER_OF_OUTPUTS);
+		for (String output : outputs) {
+			MenuItem outputExampleItem = new MenuItem(output);
+			outputExampleItem.setOnAction((e) -> {
 				ITransactionalOperation op = new SetMindMapNodeNumberOfOutputsOperation(host,
-						descrExampleItem.getText().toString());
+						outputExampleItem.getText().toString());
 				try {
 					host.getRoot().getViewer().getDomain().execute(op, null);
 				} catch (ExecutionException e1) {
 					e1.printStackTrace();
 				}
 			});
-			descrExample.getItems().add(descrExampleItem);
+			outputExample.getItems().add(outputExampleItem);
 		}
-		descrItem.getItems().addAll(descrEnter, descrExample);
+		outputItem.getItems().addAll(outputEnter, outputExample);
 
-		textsMenu.getItems().addAll(nameItem, descrItem);
+		numbersMenu.getItems().addAll(inputItem, outputItem);
 
-		return textsMenu;
+		return numbersMenu;
 	}
 
 	private Menu createChangeTextsMenu() {
