@@ -160,7 +160,7 @@ public class ControllerJSON implements PropertyChangeListener {
 	public static void writeCustomJSON(MindMapNode mindMapNode) {
 		JSONObject root = new JSONObject();
 
-		root.put(MindMapNode.PROP_NAME, mindMapNode.getName());
+		root.put(MindMapNode.PROP_NAME, mindMapNode.getName() == null ? "" : mindMapNode.getName());
 		root.put(MindMapNode.PROP_DESCRIPTION,
 				mindMapNode.getDescription() == null ? "" : mindMapNode.getDescription());
 		root.put(MindMapNode.PROP_FUNCTION_HEX_FIELD,
