@@ -64,6 +64,7 @@ public class CreateNewNodeOnClickHandler extends AbstractHandler implements IOnC
 
 			MindMapNode customNode = ControllerJSON.search(Type.Node.getString());
 			if (!(customNode == null)) {
+				newNode.setTitle("");
 				newNode.setName(customNode.getName());
 				newNode.setDescription(customNode.getDescription());
 				newNode.setFunctionHexField(customNode.getFunctionHexField());

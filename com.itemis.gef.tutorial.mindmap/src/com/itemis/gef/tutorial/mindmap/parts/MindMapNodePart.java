@@ -204,6 +204,9 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 			case "New Connection":
 				quantityRectangleConnection = 0;
 				break;
+			case "":
+				quantityRectangleConnection = -1;
+				break;
 			default:
 				quantityRectangleConnection = 6;
 				break;
