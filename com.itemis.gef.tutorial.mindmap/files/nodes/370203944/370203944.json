@@ -5,7 +5,7 @@
     "output1": {"PAD_Out0": "inv1_pad_out0_field.hex"},
     "output2": {"PAD_Out1": "inv1_pad_out1_field.hex"}
   },
-  "function_hex_field": "jk",
+  "function_hex_field": "inv1_field.hex",
   "number_of_outputs": "1",
   "outputs_name": {
     "output3": [""],
@@ -32,5 +32,5 @@
   },
   "name": "inv1",
   "description": "Invertor 1",
-  "end": "iuhyp"
+  "end": "wetrer.hex"
 }

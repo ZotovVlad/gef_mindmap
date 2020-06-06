@@ -125,11 +125,19 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 		MenuItem nameEnter = new MenuItem("Function enter...");
 		nameEnter.setOnAction((e) -> {
 			try {
-				String newName = showDialog(host.getContent().getName(), "Enter new Function...");
-				ITransactionalOperation op = new SetMindMapNodeFunctionHexFieldOperation(host, newName);
+				FileChooser fileChooser = new FileChooser();
+				FileChooser.ExtensionFilter extFilterHEX = new FileChooser.ExtensionFilter("HEX files (*.hex)",
+						"*.hex");
+				fileChooser.getExtensionFilters().addAll(extFilterHEX);
+				File file = fileChooser.showOpenDialog(null);
+				ITransactionalOperation op = new SetMindMapNodeFunctionHexFieldOperation(host, file.getName());
 				host.getRoot().getViewer().getDomain().execute(op, null);
-			} catch (ExecutionException e1) {
-				e1.printStackTrace();
+			} catch (Exception e1) {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Warning");
+				alert.setHeaderText(null);
+				alert.setContentText("File not selected");
+				alert.showAndWait();
 			}
 		});
 		Menu nameExample = new Menu("Function example ...");
@@ -153,11 +161,19 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 		MenuItem descrEnter = new MenuItem("End enter...");
 		descrEnter.setOnAction((e) -> {
 			try {
-				String newDescription = showDialog(host.getContent().getDescription(), "Enter new End...");
-				ITransactionalOperation op = new SetMindMapNodeEndOperation(host, newDescription);
+				FileChooser fileChooser = new FileChooser();
+				FileChooser.ExtensionFilter extFilterHEX = new FileChooser.ExtensionFilter("HEX files (*.hex)",
+						"*.hex");
+				fileChooser.getExtensionFilters().addAll(extFilterHEX);
+				File file = fileChooser.showOpenDialog(null);
+				ITransactionalOperation op = new SetMindMapNodeEndOperation(host, file.getName());
 				host.getRoot().getViewer().getDomain().execute(op, null);
-			} catch (ExecutionException e1) {
-				e1.printStackTrace();
+			} catch (Exception e1) {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Warning");
+				alert.setHeaderText(null);
+				alert.setContentText("File not selected");
+				alert.showAndWait();
 			}
 		});
 		Menu descrExample = new Menu("End example ...");
