@@ -145,6 +145,28 @@ public class ControllerJSON implements PropertyChangeListener {
 		return mindMapNodeLib;
 	}
 
+	public static HashMap<String, ArrayList<String>> readName(MindMapNode mindMapNode, String property, String stor) {
+		HashMap<String, ArrayList<String>> names = new HashMap<>();
+		try {
+			Reader reader = new FileReader(mindMapNode.getNodeCustomJSON());
+			JSONTokener parser = new JSONTokener(reader);
+			JSONObject root = new JSONObject(parser);
+			JSONObject namesJSON = root.getJSONObject(property);
+			for (int j = 1; j < namesJSON.length() + 1; j++) {
+				List<Object> arrayOutput = namesJSON.getJSONArray(stor + j).toList();
+				ArrayList<String> output = new ArrayList<>();
+				for (int k = 0; k < arrayOutput.size(); k++) {
+					output.add((String) arrayOutput.get(k));
+				}
+				names.put(stor + j, output);
+			}
+			System.out.println();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return names;
+	}
+
 	public static MindMapNode search(String search) {
 		if (search.equals("")) {
 			return null;

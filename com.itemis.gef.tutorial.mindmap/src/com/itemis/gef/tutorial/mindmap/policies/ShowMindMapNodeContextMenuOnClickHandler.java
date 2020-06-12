@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 
 import javax.imageio.ImageIO;
@@ -181,8 +182,7 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 		for (String string : descriptions) {
 			MenuItem endExampleItem = new MenuItem(string);
 			endExampleItem.setOnAction((e) -> {
-				ITransactionalOperation op = new SetMindMapNodeEndOperation(host,
-						endExampleItem.getText().toString());
+				ITransactionalOperation op = new SetMindMapNodeEndOperation(host, endExampleItem.getText().toString());
 				try {
 					host.getRoot().getViewer().getDomain().execute(op, null);
 				} catch (ExecutionException e1) {
@@ -205,13 +205,45 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 
 		Menu inputItem = new Menu("Number of Input ...");
 		MenuItem inputEnter = new MenuItem("Number enter...");
+		HashMap<String, ArrayList<String>> inpcvusdfts = ControllerJSON.readName(host.getContent(),
+				MindMapNode.PROP_INPUTS_NAME, "input");
 		inputEnter.setOnAction((e) -> {
+			String newInput = showDialog(host.getContent().getNumberOfInputs(), "Enter new Number of Input...");
 			try {
-				String newInput = showDialog(host.getContent().getName(), "Enter new Number of Input...");
+				int newNumberinput = Integer.parseInt(newInput);
 				ITransactionalOperation op = new SetMindMapNodeNumberOfInputsOperation(host, newInput);
 				host.getRoot().getViewer().getDomain().execute(op, null);
-			} catch (ExecutionException e1) {
-				e1.printStackTrace();
+
+				if (newNumberinput < 0 || newNumberinput > 2) {
+					Alert alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Warning");
+					alert.setHeaderText(null);
+					alert.setContentText("New Number of Input must be between 0 and 2");
+					alert.showAndWait();
+				} else {
+					if (newNumberinput < Integer.parseInt(host.getContent().getNumberOfInputs())) {
+						String remove = showDialog(host.getContent().getNumberOfInputs(),
+								"Enter new Number of Input...");
+					}
+					HashMap<String, ArrayList<String>> inpcvuts = ControllerJSON.readName(host.getContent(),
+							MindMapNode.PROP_INPUTS_NAME, "input");
+					if (newNumberinput > Integer.parseInt(host.getContent().getNumberOfInputs())) {
+						HashMap<String, ArrayList<String>> inputs = ControllerJSON.readName(host.getContent(),
+								MindMapNode.PROP_INPUTS_NAME, "input");
+						String insert = showDialog(host.getContent().getNumberOfInputs(),
+								"Enter new Number of Input...");
+					}
+				}
+
+				// String newInput = showDialog(host.getContent().getNumberOfInputs(), "Enter
+				// new Number of Input...");
+
+			} catch (Exception e1) {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Warning");
+				alert.setHeaderText(null);
+				alert.setContentText("New Number of Input is not Integer");
+				alert.showAndWait();
 			}
 		});
 		Menu inputExample = new Menu("Number example ...");
@@ -235,7 +267,7 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 		MenuItem outputEnter = new MenuItem("Output enter...");
 		outputEnter.setOnAction((e) -> {
 			try {
-				String newOutput = showDialog(host.getContent().getDescription(), "Enter new Number of Output...");
+				String newOutput = showDialog(host.getContent().getNumberOfOutputs(), "Enter new Number of Output...");
 				ITransactionalOperation op = new SetMindMapNodeNumberOfOutputsOperation(host, newOutput);
 				host.getRoot().getViewer().getDomain().execute(op, null);
 			} catch (ExecutionException e1) {

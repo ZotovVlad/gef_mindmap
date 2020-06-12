@@ -93,10 +93,10 @@ public class MindMapNodeVisual extends Region {
 
 		Rectangle rec = null;
 
-		points.addAll(Arrays.asList(new Point(0, 0), new Point(NODE_WIDTH, 0), new Point(NODE_WIDTH, NODE_HEIGH / 2),
-				new Point(NODE_WIDTH, NODE_HEIGH), new Point(0, NODE_HEIGH), new Point(0, NODE_HEIGH / 2)));
-
 		if (quantityRectangleConnection == 6) {
+			points.addAll(
+					Arrays.asList(new Point(0, 0), new Point(NODE_WIDTH, 0), new Point(NODE_WIDTH, NODE_HEIGH / 2),
+							new Point(NODE_WIDTH, NODE_HEIGH), new Point(0, NODE_HEIGH), new Point(0, NODE_HEIGH / 2)));
 			for (int i = 0; i < points.size(); i++) {
 				switch (i) {
 				case 0:
@@ -147,6 +147,9 @@ public class MindMapNodeVisual extends Region {
 			}
 			getChildren().addAll(pointsBox);
 		} else if (quantityRectangleConnection == 1) {
+			points.addAll(
+					Arrays.asList(new Point(0, 0), new Point(NODE_WIDTH, 0), new Point(NODE_WIDTH, NODE_HEIGH / 2),
+							new Point(NODE_WIDTH, NODE_HEIGH), new Point(0, NODE_HEIGH), new Point(0, NODE_HEIGH / 2)));
 			if (connectionOnlyRight) {
 				rec = new Rectangle(points.get(2).x - SIZERECTANGLEBOX, points.get(2).y - SIZERECTANGLEBOX / 2,
 						SIZERECTANGLEBOX, SIZERECTANGLEBOX);
@@ -160,6 +163,59 @@ public class MindMapNodeVisual extends Region {
 				rec.setOnMouseEntered((event) -> {
 					pointConnection.add(new Point(event.getX(), event.getY()));
 				});
+				pointsBox.add(rec);
+			}
+			getChildren().addAll(pointsBox);
+		} else if (quantityRectangleConnection == -1) {
+			points.addAll(Arrays.asList(new Point(0, 0), new Point(NODE_WIDTH, 0),
+					new Point(NODE_WIDTH, NODE_HEIGH / 3 * 1), new Point(NODE_WIDTH, NODE_HEIGH / 3 * 2),
+					new Point(NODE_WIDTH, NODE_HEIGH), new Point(0, NODE_HEIGH)));
+			for (int i = 0; i < points.size(); i++) {
+				switch (i) {
+				case 0:
+					rec = new Rectangle(points.get(i).x, points.get(i).y, SIZERECTANGLEBOX, SIZERECTANGLEBOX);
+					rec.setOnMouseEntered((event) -> {
+						pointConnection.add(new Point(event.getX(), event.getY()));
+					});
+					break;
+				case 1:
+					rec = new Rectangle(points.get(i).x - SIZERECTANGLEBOX, points.get(i).y, SIZERECTANGLEBOX,
+							SIZERECTANGLEBOX);
+					rec.setOnMouseEntered((event) -> {
+						pointConnection.add(new Point(event.getX(), event.getY()));
+					});
+					break;
+				case 2:
+					rec = new Rectangle(points.get(i).x - SIZERECTANGLEBOX, points.get(i).y - SIZERECTANGLEBOX / 2,
+							SIZERECTANGLEBOX, SIZERECTANGLEBOX);
+					rec.setOnMouseEntered((event) -> {
+						pointConnection.add(new Point(event.getX(), event.getY()));
+					});
+					break;
+				case 3:
+					rec = new Rectangle(points.get(i).x - SIZERECTANGLEBOX, points.get(i).y - SIZERECTANGLEBOX,
+							SIZERECTANGLEBOX, SIZERECTANGLEBOX);
+					rec.setOnMouseEntered((event) -> {
+						pointConnection.add(new Point(event.getX(), event.getY()));
+					});
+					break;
+				case 4:
+					rec = new Rectangle(points.get(i).x - SIZERECTANGLEBOX, points.get(i).y - SIZERECTANGLEBOX,
+							SIZERECTANGLEBOX, SIZERECTANGLEBOX);
+					rec.setOnMouseEntered((event) -> {
+						pointConnection.add(new Point(event.getX(), event.getY()));
+					});
+					break;
+				case 5:
+					rec = new Rectangle(points.get(i).x, points.get(i).y - SIZERECTANGLEBOX, SIZERECTANGLEBOX,
+							SIZERECTANGLEBOX);
+					rec.setOnMouseEntered((event) -> {
+						pointConnection.add(new Point(event.getX(), event.getY()));
+					});
+					break;
+				default:
+					break;
+				}
 				pointsBox.add(rec);
 			}
 			getChildren().addAll(pointsBox);
