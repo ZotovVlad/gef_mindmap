@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -28,6 +29,7 @@ import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeDescriptionOpera
 import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeEndOperation;
 import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeFunctionHexFieldOperation;
 import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeImageOperation;
+import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeInputsNameOperation;
 import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeNameOperation;
 import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeNumberOfInputsOperation;
 import com.itemis.gef.tutorial.mindmap.operations.SetMindMapNodeNumberOfOutputsOperation;
@@ -205,14 +207,23 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 
 		Menu inputItem = new Menu("Number of Input ...");
 		MenuItem inputEnter = new MenuItem("Number enter...");
-		HashMap<String, ArrayList<String>> inpcvusdfts = ControllerJSON.readName(host.getContent(),
+		HashMap<String, ArrayList<String>> readName = ControllerJSON.readName(host.getContent(),
 				MindMapNode.PROP_INPUTS_NAME, "input");
+		int input_number = Integer.parseInt(host.getContent().getNumberOfInputs());
+		Object[] keyset = readName.keySet().toArray();
+		Collection<ArrayList<String>> values = readName.values();
+		ArrayList<ArrayList<String>> list = new ArrayList<>();
+		for (ArrayList<String> arrayList : values) {
+			list.add(arrayList);
+		}
+
+		HashMap<String, ArrayList<String>> contentInputsName = host.getContent().getInputsName();
+		HashMap<String, HashMap<String, String>> contentInputs = host.getContent().getInputs();
+
 		inputEnter.setOnAction((e) -> {
 			String newInput = showDialog(host.getContent().getNumberOfInputs(), "Enter new Number of Input...");
 			try {
 				int newNumberinput = Integer.parseInt(newInput);
-				ITransactionalOperation op = new SetMindMapNodeNumberOfInputsOperation(host, newInput);
-				host.getRoot().getViewer().getDomain().execute(op, null);
 
 				if (newNumberinput < 0 || newNumberinput > 2) {
 					Alert alert = new Alert(AlertType.WARNING);
@@ -221,23 +232,65 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 					alert.setContentText("New Number of Input must be between 0 and 2");
 					alert.showAndWait();
 				} else {
-					if (newNumberinput < Integer.parseInt(host.getContent().getNumberOfInputs())) {
-						String remove = showDialog(host.getContent().getNumberOfInputs(),
-								"Enter new Number of Input...");
+					if (newNumberinput < input_number) {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setTitle("Warning");
+						alert.setHeaderText(null);
+						alert.setContentText("<");
+						alert.showAndWait();
+						// String remove = showDialog(host.getContent().getNumberOfInputs(),
+						// "Enter new Number of Input...");
 					}
-					HashMap<String, ArrayList<String>> inpcvuts = ControllerJSON.readName(host.getContent(),
-							MindMapNode.PROP_INPUTS_NAME, "input");
-					if (newNumberinput > Integer.parseInt(host.getContent().getNumberOfInputs())) {
-						HashMap<String, ArrayList<String>> inputs = ControllerJSON.readName(host.getContent(),
-								MindMapNode.PROP_INPUTS_NAME, "input");
-						String insert = showDialog(host.getContent().getNumberOfInputs(),
-								"Enter new Number of Input...");
+//					HashMap<String, ArrayList<String>> inpcvuts = ControllerJSON.readName(host.getContent(),
+//							MindMapNode.PROP_INPUTS_NAME, "input");
+					if (newNumberinput > input_number) {
+						String newName = "";
+						if (list.get(0).get(0).equals("")) {
+							newName = showDialog((String) keyset[0], "Enter Name of Input");
+						}
+						if (list.get(1).get(0).equals("")) {
+							newName = showDialog((String) keyset[1], "Enter Name of Input");
+						}
+
+						boolean flag = false;
+						for (int i = 0; i < keyset.length; i++) {
+							if (keyset[i].equals(newName)) {
+								flag = true;
+							}
+						}
+
+						if (flag) {
+							String newPIN = showDialog("PIN_", "Enter PIN of Input");
+							if (!newPIN.equals("")) {
+								ITransactionalOperation opInput = new SetMindMapNodeNumberOfInputsOperation(host,
+										newInput);
+								host.getRoot().getViewer().getDomain().execute(opInput, null);
+
+								contentInputsName.put(newName, new ArrayList<String>() {
+									{
+										add(newPIN);
+									}
+								});
+								ITransactionalOperation opInputsName = new SetMindMapNodeInputsNameOperation(host,
+										contentInputsName);
+								host.getRoot().getViewer().getDomain().execute(opInputsName, null);
+								ControllerJSON.writeCustomJSON(host.getContent());
+							} else {
+								Alert alert = new Alert(AlertType.WARNING);
+								alert.setTitle("Warning");
+								alert.setHeaderText(null);
+								alert.setContentText("Empty PIN");
+								alert.showAndWait();
+							}
+						} else {
+							Alert alert = new Alert(AlertType.WARNING);
+							alert.setTitle("Warning");
+							alert.setHeaderText(null);
+							alert.setContentText("Don't have this name of input");
+							alert.showAndWait();
+						}
 					}
 				}
-
-				// String newInput = showDialog(host.getContent().getNumberOfInputs(), "Enter
-				// new Number of Input...");
-
 			} catch (Exception e1) {
 				Alert alert = new Alert(AlertType.WARNING);
 				alert.setTitle("Warning");

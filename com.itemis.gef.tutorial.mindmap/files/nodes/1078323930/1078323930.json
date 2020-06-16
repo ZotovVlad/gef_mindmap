@@ -18,9 +18,9 @@
     ],
     "output2": [""]
   },
-  "number_of_inputs": "1",
+  "number_of_inputs": "2",
   "inputs_name": {
-    "input2": [""],
+    "input2": ["PIN_6"],
     "input1": [
       "PIN_0",
       "PIN_1"
