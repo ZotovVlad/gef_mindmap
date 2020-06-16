@@ -216,7 +216,6 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 		for (ArrayList<String> arrayList : values) {
 			list.add(arrayList);
 		}
-
 		HashMap<String, ArrayList<String>> contentInputsName = host.getContent().getInputsName();
 		HashMap<String, HashMap<String, String>> contentInputs = host.getContent().getInputs();
 
@@ -233,23 +232,50 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 					alert.showAndWait();
 				} else {
 					if (newNumberinput < input_number) {
-						Alert alert = new Alert(AlertType.WARNING);
-						alert.setTitle("Warning");
-						alert.setHeaderText(null);
-						alert.setContentText("<");
-						alert.showAndWait();
-						// String remove = showDialog(host.getContent().getNumberOfInputs(),
-						// "Enter new Number of Input...");
+
+						String newName = showDialog("input", "Enter Remove Name of Input");
+
+						boolean flag = false;
+						for (int i = 0; i < keyset.length; i++) {
+							if (keyset[i].equals(newName)) {
+								flag = true;
+							}
+						}
+						if (flag) {
+							for (int i = 0; i < keyset.length; i++) {
+								if (keyset[i].equals(newName)) {
+									host.getContent().getInputsName().values().remove(list.get(i));
+									HashMap<String, ArrayList<String>> fgh = host.getContent().getInputsName();
+									fgh.put(newName, new ArrayList<String>() {
+										{
+											add("");
+										}
+									});
+									host.getContent().setInputsName(fgh);
+									break;
+								}
+							}
+							ITransactionalOperation opInput = new SetMindMapNodeNumberOfInputsOperation(host, newInput);
+							host.getRoot().getViewer().getDomain().execute(opInput, null);
+							ITransactionalOperation opInputsName = new SetMindMapNodeInputsNameOperation(host,
+									host.getContent().getInputsName());
+							host.getRoot().getViewer().getDomain().execute(opInputsName, null);
+							ControllerJSON.writeCustomJSON(host.getContent());
+						} else {
+							Alert alert = new Alert(AlertType.WARNING);
+							alert.setTitle("Warning");
+							alert.setHeaderText(null);
+							alert.setContentText("Don't have this name of input");
+							alert.showAndWait();
+						}
 					}
-//					HashMap<String, ArrayList<String>> inpcvuts = ControllerJSON.readName(host.getContent(),
-//							MindMapNode.PROP_INPUTS_NAME, "input");
 					if (newNumberinput > input_number) {
 						String newName = "";
 						if (list.get(0).get(0).equals("")) {
-							newName = showDialog((String) keyset[0], "Enter Name of Input");
+							newName = showDialog((String) keyset[0], "Enter Add Name of Input");
 						}
 						if (list.get(1).get(0).equals("")) {
-							newName = showDialog((String) keyset[1], "Enter Name of Input");
+							newName = showDialog((String) keyset[1], "Enter Add Name of Input");
 						}
 
 						boolean flag = false;
@@ -299,6 +325,7 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 				alert.showAndWait();
 			}
 		});
+
 		Menu inputExample = new Menu("Number example ...");
 		ArrayList<String> inputs = ControllerJSON.read(host.getContent(), MindMapNode.PROP_NUMBER_OF_INPUTS);
 		for (String input : inputs) {
