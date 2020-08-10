@@ -1,3 +1,0 @@
-wiki.title=GEF Geometry Developer Documentation
-wiki.path=Geometry
-wiki.image.path=images/geometry

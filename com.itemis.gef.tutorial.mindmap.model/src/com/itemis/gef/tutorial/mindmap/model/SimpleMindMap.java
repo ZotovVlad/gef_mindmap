@@ -1,6 +1,5 @@
 package com.itemis.gef.tutorial.mindmap.model;
 
-import java.io.File;
 import java.util.List;
 
 import com.google.common.collect.Lists;
@@ -16,31 +15,6 @@ public class SimpleMindMap extends AbstractMindMapItem {
 	private static final long serialVersionUID = 4667064215236604843L;
 
 	public static final String PROP_CHILD_ELEMENTS = "childElements";
-
-	static void cleanDirectory(File dir) {
-		if (dir.isDirectory()) {
-			File[] files = dir.listFiles();
-			if (files != null && files.length > 0) {
-				for (File aFile : files) {
-					removeDirectory(aFile);
-				}
-			}
-		}
-	}
-
-	static void removeDirectory(File dir) {
-		if (dir.isDirectory()) {
-			File[] files = dir.listFiles();
-			if (files != null && files.length > 0) {
-				for (File aFile : files) {
-					removeDirectory(aFile);
-				}
-			}
-			dir.delete();
-		} else {
-			dir.delete();
-		}
-	}
 
 	private List<AbstractMindMapItem> childElements = Lists.newArrayList();
 

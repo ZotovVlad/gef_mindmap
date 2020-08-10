@@ -1,3 +1,0 @@
-wiki.title=GEF DOT Developer Documentation
-wiki.path=DOT
-wiki.image.path=images/dot

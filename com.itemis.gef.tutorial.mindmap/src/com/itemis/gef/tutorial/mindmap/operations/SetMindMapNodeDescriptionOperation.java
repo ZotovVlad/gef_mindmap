@@ -11,9 +11,9 @@ import org.eclipse.gef.mvc.fx.operations.ITransactionalOperation;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
 
 /**
- * operation to change the Description property of a MindMapNode
+ * operation to change the title property of a MindMapNode
  *
- * @author bajurus
+ * @author hniederhausen
  *
  */
 public class SetMindMapNodeDescriptionOperation extends AbstractOperation implements ITransactionalOperation {

@@ -16,46 +16,26 @@ public class MindMapVisualApplication extends Application {
 		Application.launch(args);
 	}
 
-	private String urlImage = "Event-search-icon.png";
-
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Pane root = new Pane();
 
-		// Image image = new Image(new FileInputStream(urlImage));
-		// ImageView iv1 = new ImageView(image);
-
-		String userDir = System.getProperty("user.dir");
-//		File f = new File(userDir + File.separator + "test" + ".txt");
-//		f.createNewFile(); \Files
-
 		// create state visuals
-
-		MindMapNodeVisual node = new MindMapNodeVisual(6, false);
+		MindMapNodeVisual node = new MindMapNodeVisual();
 		node.setTitle("Test Node");
-		node.setName("NAME1");
 		node.setDescription("This is just a test node, to see, how it looks :)");
-		node.relocate(500, 50);
-		// node.setImage(image);
+		node.relocate(50, 50);
 
-		MindMapNodeVisual node2 = new MindMapNodeVisual(6, false);
+		MindMapNodeVisual node2 = new MindMapNodeVisual();
 		node2.setTitle("Test Node 2");
-		node2.setName("NAME2");
 		node2.setDescription("This is just a test node, to see, how it looks :)");
 		node2.relocate(150, 250);
 		node2.setColor(Color.ALICEBLUE);
-		// node2.setImage(image);
-		// node2.getChildrenUnmodifiable().add(iv1);
-
-		System.out.println(node.hashCode());
-		System.out.println(node2.hashCode());
 
 		Connection conn = new MindMapConnectionVisual();
-		conn.setStartAnchor(new DynamicAnchor(node, new ChopBoxStrategy())); // OrthogonalProjectionStrategy,
-																				// ProjectionStrategy
+		conn.setStartAnchor(new DynamicAnchor(node, new ChopBoxStrategy()));
 		conn.setEndAnchor(new DynamicAnchor(node2, new ChopBoxStrategy()));
 
-		// root.getChildren().add(iv1);
 		root.getChildren().addAll(conn, node, node2);
 
 		primaryStage.setResizable(true);

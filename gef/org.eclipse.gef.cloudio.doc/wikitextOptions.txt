@@ -1,3 +1,0 @@
-wiki.title=GEF Cloudio Developer Documentation
-wiki.path=Cloudio
-wiki.image.path=images/cloudio

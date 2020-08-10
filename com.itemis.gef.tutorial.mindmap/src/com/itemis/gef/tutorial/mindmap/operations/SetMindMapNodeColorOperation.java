@@ -13,9 +13,7 @@ import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
 import javafx.scene.paint.Color;
 
 /**
- * operation to change the Color property of a MindMapNode
- *
- * @author bajurus
+ * operation to change the color property of a MindMapNode
  *
  */
 public class SetMindMapNodeColorOperation extends AbstractOperation implements ITransactionalOperation {

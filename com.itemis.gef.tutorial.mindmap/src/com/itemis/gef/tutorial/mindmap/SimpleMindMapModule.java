@@ -31,7 +31,6 @@ import com.itemis.gef.tutorial.mindmap.parts.handles.MindMapSelectionHandlePartF
 import com.itemis.gef.tutorial.mindmap.policies.CreateNewConnectionOnClickHandler;
 import com.itemis.gef.tutorial.mindmap.policies.CreateNewNodeOnClickHandler;
 import com.itemis.gef.tutorial.mindmap.policies.DeleteNodeOnHandleClickHandler;
-import com.itemis.gef.tutorial.mindmap.policies.MindMapKeyHandler;
 import com.itemis.gef.tutorial.mindmap.policies.ShowMindMapNodeContextMenuOnClickHandler;
 
 /**
@@ -51,7 +50,6 @@ public class SimpleMindMapModule extends MvcFxModule {
 		// add the focus and select policy to every part, listening to clicks
 		// and changing the focus and selection model
 		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(FocusAndSelectOnClickHandler.class);
-
 	}
 
 	protected void bindDeleteMindMapNodeHandlePartAdapters(MapBinder<AdapterKey<?>, Object> adapterMapBinder) {
@@ -79,10 +77,6 @@ public class SimpleMindMapModule extends MvcFxModule {
 
 		// adding the creation feedback behavior
 		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(CreateFeedbackBehavior.class);
-
-		// adding hotkeys handler
-		// working create new node, new connection on hotkeys
-		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(MindMapKeyHandler.class);
 	}
 
 	@Override
@@ -133,10 +127,6 @@ public class SimpleMindMapModule extends MvcFxModule {
 
 		// bind the context menu policy to the part
 		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(ShowMindMapNodeContextMenuOnClickHandler.class);
-
-		// adding hotkeys handler
-		// working delete node on hotkeys
-		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(MindMapKeyHandler.class);
 	}
 
 	@Override
@@ -169,6 +159,5 @@ public class SimpleMindMapModule extends MvcFxModule {
 				AdapterMaps.getAdapterMapBinder(binder(), SquareSegmentHandlePart.class));
 		bindDeleteMindMapNodeHandlePartAdapters(
 				AdapterMaps.getAdapterMapBinder(binder(), DeleteMindMapNodeHandlePart.class));
-
 	}
 }

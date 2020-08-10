@@ -1,3 +1,0 @@
-wiki.title=GEF Graph Developer Documentation
-wiki.path=Graph
-wiki.image.path=images/graph

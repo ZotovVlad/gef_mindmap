@@ -1,6 +1,0 @@
-bin
-target
-src-gen
-plugin.xml_gen
-.refactorings
-.DS_Store

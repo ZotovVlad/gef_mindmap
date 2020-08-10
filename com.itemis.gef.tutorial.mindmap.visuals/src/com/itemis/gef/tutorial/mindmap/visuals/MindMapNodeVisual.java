@@ -1,23 +1,15 @@
 package com.itemis.gef.tutorial.mindmap.visuals;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.eclipse.gef.fx.nodes.GeometryNode;
-import org.eclipse.gef.geometry.planar.Point;
 import org.eclipse.gef.geometry.planar.RoundedRectangle;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.VPos;
 import javafx.scene.Group;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
@@ -26,29 +18,17 @@ public class MindMapNodeVisual extends Region {
 	private static final double HORIZONTAL_PADDING = 20d;
 	private static final double VERTICAL_PADDING = 10d;
 	private static final double VERTICAL_SPACING = 5d;
-	private static final double NODE_WIDTH = 170;
-	private static final double NODE_HEIGH = 170;
-	private static final int SIZERECTANGLEBOX = 10;
 
 	private Text titleText;
 	private TextFlow descriptionFlow;
 	private Text descriptionText;
-	private Text nameText;
 	private GeometryNode<RoundedRectangle> shape;
 	private VBox labelVBox;
-	private Image descriptionImage;
-	private String urlImage = "null.png";
-	private int quantityImage = 0;
-	private List<Point> points = new ArrayList<>();
-	private List<Rectangle> pointsBox = new ArrayList<>();
-	private Color color;
-	public List<Point> pointConnection = new ArrayList<>();
 
-	public MindMapNodeVisual(int quantityRectangleConnection, boolean connectionOnlyRight) {
-
+	public MindMapNodeVisual() {
 		// create background shape
-		shape = new GeometryNode<>(new RoundedRectangle(0, 0, NODE_WIDTH, NODE_HEIGH, 8, 8));
-		shape.setFill(Color.PALEVIOLETRED);
+		shape = new GeometryNode<>(new RoundedRectangle(0, 0, 70, 30, 8, 8));
+		shape.setFill(Color.LIGHTGREEN);
 		shape.setStroke(Color.BLACK);
 
 		// create vertical box for title and description
@@ -65,10 +45,6 @@ public class MindMapNodeVisual extends Region {
 		titleText = new Text();
 		titleText.setTextOrigin(VPos.TOP);
 
-		// create name text
-		nameText = new Text();
-		nameText.setTextOrigin(VPos.TOP);
-
 		// create description text
 		descriptionText = new Text();
 		descriptionText.setTextOrigin(VPos.TOP);
@@ -81,7 +57,7 @@ public class MindMapNodeVisual extends Region {
 		descriptionFlow.maxWidthProperty().bind(shape.widthProperty().subtract(HORIZONTAL_PADDING * 2));
 
 		// vertically lay out title and description
-		labelVBox.getChildren().addAll(titleText, nameText, descriptionFlow);
+		labelVBox.getChildren().addAll(titleText, descriptionFlow);
 
 		// ensure title is always visible (see also #computeMinWidth(double) and
 		// #computeMinHeight(double) methods)
@@ -90,137 +66,6 @@ public class MindMapNodeVisual extends Region {
 		// wrap shape and VBox in Groups so that their bounds-in-parent is
 		// considered when determining the layout-bounds of this visual
 		getChildren().addAll(new Group(shape), new Group(labelVBox));
-
-		Rectangle rec = null;
-
-		if (quantityRectangleConnection == 6) {
-			points.addAll(
-					Arrays.asList(new Point(0, 0), new Point(NODE_WIDTH, 0), new Point(NODE_WIDTH, NODE_HEIGH / 2),
-							new Point(NODE_WIDTH, NODE_HEIGH), new Point(0, NODE_HEIGH), new Point(0, NODE_HEIGH / 2)));
-			for (int i = 0; i < points.size(); i++) {
-				switch (i) {
-				case 0:
-					rec = new Rectangle(points.get(i).x, points.get(i).y, SIZERECTANGLEBOX, SIZERECTANGLEBOX);
-					rec.setOnMouseEntered((event) -> {
-						pointConnection.add(new Point(event.getX(), event.getY()));
-					});
-					break;
-				case 1:
-					rec = new Rectangle(points.get(i).x - SIZERECTANGLEBOX, points.get(i).y, SIZERECTANGLEBOX,
-							SIZERECTANGLEBOX);
-					rec.setOnMouseEntered((event) -> {
-						pointConnection.add(new Point(event.getX(), event.getY()));
-					});
-					break;
-				case 2:
-					rec = new Rectangle(points.get(i).x - SIZERECTANGLEBOX, points.get(i).y - SIZERECTANGLEBOX / 2,
-							SIZERECTANGLEBOX, SIZERECTANGLEBOX);
-					rec.setOnMouseEntered((event) -> {
-						pointConnection.add(new Point(event.getX(), event.getY()));
-					});
-					break;
-				case 3:
-					rec = new Rectangle(points.get(i).x - SIZERECTANGLEBOX, points.get(i).y - SIZERECTANGLEBOX,
-							SIZERECTANGLEBOX, SIZERECTANGLEBOX);
-					rec.setOnMouseEntered((event) -> {
-						pointConnection.add(new Point(event.getX(), event.getY()));
-					});
-					break;
-				case 4:
-					rec = new Rectangle(points.get(i).x, points.get(i).y - SIZERECTANGLEBOX, SIZERECTANGLEBOX,
-							SIZERECTANGLEBOX);
-					rec.setOnMouseEntered((event) -> {
-						pointConnection.add(new Point(event.getX(), event.getY()));
-					});
-					break;
-				case 5:
-					rec = new Rectangle(points.get(i).x, points.get(i).y - SIZERECTANGLEBOX / 2, SIZERECTANGLEBOX,
-							SIZERECTANGLEBOX);
-					rec.setOnMouseEntered((event) -> {
-						pointConnection.add(new Point(event.getX(), event.getY()));
-					});
-					break;
-				default:
-					break;
-				}
-				pointsBox.add(rec);
-			}
-			getChildren().addAll(pointsBox);
-		} else if (quantityRectangleConnection == 1) {
-			points.addAll(
-					Arrays.asList(new Point(0, 0), new Point(NODE_WIDTH, 0), new Point(NODE_WIDTH, NODE_HEIGH / 2),
-							new Point(NODE_WIDTH, NODE_HEIGH), new Point(0, NODE_HEIGH), new Point(0, NODE_HEIGH / 2)));
-			if (connectionOnlyRight) {
-				rec = new Rectangle(points.get(2).x - SIZERECTANGLEBOX, points.get(2).y - SIZERECTANGLEBOX / 2,
-						SIZERECTANGLEBOX, SIZERECTANGLEBOX);
-				rec.setOnMouseEntered((event) -> {
-					pointConnection.add(new Point(event.getX(), event.getY()));
-				});
-				pointsBox.add(rec);
-			} else {
-				rec = new Rectangle(points.get(5).x, points.get(5).y - SIZERECTANGLEBOX / 2, SIZERECTANGLEBOX,
-						SIZERECTANGLEBOX);
-				rec.setOnMouseEntered((event) -> {
-					pointConnection.add(new Point(event.getX(), event.getY()));
-				});
-				pointsBox.add(rec);
-			}
-			getChildren().addAll(pointsBox);
-		} else if (quantityRectangleConnection == -1) {
-			points.addAll(Arrays.asList(new Point(0, 0), new Point(NODE_WIDTH, 0),
-					new Point(NODE_WIDTH, NODE_HEIGH / 3 * 1), new Point(NODE_WIDTH, NODE_HEIGH / 3 * 2),
-					new Point(NODE_WIDTH, NODE_HEIGH), new Point(0, NODE_HEIGH)));
-			for (int i = 0; i < points.size(); i++) {
-				switch (i) {
-				case 0:
-					rec = new Rectangle(points.get(i).x, points.get(i).y, SIZERECTANGLEBOX, SIZERECTANGLEBOX);
-					rec.setOnMouseEntered((event) -> {
-						pointConnection.add(new Point(event.getX(), event.getY()));
-					});
-					break;
-				case 1:
-					rec = new Rectangle(points.get(i).x - SIZERECTANGLEBOX, points.get(i).y, SIZERECTANGLEBOX,
-							SIZERECTANGLEBOX);
-					rec.setOnMouseEntered((event) -> {
-						pointConnection.add(new Point(event.getX(), event.getY()));
-					});
-					break;
-				case 2:
-					rec = new Rectangle(points.get(i).x - SIZERECTANGLEBOX, points.get(i).y - SIZERECTANGLEBOX / 2,
-							SIZERECTANGLEBOX, SIZERECTANGLEBOX);
-					rec.setOnMouseEntered((event) -> {
-						pointConnection.add(new Point(event.getX(), event.getY()));
-					});
-					break;
-				case 3:
-					rec = new Rectangle(points.get(i).x - SIZERECTANGLEBOX, points.get(i).y - SIZERECTANGLEBOX,
-							SIZERECTANGLEBOX, SIZERECTANGLEBOX);
-					rec.setOnMouseEntered((event) -> {
-						pointConnection.add(new Point(event.getX(), event.getY()));
-					});
-					break;
-				case 4:
-					rec = new Rectangle(points.get(i).x - SIZERECTANGLEBOX, points.get(i).y - SIZERECTANGLEBOX,
-							SIZERECTANGLEBOX, SIZERECTANGLEBOX);
-					rec.setOnMouseEntered((event) -> {
-						pointConnection.add(new Point(event.getX(), event.getY()));
-					});
-					break;
-				case 5:
-					rec = new Rectangle(points.get(i).x, points.get(i).y - SIZERECTANGLEBOX, SIZERECTANGLEBOX,
-							SIZERECTANGLEBOX);
-					rec.setOnMouseEntered((event) -> {
-						pointConnection.add(new Point(event.getX(), event.getY()));
-					});
-					break;
-				default:
-					break;
-				}
-				pointsBox.add(rec);
-			}
-			getChildren().addAll(pointsBox);
-		}
-
 	}
 
 	@Override
@@ -247,10 +92,6 @@ public class MindMapNodeVisual extends Region {
 		return minWidth(height);
 	}
 
-	public Color getColor() {
-		return color;
-	}
-
 	@Override
 	public Orientation getContentBias() {
 		return Orientation.HORIZONTAL;
@@ -264,32 +105,11 @@ public class MindMapNodeVisual extends Region {
 		return shape;
 	}
 
-	public Image getImage() {
-		return descriptionImage;
-	}
-
-	public Text getNameText() {
-		return nameText;
-	}
-
-	public List<Point> getPoints() {
-		return points;
-	}
-
-	public List<Rectangle> getPointsBox() {
-		return pointsBox;
-	}
-
 	public Text getTitleText() {
 		return titleText;
 	}
 
-	public String getUrlImage() {
-		return urlImage;
-	}
-
 	public void setColor(Color color) {
-		this.color = color;
 		shape.setFill(color);
 	}
 
@@ -297,29 +117,7 @@ public class MindMapNodeVisual extends Region {
 		this.descriptionText.setText(description);
 	}
 
-	public void setImage(Image image) {
-		if (!(this.descriptionImage == image)) {
-			ImageView iv1 = new ImageView(image);
-			iv1.setFitWidth(100);
-			try {
-				labelVBox.getChildren().remove(2);
-			} catch (Exception e) {
-
-			}
-			labelVBox.getChildren().add(iv1);
-			this.descriptionImage = image;
-		}
-	}
-
-	public void setName(String name) {
-		this.nameText.setText(name);
-	}
-
 	public void setTitle(String title) {
 		this.titleText.setText(title);
-	}
-
-	public void setUrlImage(String urlImage) {
-		this.urlImage = urlImage;
 	}
 }
