@@ -221,8 +221,8 @@ public class SimpleMindMapApplication extends Application {
 		pane.setCenter(getContentViewer().getCanvas());
 		pane.setRight(createToolPalette());
 
-		pane.setMinWidth(1500);
-		pane.setMinHeight(900);
+		pane.setMinWidth(1300);
+		pane.setMinHeight(700);
 
 //		HotKeysHandler keyboard = new HotKeysHandler();
 //		keyboard.init();
@@ -243,7 +243,7 @@ public class SimpleMindMapApplication extends Application {
 		for (AbstractMindMapItem abstractMindMapItem : mindMap.getChildElements()) {
 			abstractMindMapItem.addPropertyChangeListener(controllerJSON);
 			ControllerJSON.mindMapNodesAtField.add(abstractMindMapItem);
-			mindMap.addChildElement(abstractMindMapItem);
+			// mindMap.addChildElement(abstractMindMapItem);
 		}
 
 		// ControllerJSON.writeAllPropertiesJSON();

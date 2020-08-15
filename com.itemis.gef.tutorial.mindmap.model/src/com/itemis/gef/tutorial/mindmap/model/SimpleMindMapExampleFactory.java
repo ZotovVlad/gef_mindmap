@@ -19,6 +19,16 @@ public class SimpleMindMapExampleFactory {
 		SimpleMindMap.cleanDirectory(
 				new File(System.getProperty("user.dir") + File.separator + "files" + File.separator + "nodes"));
 
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				MindMapNode node = new MindMapNode();
+				node.setTitle(i + "" + j);
+				node.setColor(Color.GREENYELLOW);
+				node.setBounds(new Rectangle(0 + (j * WIDTH), 0 + (i * HEIGHT), WIDTH, HEIGHT));
+				mindMap.addChildElement(node);
+			}
+		}
+
 //		List<MindMapNode> child = new ArrayList<>();
 //		for (int i = 0; i < 3; i++) {
 //			child.add(new MindMapNode());
