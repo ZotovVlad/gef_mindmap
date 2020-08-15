@@ -1,11 +1,13 @@
 package com.itemis.gef.tutorial.mindmap.parts;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.gef.common.adapt.AdapterKey;
 import org.eclipse.gef.fx.anchors.IAnchor;
 import org.eclipse.gef.fx.nodes.Connection;
+import org.eclipse.gef.geometry.planar.Point;
 import org.eclipse.gef.mvc.fx.parts.AbstractContentPart;
 import org.eclipse.gef.mvc.fx.parts.IVisualPart;
 
@@ -14,6 +16,7 @@ import com.google.common.collect.SetMultimap;
 import com.google.common.reflect.TypeToken;
 import com.google.inject.Provider;
 import com.itemis.gef.tutorial.mindmap.model.MindMapConnection;
+import com.itemis.gef.tutorial.mindmap.parts.feedback.CreateConnectionFeedbackPart;
 import com.itemis.gef.tutorial.mindmap.visuals.MindMapConnectionVisual;
 
 import javafx.scene.Node;
@@ -28,6 +31,8 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> {
 
 	private static final String START_ROLE = "START";
 	private static final String END_ROLE = "END";
+
+	ArrayList<Point> points_t = new ArrayList<>();
 
 	@Override
 	protected void doAttachToAnchorageVisual(IVisualPart<? extends Node> anchorage, String role) {
@@ -53,7 +58,13 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> {
 
 	@Override
 	protected Connection doCreateVisual() {
-		return new MindMapConnectionVisual();
+		// Anchor anchor = adapter.get();
+		for (int i = 0; i < CreateConnectionFeedbackPart.points.size(); i++) {
+			points_t.add(CreateConnectionFeedbackPart.points.get(i));
+		}
+		CreateConnectionFeedbackPart.points.clear();
+		return new MindMapConnectionVisual(points_t);
+
 	}
 
 	@Override
@@ -90,5 +101,10 @@ public class MindMapConnectionPart extends AbstractContentPart<Connection> {
 	@Override
 	public MindMapConnection getContent() {
 		return (MindMapConnection) super.getContent();
+	}
+
+	@Override
+	public MindMapConnectionVisual getVisual() {
+		return (MindMapConnectionVisual) super.getVisual();
 	}
 }

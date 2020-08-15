@@ -1,17 +1,15 @@
 package com.itemis.gef.tutorial.mindmap.parts;
 
 import org.eclipse.gef.common.adapt.IAdaptable;
-import org.eclipse.gef.fx.anchors.DynamicAnchor;
-import org.eclipse.gef.fx.anchors.DynamicAnchor.AnchorageReferenceGeometry;
 import org.eclipse.gef.fx.anchors.IAnchor;
-import org.eclipse.gef.geometry.planar.IGeometry;
+import org.eclipse.gef.fx.anchors.StaticAnchor;
+import org.eclipse.gef.geometry.planar.Point;
 import org.eclipse.gef.mvc.fx.parts.IVisualPart;
 
-import com.google.common.reflect.TypeToken;
 import com.google.inject.Provider;
 import com.itemis.gef.tutorial.mindmap.visuals.MindMapConnectionVisual;
+import com.itemis.gef.tutorial.mindmap.visuals.MindMapNodeVisual;
 
-import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.scene.Node;
 
@@ -26,8 +24,8 @@ import javafx.scene.Node;
 public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPart<? extends Node>>
 		implements Provider<IAnchor> {
 
-	// the anchor in case we already created one
-	private DynamicAnchor anchor;
+	private static final int SIZERECTANGLEBOX = 10;
+	private StaticAnchor staticAnchor;
 
 	@Override
 	public ReadOnlyObjectProperty<IVisualPart<? extends Node>> adaptableProperty() {
@@ -36,30 +34,26 @@ public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPa
 
 	@Override
 	public IAnchor get() {
-		if (anchor == null) {
-			// get the visual from the host (MindMapNodePart)
-			Node anchorage = getAdaptable().getVisual();
-			// create a new anchor instance
-			anchor = new DynamicAnchor(anchorage);
+		// get current MindMapNodeVisual
+		MindMapNodeVisual mindMapNodeVisual = (MindMapNodeVisual) getAdaptable().getVisual();
 
-			// binding the anchor reference to an object binding, which
-			// recalculates the geometry when the layout bounds of
-			// the anchorage are changing
-			anchor.getComputationParameter(AnchorageReferenceGeometry.class).bind(new ObjectBinding<IGeometry>() {
-				{
-					bind(anchorage.layoutBoundsProperty());
-				}
-
-				@Override
-				protected IGeometry computeValue() {
-					@SuppressWarnings("serial")
-					// get the registered geometry provider from the host
-					Provider<IGeometry> geomProvider = getAdaptable().getAdapter(new TypeToken<Provider<IGeometry>>() {
-					});
-					return geomProvider.get();
-				}
-			});
+		// default node visual "settings"
+		if (mindMapNodeVisual.getTitleText().getText().toString().equals("START")) {
+			mindMapNodeVisual.pointConnection.add(new Point(170, 170 / 2));
+		} else if (mindMapNodeVisual.getTitleText().getText().toString().equals("FINISH")) {
+			mindMapNodeVisual.pointConnection.add(new Point(0, 170 / 2));
 		}
-		return anchor;
+
+		// return staticAnchor
+		if (mindMapNodeVisual.pointConnection.size() == 0) {
+			// return default-staticAnchor
+			staticAnchor = new StaticAnchor(mindMapNodeVisual, new Point(5, 5));
+			return staticAnchor;
+		} else {
+			// return point-staticAnchor
+			staticAnchor = new StaticAnchor(mindMapNodeVisual,
+					mindMapNodeVisual.pointConnection.get(mindMapNodeVisual.pointConnection.size() - 1));
+			return staticAnchor;
+		}
 	}
 }

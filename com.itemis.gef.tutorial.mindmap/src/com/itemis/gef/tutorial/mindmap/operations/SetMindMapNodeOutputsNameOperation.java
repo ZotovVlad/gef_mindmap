@@ -1,5 +1,8 @@
 package com.itemis.gef.tutorial.mindmap.operations;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.AbstractOperation;
 import org.eclipse.core.runtime.IAdaptable;
@@ -11,27 +14,28 @@ import org.eclipse.gef.mvc.fx.operations.ITransactionalOperation;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
 
 /**
- * operation to change the Title property of a MindMapNode
+ * operation to change the OutputsName property of a MindMapNode
  *
  * @author bajurus
  *
  */
-public class SetMindMapNodeTitleOperation extends AbstractOperation implements ITransactionalOperation {
+public class SetMindMapNodeOutputsNameOperation extends AbstractOperation implements ITransactionalOperation {
 
 	private final MindMapNodePart nodePart;
-	private final String oldTitle;
-	private final String newTitle;
+	private final HashMap<String, ArrayList<String>> oldOutputsName;
+	private final HashMap<String, ArrayList<String>> newOutputsName;
 
-	public SetMindMapNodeTitleOperation(MindMapNodePart nodePart, String newTitle) {
+	public SetMindMapNodeOutputsNameOperation(MindMapNodePart nodePart,
+			HashMap<String, ArrayList<String>> newOutputsName) {
 		super("Change color");
 		this.nodePart = nodePart;
-		this.newTitle = newTitle;
-		this.oldTitle = nodePart.getContent().getTitle();
+		this.newOutputsName = newOutputsName;
+		this.oldOutputsName = nodePart.getContent().getOutputsName();
 	}
 
 	@Override
 	public IStatus execute(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
-		nodePart.getContent().setTitle(newTitle);
+		nodePart.getContent().setOutputsName(newOutputsName);
 		return Status.OK_STATUS;
 	}
 
@@ -43,7 +47,7 @@ public class SetMindMapNodeTitleOperation extends AbstractOperation implements I
 
 	@Override
 	public boolean isNoOp() {
-		return newTitle.equals(oldTitle);
+		return newOutputsName.equals(oldOutputsName);
 	}
 
 	@Override
@@ -53,7 +57,7 @@ public class SetMindMapNodeTitleOperation extends AbstractOperation implements I
 
 	@Override
 	public IStatus undo(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
-		nodePart.getContent().setTitle(oldTitle);
+		nodePart.getContent().setOutputsName(oldOutputsName);
 		return Status.OK_STATUS;
 	}
 }

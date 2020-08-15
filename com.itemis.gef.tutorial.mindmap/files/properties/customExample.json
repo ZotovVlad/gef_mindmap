@@ -1,0 +1,52 @@
+{
+  "name": "inv1",
+  "description": "Invertor 1",
+  "function_hex_field": "inv1_field.hex",
+  "number_of_inputs": "1",
+  "number_of_outputs": "1",
+  "inputs_name": {
+    "input1": [
+      "PIN_0"
+    ],
+    "input2": [
+      ""
+    ]
+  },
+  "outputs_name": {
+    "output1": [
+      "PAD_Out0"
+    ],
+    "output2": [
+      ""
+    ],
+    "output3": [
+      ""
+    ],
+    "output4": [
+      ""
+    ]
+  },
+  "inputs": {
+    "input1": {
+      "PIN_0": "inv1_pin_0_field.hex"
+    },
+    "input2": {
+      "PIN_1": ""
+    }
+  },
+  "outputs": {
+    "output1": {
+      "PAD_Out0": "inv1_pad_out0_field.hex"
+    },
+    "output2": {
+      "PAD_Out1": ""
+    },
+    "output3": {
+      "PAD_Out2": ""
+    },
+    "output4": {
+      "PAD_Out3": ""
+    }
+  },
+  "end": "inv1_flash_read_end_field.hex"
+}

@@ -13,10 +13,12 @@ Require-Bundle: org.eclipse.gef.common,
  org.eclipse.core.commands,
  org.eclipse.core.runtime,
  com.itemis.gef.mindmap.model,
- com.itemis.gef.mindmap.visuals
+ com.itemis.gef.mindmap.visuals,
+ org.eclipse.fx.javafx
 Import-Package: com.google.common.collect,
  com.google.common.reflect,
  com.google.inject,
  com.google.inject.binder,
- com.google.inject.multibindings,
- javax.inject
+ com.google.inject.multibindings
+Export-Package: com.itemis.gef.tutorial.mindmap.JSON
+
