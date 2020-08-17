@@ -32,6 +32,7 @@ import com.itemis.gef.tutorial.mindmap.policies.CreateNewConnectionOnClickHandle
 import com.itemis.gef.tutorial.mindmap.policies.CreateNewNodeOnClickHandler;
 import com.itemis.gef.tutorial.mindmap.policies.DeleteNodeOnHandleClickHandler;
 import com.itemis.gef.tutorial.mindmap.policies.MindMapKeyHandler;
+import com.itemis.gef.tutorial.mindmap.policies.MindMapMovingHandler;
 import com.itemis.gef.tutorial.mindmap.policies.ShowMindMapNodeContextMenuOnClickHandler;
 
 /**
@@ -133,6 +134,9 @@ public class SimpleMindMapModule extends MvcFxModule {
 
 		// bind the context menu policy to the part
 		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(ShowMindMapNodeContextMenuOnClickHandler.class);
+
+		// bind moving handler to the part
+		adapterMapBinder.addBinding(AdapterKey.defaultRole()).to(MindMapMovingHandler.class);
 
 		// adding hotkeys handler
 		// working delete node on hotkeys
