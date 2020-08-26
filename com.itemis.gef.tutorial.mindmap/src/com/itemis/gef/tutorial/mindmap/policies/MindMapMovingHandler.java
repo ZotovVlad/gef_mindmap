@@ -36,10 +36,13 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnHoverHan
 
 	@Override
 	public void endDrag(MouseEvent e, Dimension delta) {
+		if (mindMapNodeBottomMoved.getBounds() == null) {
+			MindMapMovingHandler.mindMapNodeBottomMoved = mindMapNodeTopMoved;
+		}
 		Rectangle rectangle = mindMapNodeBottomMoved.getBounds();
-
 		((MindMapNodePart) getHost()).getContent().setBounds(rectangle);
-		System.out.println(mindMapNodeTopMoved.getTitle() + " top");
+		MindMapMovingHandler.mindMapNodeTopMoved = new MindMapNode();
+		MindMapMovingHandler.mindMapNodeBottomMoved = new MindMapNode();
 	}
 
 	@Override
@@ -72,17 +75,20 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnHoverHan
 
 	@Override
 	public void startDrag(MouseEvent e) {
-		mindMapNodeTopMoved = ((MindMapNodePart) getHost()).getContent();
+		MindMapMovingHandler.mindMapNodeTopMoved = ((MindMapNodePart) getHost()).getContent();
 	}
 
 	private void verifyAndMoveCoordinatesAtNodesAtField(MouseEvent e) {
 		for (MindMapNode mindMapNode : mindMapNodesAtField) {
 			Rectangle bounds = mindMapNode.getBounds();
-			if (mindMapNode != ((MindMapNodePart) getHost()).getContent() && e.getX() >= bounds.getX()
-					&& e.getX() <= bounds.getX() + bounds.getWidth() && e.getY() >= bounds.getY()
+			if (/*
+				 * mindMapNode.getTitle() != ((MindMapNodePart)
+				 * getHost()).getContent().getTitle() &&
+				 */
+			e.getX() >= bounds.getX() && e.getX() <= bounds.getX() + bounds.getWidth() && e.getY() >= bounds.getY()
 					&& e.getY() <= bounds.getY() + bounds.getHeight()) {
 				MindMapMovingHandler.mindMapNodeBottomMoved = mindMapNode;
-				// System.out.println(mindMapNode.getTitle() + " bottom");
+				System.out.println(mindMapNode.getTitle() + " bottom");
 				break;
 			}
 		}

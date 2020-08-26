@@ -181,7 +181,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		String prop = event.getPropertyName();
 		if (MindMapNode.PROP_COLOR.equals(prop) || MindMapNode.PROP_DESCRIPTION.equals(prop)
 				|| MindMapNode.PROP_TITLE.equals(prop) || MindMapNode.PROP_IMAGE.equals(prop)
-				|| MindMapNode.PROP_NAME.equals(prop)) {
+				|| MindMapNode.PROP_NAME.equals(prop) || MindMapNode.PROP_BOUNDS.equals(prop)) {
 			refreshVisual();
 		}
 	}
