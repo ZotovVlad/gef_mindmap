@@ -7,17 +7,15 @@ import org.eclipse.gef.geometry.planar.Dimension;
 import org.eclipse.gef.geometry.planar.Rectangle;
 import org.eclipse.gef.mvc.fx.handlers.AbstractHandler;
 import org.eclipse.gef.mvc.fx.handlers.IOnDragHandler;
-import org.eclipse.gef.mvc.fx.handlers.IOnHoverHandler;
 
 import com.itemis.gef.tutorial.mindmap.JSON.ControllerJSON;
 import com.itemis.gef.tutorial.mindmap.model.MindMapNode;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
 
-import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
-public class MindMapMovingHandler extends AbstractHandler implements IOnHoverHandler, IOnDragHandler {
+public class MindMapMovingHandler extends AbstractHandler implements IOnDragHandler {
 
 	static MindMapNode mindMapNodeTopMoved = new MindMapNode();
 	static MindMapNode mindMapNodeBottomMoved = new MindMapNode();
@@ -36,6 +34,7 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnHoverHan
 
 	@Override
 	public void endDrag(MouseEvent e, Dimension delta) {
+		verifyAndMoveCoordinatesAtNodesAtField(e);
 		if (mindMapNodeBottomMoved.getBounds() == null) {
 			MindMapMovingHandler.mindMapNodeBottomMoved = mindMapNodeTopMoved;
 		}
@@ -47,17 +46,6 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnHoverHan
 
 	@Override
 	public void hideIndicationCursor() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void hover(MouseEvent e) {
-		MindMapMovingHandler.mindMapNodesAtField = (List<MindMapNode>) (List<?>) ControllerJSON.mindMapNodesAtField;
-		verifyAndMoveCoordinatesAtNodesAtField(e);
-	}
-
-	@Override
-	public void hoverIntent(Node hoverIntent) {
 		// TODO Auto-generated method stub
 	}
 
@@ -75,21 +63,20 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnHoverHan
 
 	@Override
 	public void startDrag(MouseEvent e) {
+		MindMapMovingHandler.mindMapNodesAtField = (List<MindMapNode>) (List<?>) ControllerJSON.mindMapNodesAtField;
 		MindMapMovingHandler.mindMapNodeTopMoved = ((MindMapNodePart) getHost()).getContent();
 	}
 
 	private void verifyAndMoveCoordinatesAtNodesAtField(MouseEvent e) {
 		for (MindMapNode mindMapNode : mindMapNodesAtField) {
-			Rectangle bounds = mindMapNode.getBounds();
-			if (/*
-				 * mindMapNode.getTitle() != ((MindMapNodePart)
-				 * getHost()).getContent().getTitle() &&
-				 */
-			e.getX() >= bounds.getX() && e.getX() <= bounds.getX() + bounds.getWidth() && e.getY() >= bounds.getY()
-					&& e.getY() <= bounds.getY() + bounds.getHeight()) {
-				MindMapMovingHandler.mindMapNodeBottomMoved = mindMapNode;
-				System.out.println(mindMapNode.getTitle() + " bottom");
-				break;
+			if (mindMapNode.getTitle() != MindMapMovingHandler.mindMapNodeTopMoved.getTitle()) {
+				Rectangle bounds = mindMapNode.getBounds();
+				if (e.getX() >= bounds.getX() && e.getX() <= bounds.getX() + bounds.getWidth()
+						&& e.getY() >= bounds.getY() && e.getY() <= bounds.getY() + bounds.getHeight()) {
+					MindMapMovingHandler.mindMapNodeBottomMoved = mindMapNode;
+					System.out.println(mindMapNode.getTitle() + " bottom");
+					break;
+				}
 			}
 		}
 //		MindMapNodePart host = (MindMapNodePart) getHost();
