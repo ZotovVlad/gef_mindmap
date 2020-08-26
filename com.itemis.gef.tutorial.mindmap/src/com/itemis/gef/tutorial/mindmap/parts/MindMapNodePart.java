@@ -39,6 +39,8 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 	public int quantityRectangleConnection;
 	public boolean connectionOnlyRight;
 
+	private PropertyChangeEvent event;
+
 	public void deleteColorContent() {
 		MindMapNode mindMapNodeDeleted = null;
 		for (MindMapNode mindMapNode2 : MindMapNodePart.mindMapNode) {
@@ -157,6 +159,8 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		// use the ITransformableContentPart API to position the visual
 		setVisualTransform(getContentTransform());
 
+		// this.event = null;
+
 		// System.out.println(MindMapNodePart.mindMapNode.size());
 	}
 
@@ -172,8 +176,14 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 
 	@Override
 	public Affine getContentTransform() {
-		Rectangle bounds = getContent().getBounds();
+		Rectangle bounds = new Rectangle();
+//		if (event == null) {
+		bounds = getContent().getBounds();
+//		} else {
+//			bounds = (Rectangle) event.getOldValue();
+//		}
 		return new Affine(new Translate(bounds.getX(), bounds.getY()));
+
 	}
 
 	@Override
@@ -181,7 +191,11 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		String prop = event.getPropertyName();
 		if (MindMapNode.PROP_COLOR.equals(prop) || MindMapNode.PROP_DESCRIPTION.equals(prop)
 				|| MindMapNode.PROP_TITLE.equals(prop) || MindMapNode.PROP_IMAGE.equals(prop)
-				|| MindMapNode.PROP_NAME.equals(prop) || MindMapNode.PROP_BOUNDS.equals(prop)) {
+				|| MindMapNode.PROP_NAME.equals(prop)) {
+			refreshVisual();
+		}
+		if (MindMapNode.PROP_BOUNDS.equals(prop)) {
+//			this.event = event;
 			refreshVisual();
 		}
 	}
@@ -224,8 +238,8 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 	public void setContentTransform(Affine totalTransform) {
 		// storing the new position
 		Rectangle bounds = getContent().getBounds().getCopy();
-		bounds.setX(totalTransform.getTx());
-		bounds.setY(totalTransform.getTy());
+//		bounds.setX(totalTransform.getTx());
+//		bounds.setY(totalTransform.getTy());
 		getContent().setBounds(bounds);
 	}
 
