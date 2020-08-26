@@ -2,19 +2,16 @@ package com.itemis.gef.tutorial.mindmap.policies;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.gef.geometry.planar.Dimension;
 import org.eclipse.gef.geometry.planar.Rectangle;
 import org.eclipse.gef.mvc.fx.handlers.AbstractHandler;
 import org.eclipse.gef.mvc.fx.handlers.IOnDragHandler;
-import org.eclipse.gef.mvc.fx.parts.IContentPart;
 
 import com.itemis.gef.tutorial.mindmap.JSON.ControllerJSON;
 import com.itemis.gef.tutorial.mindmap.model.MindMapNode;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
 
-import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
@@ -43,27 +40,6 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnDragHand
 		}
 		Rectangle rectangle = mindMapNodeBottomMoved.getBounds();
 		((MindMapNodePart) getHost()).getContent().setBounds(rectangle);
-		Map<Object, IContentPart<? extends Node>> mindMap = getHost().getViewer().getContentPartMap();
-
-//		StringBuilder builder = new StringBuilder();
-//		for (Object node : mindMap.keySet()) {
-//			if (node instanceof MindMapNode) {
-//				for (MindMapConnection connection : ((MindMapNode) node).getIncomingConnections()) {
-//					builder.append(connection.getSource().getTitle());
-//					builder.append(", ");
-//				}
-//
-//				System.out.print(builder.toString() + " -> " + ((MindMapNode) node).getTitle() + " -> ");
-//				builder = new StringBuilder();
-//				for (MindMapConnection connection : ((MindMapNode) node).getOutgoingConnections()) {
-//					builder.append(connection.getTarget().getTitle());
-//					builder.append(", ");
-//				}
-//			}
-//
-//			System.out.println(builder.toString() + "\n");
-//		}
-
 		MindMapMovingHandler.mindMapNodeTopMoved = new MindMapNode();
 		MindMapMovingHandler.mindMapNodeBottomMoved = new MindMapNode();
 	}

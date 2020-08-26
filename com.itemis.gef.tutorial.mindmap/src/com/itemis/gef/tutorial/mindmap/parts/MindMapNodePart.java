@@ -39,8 +39,6 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 	public int quantityRectangleConnection;
 	public boolean connectionOnlyRight;
 
-	private PropertyChangeEvent event;
-
 	public void deleteColorContent() {
 		MindMapNode mindMapNodeDeleted = null;
 		for (MindMapNode mindMapNode2 : MindMapNodePart.mindMapNode) {
@@ -159,8 +157,6 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		// use the ITransformableContentPart API to position the visual
 		setVisualTransform(getContentTransform());
 
-		// this.event = null;
-
 		// System.out.println(MindMapNodePart.mindMapNode.size());
 	}
 
@@ -177,11 +173,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 	@Override
 	public Affine getContentTransform() {
 		Rectangle bounds = new Rectangle();
-//		if (event == null) {
 		bounds = getContent().getBounds();
-//		} else {
-//			bounds = (Rectangle) event.getOldValue();
-//		}
 		return new Affine(new Translate(bounds.getX(), bounds.getY()));
 
 	}
@@ -191,11 +183,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		String prop = event.getPropertyName();
 		if (MindMapNode.PROP_COLOR.equals(prop) || MindMapNode.PROP_DESCRIPTION.equals(prop)
 				|| MindMapNode.PROP_TITLE.equals(prop) || MindMapNode.PROP_IMAGE.equals(prop)
-				|| MindMapNode.PROP_NAME.equals(prop)) {
-			refreshVisual();
-		}
-		if (MindMapNode.PROP_BOUNDS.equals(prop)) {
-//			this.event = event;
+				|| MindMapNode.PROP_NAME.equals(prop) || MindMapNode.PROP_BOUNDS.equals(prop)) {
 			refreshVisual();
 		}
 	}
