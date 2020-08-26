@@ -90,6 +90,7 @@ public class CreateNewNodeOnClickHandler extends AbstractHandler implements IOnC
 
 			ControllerJSON.writeCustomJSON(newNode);
 			newNode.addPropertyChangeListener(controllerJSON);
+			ControllerJSON.mindMapNodesAtField.add(newNode);
 
 			// GEF provides the CreatePolicy to add a new element to the model
 			CreationPolicy creationPolicy = getHost().getRoot().getAdapter(CreationPolicy.class);
