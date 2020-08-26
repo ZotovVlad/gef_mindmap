@@ -40,6 +40,7 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnDragHand
 		}
 		Rectangle rectangle = mindMapNodeBottomMoved.getBounds();
 		((MindMapNodePart) getHost()).getContent().setBounds(rectangle);
+		mindMapNodeBottomMoved.setTitle(mindMapNodeTopMoved.getTitle());
 		MindMapMovingHandler.mindMapNodeTopMoved = new MindMapNode();
 		MindMapMovingHandler.mindMapNodeBottomMoved = new MindMapNode();
 	}
