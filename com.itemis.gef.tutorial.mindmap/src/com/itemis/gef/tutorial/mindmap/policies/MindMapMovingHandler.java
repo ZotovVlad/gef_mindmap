@@ -2,16 +2,18 @@ package com.itemis.gef.tutorial.mindmap.policies;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.gef.geometry.planar.Dimension;
 import org.eclipse.gef.geometry.planar.Rectangle;
 import org.eclipse.gef.mvc.fx.handlers.AbstractHandler;
 import org.eclipse.gef.mvc.fx.handlers.IOnDragHandler;
+import org.eclipse.gef.mvc.fx.parts.IContentPart;
 
-import com.itemis.gef.tutorial.mindmap.JSON.ControllerJSON;
 import com.itemis.gef.tutorial.mindmap.model.MindMapNode;
 import com.itemis.gef.tutorial.mindmap.parts.MindMapNodePart;
 
+import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
@@ -43,6 +45,18 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnDragHand
 		mindMapNodeBottomMoved.setTitle(mindMapNodeTopMoved.getTitle());
 		MindMapMovingHandler.mindMapNodeTopMoved = new MindMapNode();
 		MindMapMovingHandler.mindMapNodeBottomMoved = new MindMapNode();
+		MindMapMovingHandler.mindMapNodesAtField = new ArrayList<>();
+	}
+
+	private List<MindMapNode> getDataFromScene() {
+		List<MindMapNode> dataFromScene = new ArrayList<>();
+		Map<Object, IContentPart<? extends Node>> mindMap = getHost().getViewer().getContentPartMap();
+		for (Object node : mindMap.keySet()) {
+			if (node instanceof MindMapNode) {
+				dataFromScene.add((MindMapNode) node);
+			}
+		}
+		return dataFromScene;
 	}
 
 	@Override
@@ -64,7 +78,9 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnDragHand
 
 	@Override
 	public void startDrag(MouseEvent e) {
-		MindMapMovingHandler.mindMapNodesAtField = (List<MindMapNode>) (List<?>) ControllerJSON.mindMapNodesAtField;
+		// TODO take data from scene
+		MindMapMovingHandler.mindMapNodesAtField = getDataFromScene();// (List<MindMapNode>) (List<?>)
+																		// ControllerJSON.mindMapNodesAtField;
 		MindMapMovingHandler.mindMapNodeTopMoved = ((MindMapNodePart) getHost()).getContent();
 	}
 

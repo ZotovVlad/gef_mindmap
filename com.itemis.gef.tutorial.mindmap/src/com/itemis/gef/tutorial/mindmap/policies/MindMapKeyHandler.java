@@ -173,6 +173,7 @@ public class MindMapKeyHandler extends AbstractHandler implements IOnStrokeHandl
 		}
 	}
 
+	// data from scene
 	private void printInfoOnAllNodes() {
 		Map<Object, IContentPart<? extends Node>> mindMap = getHost().getViewer().getContentPartMap();
 
