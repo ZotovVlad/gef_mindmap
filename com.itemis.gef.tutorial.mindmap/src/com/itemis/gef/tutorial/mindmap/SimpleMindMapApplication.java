@@ -304,7 +304,7 @@ public class SimpleMindMapApplication extends Application {
 	}
 
 	private void updateSource() {
-		String path = System.getProperty("user.dir") + File.separator + "Files";
+		String path = System.getProperty("user.dir") + File.separator + "files";
 
 		for (File file : new File(path).listFiles()) {
 			if (file.isFile()) {
