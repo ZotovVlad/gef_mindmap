@@ -13,6 +13,7 @@ public class SimpleMindMapExampleFactory {
 
 	private static final double WIDTH = 170;
 	private static final double HEIGHT = 170;
+	private static final double DELTA = 50;
 
 	public SimpleMindMap createComplexExample() {
 		SimpleMindMap mindMap = new SimpleMindMap();
@@ -24,7 +25,8 @@ public class SimpleMindMapExampleFactory {
 				MindMapNode node = new MindMapNode();
 				node.setTitle(i + "" + j);
 				node.setColor(Color.GREENYELLOW);
-				node.setBounds(new Rectangle(0 + (j * WIDTH), 0 + (i * HEIGHT), WIDTH, HEIGHT));
+				node.setBounds(
+						new Rectangle(0 + (j * WIDTH) + (j * DELTA), 0 + (i * HEIGHT) + (i * DELTA), WIDTH, HEIGHT));
 				mindMap.addChildElement(node);
 			}
 		}
