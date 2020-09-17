@@ -221,8 +221,8 @@ public class SimpleMindMapApplication extends Application {
 		pane.setCenter(getContentViewer().getCanvas());
 		pane.setRight(createToolPalette());
 
-		pane.setMinWidth(1300);
-		pane.setMinHeight(700);
+		pane.setMinWidth(1400);
+		pane.setMinHeight(850);
 
 //		HotKeysHandler keyboard = new HotKeysHandler();
 //		keyboard.init();

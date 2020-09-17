@@ -209,7 +209,8 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 		MenuItem inputEnter = new MenuItem("Number enter...");
 		HashMap<String, ArrayList<String>> readName = ControllerJSON.readName(host.getContent(),
 				MindMapNode.PROP_INPUTS_NAME, "input");
-		int input_number = Integer.parseInt(host.getContent().getNumberOfInputs());
+		int input_number = Integer
+				.parseInt(host.getContent().getNumberOfInputs() != null ? host.getContent().getNumberOfInputs() : "0");
 		Object[] keyset = readName.keySet().toArray();
 		Collection<ArrayList<String>> values = readName.values();
 		ArrayList<ArrayList<String>> list = new ArrayList<>();
