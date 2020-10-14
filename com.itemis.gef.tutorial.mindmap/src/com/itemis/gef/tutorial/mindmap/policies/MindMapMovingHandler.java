@@ -41,19 +41,8 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnDragHand
 			MindMapMovingHandler.mindMapNodeBottomMoved = mindMapNodeTopMoved;
 		}
 
-//		System.out.println(mindMapNodeTopMoved.equals(((MindMapNodePart) getHost()).getContent()));
-//		System.out.println(mindMapNodeTopMoved.getTitle() + " top");
-//		System.out.println(mindMapNodeBottomMoved.getTitle() + " bottom");
-
 		mindMapNodeBottomMoved.setTitle(mindMapNodeTopMoved.getTitle());
 		mindMapNodeTopMoved.setBounds(mindMapNodeBottomMoved.getBounds().getCopy());
-		// mindMapNodeTopMoved.setBounds(new Rectangle(10, 10, 10, 10));
-		((MindMapNodePart) getHost()).setRefreshVisual(true);
-		((MindMapNodePart) getHost()).refreshContentAnchorages();
-		((MindMapNodePart) getHost()).refreshContentChildren();
-		((MindMapNodePart) getHost()).refreshVisual();
-		((MindMapNodePart) getHost()).refreshVisualProperty();
-		((MindMapNodePart) getHost()).doRefreshVisual(((MindMapNodePart) getHost()).getVisual());
 
 		MindMapMovingHandler.mindMapNodeTopMoved = new MindMapNode();
 		MindMapMovingHandler.mindMapNodeBottomMoved = new MindMapNode();
@@ -90,7 +79,6 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnDragHand
 
 	@Override
 	public void startDrag(MouseEvent e) {
-		// TODO take data from scene
 		MindMapMovingHandler.mindMapNodesAtField = getDataFromScene();
 		MindMapMovingHandler.mindMapNodeTopMoved = ((MindMapNodePart) getHost()).getContent();
 	}
@@ -107,12 +95,6 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnDragHand
 				}
 			}
 		}
-//		MindMapNodePart host = (MindMapNodePart) getHost();
-//		MindMapNode node = host.getContent();
-////		oldmindMapNode = node;
-////		oldmindMapNodePart = host;
-//		node.setBounds(new Rectangle(500, 500, 500, 500));
-//		System.out.println();
 	}
 
 }

@@ -117,12 +117,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 	@Override
 	public void doRefreshVisual(MindMapNodeVisual visual) {
 
-//		System.out.println(this.isRefreshVisual());
-//		System.out.println(this.isFocusable());
-//		System.out.println(this.isSelectable());
-
 		MindMapNode node = getContent();
-//		System.out.println(node.getTitle());
 
 		visual.setTitle(node.getTitle());
 		visual.setName(node.getName());
@@ -162,7 +157,6 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		// use the ITransformableContentPart API to position the visual
 		setVisualTransform(getContentTransform());
 
-		// System.out.println(MindMapNodePart.mindMapNode.size());
 	}
 
 	@Override
