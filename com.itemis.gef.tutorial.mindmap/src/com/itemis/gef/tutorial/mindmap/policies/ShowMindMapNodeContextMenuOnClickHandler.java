@@ -55,7 +55,7 @@ import javafx.stage.FileChooser;
  * This policy shows a context menu for MindMapNodeParts, providing some editing
  * functionality.
  *
- * @author hniederhausen
+ * @author hniederhausen (bajurus)
  *
  */
 public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler implements IOnClickHandler {

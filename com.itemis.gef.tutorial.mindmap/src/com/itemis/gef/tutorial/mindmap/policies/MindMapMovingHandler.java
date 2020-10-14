@@ -40,10 +40,21 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnDragHand
 		if (mindMapNodeBottomMoved.getBounds() == null) {
 			MindMapMovingHandler.mindMapNodeBottomMoved = mindMapNodeTopMoved;
 		}
-		Rectangle rectangle = mindMapNodeBottomMoved.getBounds();
-		((MindMapNodePart) getHost()).getContent().setBounds(
-				new Rectangle(rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight()));
+
+//		System.out.println(mindMapNodeTopMoved.equals(((MindMapNodePart) getHost()).getContent()));
+//		System.out.println(mindMapNodeTopMoved.getTitle() + " top");
+//		System.out.println(mindMapNodeBottomMoved.getTitle() + " bottom");
+
 		mindMapNodeBottomMoved.setTitle(mindMapNodeTopMoved.getTitle());
+		mindMapNodeTopMoved.setBounds(mindMapNodeBottomMoved.getBounds().getCopy());
+		// mindMapNodeTopMoved.setBounds(new Rectangle(10, 10, 10, 10));
+		((MindMapNodePart) getHost()).setRefreshVisual(true);
+		((MindMapNodePart) getHost()).refreshContentAnchorages();
+		((MindMapNodePart) getHost()).refreshContentChildren();
+		((MindMapNodePart) getHost()).refreshVisual();
+		((MindMapNodePart) getHost()).refreshVisualProperty();
+		((MindMapNodePart) getHost()).doRefreshVisual(((MindMapNodePart) getHost()).getVisual());
+
 		MindMapMovingHandler.mindMapNodeTopMoved = new MindMapNode();
 		MindMapMovingHandler.mindMapNodeBottomMoved = new MindMapNode();
 		MindMapMovingHandler.mindMapNodesAtField = new ArrayList<>();
@@ -80,8 +91,7 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnDragHand
 	@Override
 	public void startDrag(MouseEvent e) {
 		// TODO take data from scene
-		MindMapMovingHandler.mindMapNodesAtField = getDataFromScene();// (List<MindMapNode>) (List<?>)
-																		// ControllerJSON.mindMapNodesAtField;
+		MindMapMovingHandler.mindMapNodesAtField = getDataFromScene();
 		MindMapMovingHandler.mindMapNodeTopMoved = ((MindMapNodePart) getHost()).getContent();
 	}
 
@@ -92,7 +102,7 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnDragHand
 				if (e.getX() >= bounds.getX() && e.getX() <= bounds.getX() + bounds.getWidth()
 						&& e.getY() >= bounds.getY() && e.getY() <= bounds.getY() + bounds.getHeight()) {
 					MindMapMovingHandler.mindMapNodeBottomMoved = mindMapNode;
-					System.out.println(mindMapNode.getTitle() + " bottom");
+					// System.out.println(mindMapNode.getTitle() + " bottom");
 					break;
 				}
 			}
