@@ -1,0 +1,39 @@
+package ru.tcen.pak.workarea.parts.handles;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.eclipse.gef.mvc.fx.parts.DefaultSelectionHandlePartFactory;
+import org.eclipse.gef.mvc.fx.parts.IHandlePart;
+import org.eclipse.gef.mvc.fx.parts.IVisualPart;
+
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+
+import javafx.scene.Node;
+import ru.tcen.pak.workarea.parts.MindMapNodePart;
+
+public class MindMapSelectionHandlePartFactory extends DefaultSelectionHandlePartFactory {
+
+	@Inject
+	private Injector injector;
+
+	@Override
+	protected List<IHandlePart<? extends Node>> createSingleSelectionHandleParts(IVisualPart<? extends Node> target,
+			Map<Object, Object> contextMap) {
+		List<IHandlePart<? extends Node>> handleParts = new ArrayList<>();
+
+		// add super handles
+		handleParts.addAll(super.createSingleSelectionHandleParts(target, contextMap));
+
+		if (target instanceof MindMapNodePart) {
+			// add deletion handle part
+			DeleteMindMapNodeHandlePart delHp = injector.getInstance(DeleteMindMapNodeHandlePart.class);
+			handleParts.add(delHp);
+		}
+
+		return handleParts;
+	}
+
+}
