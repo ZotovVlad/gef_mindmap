@@ -103,6 +103,8 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 
 	public List<MindMapConnection> outgoingConnections = Lists.newArrayList();
 
+	private boolean isStatic;
+
 	public MindMapNode() {
 		super();
 
@@ -427,5 +429,13 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		titlesIncomingConnection.add(title);
 		titlesOutgoingConnection.add(title);
 		pcs.firePropertyChange(PROP_TITLE, this.title, (this.title = title));
+	}
+
+	public boolean isStatic() {
+		return isStatic;
+	}
+
+	public void setStatic(boolean isStatic) {
+		this.isStatic = isStatic;
 	}
 }

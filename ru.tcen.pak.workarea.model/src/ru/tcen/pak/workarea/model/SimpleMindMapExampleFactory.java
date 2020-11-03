@@ -24,7 +24,8 @@ public class SimpleMindMapExampleFactory {
 			for (int j = 0; j < 4; j++) {
 				MindMapNode node = new MindMapNode();
 				node.setTitle(i + "" + j);
-				node.setColor(Color.GREENYELLOW);
+				node.setColor(Color.PALEVIOLETRED);
+				node.setStatic(true);
 				node.setBounds(
 						new Rectangle(0 + (j * WIDTH) + (j * DELTA), 0 + (i * HEIGHT) + (i * DELTA), WIDTH, HEIGHT));
 				mindMap.addChildElement(node);

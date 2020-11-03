@@ -38,6 +38,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 
 	public int quantityRectangleConnection;
 	public boolean connectionOnlyRight;
+	public boolean isStatic;
 
 	public void deleteColorContent() {
 		MindMapNode mindMapNodeDeleted = null;
@@ -93,7 +94,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 	@Override
 	protected MindMapNodeVisual doCreateVisual() {
 		propertySet();
-		return new MindMapNodeVisual(quantityRectangleConnection, connectionOnlyRight);
+		return new MindMapNodeVisual(quantityRectangleConnection, connectionOnlyRight, isStatic);
 	}
 
 	@Override
@@ -125,26 +126,27 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		if (node.getImage() != null) {
 			visual.setImage(node.getImage());
 		}
+		visual.setColor(node.getColor());
 
-		for (MindMapNode mindMapNode : MindMapNodePart.mindMapNode) {
-			if (mindMapNode.isStarted() && mindMapNode.isFinished()) {
-				// if the node is in the chain
-				mindMapNode.setColor(greenNode);
-				for (MindMapNodeVisual mindMapNodeVisual : MindMapNodePart.mindMapNodeVisual) {
-					if (mindMapNodeVisual.getTitleText().getText().toString().equals(mindMapNode.getTitle())) {
-						mindMapNodeVisual.setColor(greenNode);
-					}
-				}
-			} else {
-				// if the node is not in the chain
-				mindMapNode.setColor(redNode);
-				for (MindMapNodeVisual mindMapNodeVisual : MindMapNodePart.mindMapNodeVisual) {
-					if (mindMapNodeVisual.getTitleText().getText().toString().equals(mindMapNode.getTitle())) {
-						mindMapNodeVisual.setColor(redNode);
-					}
-				}
-			}
-		}
+//		for (MindMapNode mindMapNode : MindMapNodePart.mindMapNode) {
+//			if (mindMapNode.isStarted() && mindMapNode.isFinished()) {
+//				// if the node is in the chain
+//				mindMapNode.setColor(greenNode);
+//				for (MindMapNodeVisual mindMapNodeVisual : MindMapNodePart.mindMapNodeVisual) {
+//					if (mindMapNodeVisual.getTitleText().getText().toString().equals(mindMapNode.getTitle())) {
+//						mindMapNodeVisual.setColor(greenNode);
+//					}
+//				}
+//			} else {
+//				// if the node is not in the chain
+//				mindMapNode.setColor(redNode);
+//				for (MindMapNodeVisual mindMapNodeVisual : MindMapNodePart.mindMapNodeVisual) {
+//					if (mindMapNodeVisual.getTitleText().getText().toString().equals(mindMapNode.getTitle())) {
+//						mindMapNodeVisual.setColor(redNode);
+//					}
+//				}
+//			}
+//		}
 
 		// added each node in collection for update each node
 		MindMapNodePart.mindMapNode.add(node);
@@ -212,6 +214,12 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 				quantityRectangleConnection = 6;
 				break;
 			}
+		}
+
+		if (node.isStatic()) {
+			isStatic = true;
+		} else {
+			isStatic = false;
 		}
 	}
 

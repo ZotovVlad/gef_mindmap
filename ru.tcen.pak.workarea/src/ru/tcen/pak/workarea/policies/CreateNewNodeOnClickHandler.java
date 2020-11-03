@@ -85,7 +85,8 @@ public class CreateNewNodeOnClickHandler extends AbstractHandler implements IOnC
 					e1.printStackTrace();
 				}
 			}
-			newNode.setColor(Color.PALEVIOLETRED);
+			newNode.setColor(Color.GREENYELLOW);
+			newNode.setStatic(false);
 			newNode.setBounds(new Rectangle(mouseInLocal.getX(), mouseInLocal.getY(), 170, 170));
 
 			ControllerJSON.writeCustomJSON(newNode);

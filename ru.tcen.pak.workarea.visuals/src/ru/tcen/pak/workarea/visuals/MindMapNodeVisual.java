@@ -42,9 +42,10 @@ public class MindMapNodeVisual extends Region {
 	private List<Point> points = new ArrayList<>();
 	private List<Rectangle> pointsBox = new ArrayList<>();
 	private Color color;
+	private boolean isStatic;
 	public List<Point> pointConnection = new ArrayList<>();
 
-	public MindMapNodeVisual(int quantityRectangleConnection, boolean connectionOnlyRight) {
+	public MindMapNodeVisual(int quantityRectangleConnection, boolean connectionOnlyRight, boolean isStatic) {
 
 		// create background shape
 		shape = new GeometryNode<>(new RoundedRectangle(0, 0, NODE_WIDTH, NODE_HEIGH, 8, 8));
@@ -220,6 +221,7 @@ public class MindMapNodeVisual extends Region {
 			}
 			getChildren().addAll(pointsBox);
 		}
+		this.setStatic(isStatic);
 
 	}
 
@@ -288,6 +290,10 @@ public class MindMapNodeVisual extends Region {
 		return urlImage;
 	}
 
+	public boolean isStatic() {
+		return isStatic;
+	}
+
 	public void setColor(Color color) {
 		this.color = color;
 		shape.setFill(color);
@@ -313,6 +319,10 @@ public class MindMapNodeVisual extends Region {
 
 	public void setName(String name) {
 		this.nameText.setText(name);
+	}
+
+	public void setStatic(boolean isStatic) {
+		this.isStatic = isStatic;
 	}
 
 	public void setTitle(String title) {

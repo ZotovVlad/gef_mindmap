@@ -44,6 +44,7 @@ public class CreateConnectionFeedbackPart extends AbstractFeedbackPart<Connectio
 
 		@Override
 		public void handle(MouseEvent event) {
+			System.out.println(event.toString());
 			Point v = new Point(event.getSceneX(), event.getSceneY());
 			referencePositionProperty().setValue(v);
 			if (event.isPrimaryButtonDown()) {
