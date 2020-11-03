@@ -35,13 +35,15 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnDragHand
 
 	@Override
 	public void endDrag(MouseEvent e, Dimension delta) {
-		verifyAndMoveCoordinatesAtNodesAtField(e);
-		if (mindMapNodeBottomMoved.getBounds() == null) {
-			MindMapMovingHandler.mindMapNodeBottomMoved = mindMapNodeTopMoved;
-		}
+		if (!mindMapNodeTopMoved.isStatic()) {
+			verifyAndMoveCoordinatesAtNodesAtField(e);
+			if (mindMapNodeBottomMoved.getBounds() == null) {
+				MindMapMovingHandler.mindMapNodeBottomMoved = mindMapNodeTopMoved;
+			}
 
-		mindMapNodeBottomMoved.setTitle(mindMapNodeTopMoved.getTitle());
-		mindMapNodeTopMoved.setBounds(mindMapNodeBottomMoved.getBounds().getCopy());
+			mindMapNodeBottomMoved.setTitle(mindMapNodeTopMoved.getTitle());
+			mindMapNodeTopMoved.setBounds(mindMapNodeBottomMoved.getBounds().getCopy());
+		}
 
 		MindMapMovingHandler.mindMapNodeTopMoved = new MindMapNode();
 		MindMapMovingHandler.mindMapNodeBottomMoved = new MindMapNode();

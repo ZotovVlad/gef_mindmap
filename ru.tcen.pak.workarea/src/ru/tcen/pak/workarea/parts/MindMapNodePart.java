@@ -153,9 +153,10 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		// added each node visual in collection for update each node visual
 		MindMapNodePart.mindMapNodeVisual.add(visual);
 
+		System.out.println(getContent().isStatic());
+		
 		// use the IResizableContentPart API to resize the visual
 		setVisualSize(getContentSize());
-
 		// use the ITransformableContentPart API to position the visual
 		setVisualTransform(getContentTransform());
 
