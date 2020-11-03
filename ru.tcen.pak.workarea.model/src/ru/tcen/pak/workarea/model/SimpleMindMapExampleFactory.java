@@ -1,6 +1,5 @@
 package ru.tcen.pak.workarea.model;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -17,8 +16,6 @@ public class SimpleMindMapExampleFactory {
 
 	public SimpleMindMap createComplexExample() {
 		SimpleMindMap mindMap = new SimpleMindMap();
-		SimpleMindMap.cleanDirectory(
-				new File(System.getProperty("user.dir") + File.separator + "files" + File.separator + "nodes"));
 
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {

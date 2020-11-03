@@ -129,6 +129,7 @@ public class ControllerJSON implements PropertyChangeListener {
 				mmn.setOutputsName(outputsName);
 
 				try {
+					System.out.println();
 					Writer file = new FileWriter(mmn.getNodeCustomJSON());
 					file.write(root.toString());
 					file.flush();

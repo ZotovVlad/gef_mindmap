@@ -304,12 +304,16 @@ public class SimpleMindMapApplication extends Application {
 	}
 
 	private void updateSource() {
-		String path = System.getProperty("user.dir") + File.separator + "files";
-
-		for (File file : new File(path).listFiles()) {
-			if (file.isFile()) {
-				file.delete();
-			}
-		}
+//		String path = System.getProperty("user.dir") + File.separator + "files" + File.separator + "nodes";
+//
+//		for (File file : new File(path).listFiles()) {
+//			if (file.isFile()) {
+//				file.delete();
+//			}
+//		}
+		File file = new File(System.getProperty("user.dir") + File.separator + "files" + File.separator + "nodes");
+		file.mkdir();
+		SimpleMindMap.cleanDirectory(
+				new File(System.getProperty("user.dir") + File.separator + "files" + File.separator + "nodes"));
 	}
 }

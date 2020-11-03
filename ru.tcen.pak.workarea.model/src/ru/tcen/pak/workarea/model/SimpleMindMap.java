@@ -17,7 +17,7 @@ public class SimpleMindMap extends AbstractMindMapItem {
 
 	public static final String PROP_CHILD_ELEMENTS = "childElements";
 
-	static void cleanDirectory(File dir) {
+	public static void cleanDirectory(File dir) {
 		if (dir.isDirectory()) {
 			File[] files = dir.listFiles();
 			if (files != null && files.length > 0) {
