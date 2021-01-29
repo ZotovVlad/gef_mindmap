@@ -61,8 +61,10 @@ public class ControllerJSON implements PropertyChangeListener {
 //					properties.add((String) root.get(property));
 //				}
 //			}
-			JSONObject root = new JSONObject(parser);
-			properties.add(root.get(property).toString());
+			if (parser.more()) {
+				JSONObject root = new JSONObject(parser);
+				properties.add(root.get(property).toString());
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -127,9 +129,7 @@ public class ControllerJSON implements PropertyChangeListener {
 					outputsName.put("output" + j, output);
 				}
 				mmn.setOutputsName(outputsName);
-
 				try {
-					System.out.println();
 					Writer file = new FileWriter(mmn.getNodeCustomJSON());
 					file.write(root.toString());
 					file.flush();
@@ -151,17 +151,18 @@ public class ControllerJSON implements PropertyChangeListener {
 		try {
 			Reader reader = new FileReader(mindMapNode.getNodeCustomJSON());
 			JSONTokener parser = new JSONTokener(reader);
-			JSONObject root = new JSONObject(parser);
-			JSONObject namesJSON = root.getJSONObject(property);
-			for (int j = 1; j < namesJSON.length() + 1; j++) {
-				List<Object> arrayOutput = namesJSON.getJSONArray(stor + j).toList();
-				ArrayList<String> output = new ArrayList<>();
-				for (int k = 0; k < arrayOutput.size(); k++) {
-					output.add((String) arrayOutput.get(k));
+			if (parser.more()) {
+				JSONObject root = new JSONObject(parser);
+				JSONObject namesJSON = root.getJSONObject(property);
+				for (int j = 1; j < namesJSON.length() + 1; j++) {
+					List<Object> arrayOutput = namesJSON.getJSONArray(stor + j).toList();
+					ArrayList<String> output = new ArrayList<>();
+					for (int k = 0; k < arrayOutput.size(); k++) {
+						output.add((String) arrayOutput.get(k));
+					}
+					names.put(stor + j, output);
 				}
-				names.put(stor + j, output);
 			}
-			System.out.println();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
