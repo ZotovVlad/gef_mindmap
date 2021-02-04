@@ -16,7 +16,6 @@ import com.google.inject.Guice;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -88,12 +87,11 @@ public class SimpleMindMapApplication extends Application {
 	 */
 	private Node createToolPalette() {
 		ItemCreationModel creationModel = getContentViewer().getAdapter(ItemCreationModel.class);
+		VBox vBox_root = new VBox(10);
 
-		VBox vBox = new VBox(20);
-
+		VBox vBox_new = new VBox(0);
 		// the toggleGroup makes sure, we only select one
 		ToggleGroup toggleGroup = new ToggleGroup();
-
 		ToggleButton createNode = new ToggleButton("New Node");
 		createNode.setToggleGroup(toggleGroup);
 		createNode.setMaxWidth(Double.MAX_VALUE);
@@ -101,8 +99,7 @@ public class SimpleMindMapApplication extends Application {
 		createNode.selectedProperty().addListener((e, oldVal, newVal) -> {
 			creationModel.setType(newVal ? Type.Node : Type.None);
 		});
-		vBox.getChildren().add(createNode);
-
+		vBox_new.getChildren().add(createNode);
 		ToggleButton createConn = new ToggleButton("New Connection");
 		createConn.setToggleGroup(toggleGroup);
 		createConn.setMaxWidth(Double.MAX_VALUE);
@@ -110,12 +107,15 @@ public class SimpleMindMapApplication extends Application {
 		createConn.selectedProperty().addListener((e, oldVal, newVal) -> {
 			creationModel.setType(newVal ? Type.Connection : Type.None);
 		});
-		vBox.getChildren().add(createConn);
+		vBox_new.getChildren().add(createConn);
+		vBox_root.getChildren().add(vBox_new);
 
+		VBox vBox_text = new VBox(0);
 		Text text = new Text("Nodes in library:");
-		vBox.getChildren().add(text);
-		VBox.setMargin(vBox.getChildren().get(2), new Insets(50, 0, 0, 0));
+		vBox_text.getChildren().add(text);
+		vBox_root.getChildren().add(vBox_text);
 
+		VBox vBox_lib = new VBox(0);
 		List<MindMapNode> nodeLib = ControllerJSON.readMindMapNodeLib();
 		List<ToggleButton> nodeLibButton = new ArrayList<>();
 		for (int i = 0; i < nodeLib.size(); i++) {
@@ -131,8 +131,6 @@ public class SimpleMindMapApplication extends Application {
 				public void handle(ActionEvent arg0) {
 					Type.Node.setString(((ToggleButton) arg0.getSource()).getText().toString());
 					flag = !flag;
-					// creationModel.setType(arg0 ? Type.Node : Type.None);
-					// TODO Auto-generated method stub
 				}
 			});
 
@@ -140,14 +138,13 @@ public class SimpleMindMapApplication extends Application {
 				creationModel.setType(newVal ? Type.Node : Type.None);
 			});
 
-			vBox.getChildren().add(oneNodeLibButton);
+			vBox_lib.getChildren().add(oneNodeLibButton);
 			nodeLibButton.add(oneNodeLibButton);
 		}
 
 		if (nodeLib.size() == 0) {
 			Text textEmptyLib = new Text("Not library!");
-			vBox.getChildren().add(textEmptyLib);
-			VBox.setMargin(vBox.getChildren().get(3), new Insets(-20, 0, 0, 0));
+			vBox_lib.getChildren().add(textEmptyLib);
 		}
 
 		// ListView list = new ListView();
@@ -165,8 +162,9 @@ public class SimpleMindMapApplication extends Application {
 				}
 			}
 		});
+		vBox_root.getChildren().add(vBox_lib);
 
-		return vBox;
+		return vBox_root;
 	}
 
 	/**

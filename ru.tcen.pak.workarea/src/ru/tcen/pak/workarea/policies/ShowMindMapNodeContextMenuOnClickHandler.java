@@ -6,8 +6,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Optional;
 
 import javax.imageio.ImageIO;
@@ -40,13 +38,8 @@ import ru.tcen.pak.workarea.JSON.ControllerJSON;
 import ru.tcen.pak.workarea.model.MindMapNode;
 import ru.tcen.pak.workarea.operations.SetMindMapNodeColorOperation;
 import ru.tcen.pak.workarea.operations.SetMindMapNodeDescriptionOperation;
-import ru.tcen.pak.workarea.operations.SetMindMapNodeEndOperation;
-import ru.tcen.pak.workarea.operations.SetMindMapNodeFunctionHexFieldOperation;
 import ru.tcen.pak.workarea.operations.SetMindMapNodeImageOperation;
-import ru.tcen.pak.workarea.operations.SetMindMapNodeInputsNameOperation;
 import ru.tcen.pak.workarea.operations.SetMindMapNodeNameOperation;
-import ru.tcen.pak.workarea.operations.SetMindMapNodeNumberOfInputsOperation;
-import ru.tcen.pak.workarea.operations.SetMindMapNodeNumberOfOutputsOperation;
 import ru.tcen.pak.workarea.parts.MindMapConnectionPart;
 import ru.tcen.pak.workarea.parts.MindMapNodePart;
 
@@ -93,14 +86,16 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 
 		MenuItem imageNodeItem = createImageNodeItem();
 		Menu textMenu = createChangeTextsMenu();
-		Menu numberMenu = createChangeNumbersMenu();
-		Menu functionMenu = createChangeFunctionsMenu();
+//		Menu numberMenu = createChangeNumbersMenu();
+//		Menu functionMenu = createChangeFunctionsMenu();
 		Menu colorMenu = createChangeColorMenu();
 		MenuItem deleteNodeItem = createDeleteNodeItem();
 		MenuItem getPathSource = getPathSource();
 
-		ContextMenu ctxMenu = new ContextMenu(imageNodeItem, textMenu, numberMenu, functionMenu, colorMenu,
-				deleteNodeItem, getPathSource);
+//		ContextMenu ctxMenu = new ContextMenu(imageNodeItem, textMenu, numberMenu, functionMenu, colorMenu,
+//				deleteNodeItem, getPathSource);
+
+		ContextMenu ctxMenu = new ContextMenu(imageNodeItem, textMenu, colorMenu, deleteNodeItem, getPathSource);
 
 		// show the menu at the mouse position
 		ctxMenu.show((Node) event.getTarget(), event.getScreenX(), event.getScreenY());
@@ -118,263 +113,263 @@ public class ShowMindMapNodeContextMenuOnClickHandler extends AbstractHandler im
 		return colorMenu;
 	}
 
-	private Menu createChangeFunctionsMenu() {
-		Menu functionsMenu = new Menu("Change Functions");
+//	private Menu createChangeFunctionsMenu() {
+//		Menu functionsMenu = new Menu("Change Functions");
+//
+//		MindMapNodePart host = (MindMapNodePart) getHost();
+//
+//		Menu functionItem = new Menu("Function Hex Field ...");
+//		MenuItem functionEnter = new MenuItem("Function enter...");
+//		functionEnter.setOnAction((e) -> {
+//			try {
+//				FileChooser fileChooser = new FileChooser();
+//				FileChooser.ExtensionFilter extFilterHEX = new FileChooser.ExtensionFilter("HEX files (*.hex)",
+//						"*.hex");
+//				fileChooser.getExtensionFilters().addAll(extFilterHEX);
+//				File file = fileChooser.showOpenDialog(null);
+//				ITransactionalOperation op = new SetMindMapNodeFunctionHexFieldOperation(host, file.getName());
+//				host.getRoot().getViewer().getDomain().execute(op, null);
+//			} catch (Exception e1) {
+//				Alert alert = new Alert(AlertType.WARNING);
+//				alert.setTitle("Warning");
+//				alert.setHeaderText(null);
+//				alert.setContentText("File not selected");
+//				alert.showAndWait();
+//			}
+//		});
+//		Menu functionExample = new Menu("Function example ...");
+//		ArrayList<String> names = ControllerJSON.read(host.getContent(), MindMapNode.PROP_FUNCTION_HEX_FIELD);
+//		for (String string : names) {
+//			MenuItem functionExampleItem = new MenuItem(string);
+//			functionExampleItem.setOnAction((e) -> {
+//				ITransactionalOperation op = new SetMindMapNodeFunctionHexFieldOperation(host,
+//						functionExampleItem.getText().toString());
+//				try {
+//					host.getRoot().getViewer().getDomain().execute(op, null);
+//				} catch (ExecutionException e1) {
+//					e1.printStackTrace();
+//				}
+//			});
+//			functionExample.getItems().add(functionExampleItem);
+//		}
+//		functionItem.getItems().addAll(functionEnter, functionExample);
+//
+//		Menu endItem = new Menu("End ...");
+//		MenuItem endEnter = new MenuItem("End enter...");
+//		endEnter.setOnAction((e) -> {
+//			try {
+//				FileChooser fileChooser = new FileChooser();
+//				FileChooser.ExtensionFilter extFilterHEX = new FileChooser.ExtensionFilter("HEX files (*.hex)",
+//						"*.hex");
+//				fileChooser.getExtensionFilters().addAll(extFilterHEX);
+//				File file = fileChooser.showOpenDialog(null);
+//				ITransactionalOperation op = new SetMindMapNodeEndOperation(host, file.getName());
+//				host.getRoot().getViewer().getDomain().execute(op, null);
+//			} catch (Exception e1) {
+//				Alert alert = new Alert(AlertType.WARNING);
+//				alert.setTitle("Warning");
+//				alert.setHeaderText(null);
+//				alert.setContentText("File not selected");
+//				alert.showAndWait();
+//			}
+//		});
+//		Menu endExample = new Menu("End example ...");
+//		ArrayList<String> descriptions = ControllerJSON.read(host.getContent(), MindMapNode.PROP_END);
+//		for (String string : descriptions) {
+//			MenuItem endExampleItem = new MenuItem(string);
+//			endExampleItem.setOnAction((e) -> {
+//				ITransactionalOperation op = new SetMindMapNodeEndOperation(host, endExampleItem.getText().toString());
+//				try {
+//					host.getRoot().getViewer().getDomain().execute(op, null);
+//				} catch (ExecutionException e1) {
+//					e1.printStackTrace();
+//				}
+//			});
+//			endExample.getItems().add(endExampleItem);
+//		}
+//		endItem.getItems().addAll(endEnter, endExample);
+//
+//		functionsMenu.getItems().addAll(functionItem, endItem);
+//
+//		return functionsMenu;
+//	}
 
-		MindMapNodePart host = (MindMapNodePart) getHost();
-
-		Menu functionItem = new Menu("Function Hex Field ...");
-		MenuItem functionEnter = new MenuItem("Function enter...");
-		functionEnter.setOnAction((e) -> {
-			try {
-				FileChooser fileChooser = new FileChooser();
-				FileChooser.ExtensionFilter extFilterHEX = new FileChooser.ExtensionFilter("HEX files (*.hex)",
-						"*.hex");
-				fileChooser.getExtensionFilters().addAll(extFilterHEX);
-				File file = fileChooser.showOpenDialog(null);
-				ITransactionalOperation op = new SetMindMapNodeFunctionHexFieldOperation(host, file.getName());
-				host.getRoot().getViewer().getDomain().execute(op, null);
-			} catch (Exception e1) {
-				Alert alert = new Alert(AlertType.WARNING);
-				alert.setTitle("Warning");
-				alert.setHeaderText(null);
-				alert.setContentText("File not selected");
-				alert.showAndWait();
-			}
-		});
-		Menu functionExample = new Menu("Function example ...");
-		ArrayList<String> names = ControllerJSON.read(host.getContent(), MindMapNode.PROP_FUNCTION_HEX_FIELD);
-		for (String string : names) {
-			MenuItem functionExampleItem = new MenuItem(string);
-			functionExampleItem.setOnAction((e) -> {
-				ITransactionalOperation op = new SetMindMapNodeFunctionHexFieldOperation(host,
-						functionExampleItem.getText().toString());
-				try {
-					host.getRoot().getViewer().getDomain().execute(op, null);
-				} catch (ExecutionException e1) {
-					e1.printStackTrace();
-				}
-			});
-			functionExample.getItems().add(functionExampleItem);
-		}
-		functionItem.getItems().addAll(functionEnter, functionExample);
-
-		Menu endItem = new Menu("End ...");
-		MenuItem endEnter = new MenuItem("End enter...");
-		endEnter.setOnAction((e) -> {
-			try {
-				FileChooser fileChooser = new FileChooser();
-				FileChooser.ExtensionFilter extFilterHEX = new FileChooser.ExtensionFilter("HEX files (*.hex)",
-						"*.hex");
-				fileChooser.getExtensionFilters().addAll(extFilterHEX);
-				File file = fileChooser.showOpenDialog(null);
-				ITransactionalOperation op = new SetMindMapNodeEndOperation(host, file.getName());
-				host.getRoot().getViewer().getDomain().execute(op, null);
-			} catch (Exception e1) {
-				Alert alert = new Alert(AlertType.WARNING);
-				alert.setTitle("Warning");
-				alert.setHeaderText(null);
-				alert.setContentText("File not selected");
-				alert.showAndWait();
-			}
-		});
-		Menu endExample = new Menu("End example ...");
-		ArrayList<String> descriptions = ControllerJSON.read(host.getContent(), MindMapNode.PROP_END);
-		for (String string : descriptions) {
-			MenuItem endExampleItem = new MenuItem(string);
-			endExampleItem.setOnAction((e) -> {
-				ITransactionalOperation op = new SetMindMapNodeEndOperation(host, endExampleItem.getText().toString());
-				try {
-					host.getRoot().getViewer().getDomain().execute(op, null);
-				} catch (ExecutionException e1) {
-					e1.printStackTrace();
-				}
-			});
-			endExample.getItems().add(endExampleItem);
-		}
-		endItem.getItems().addAll(endEnter, endExample);
-
-		functionsMenu.getItems().addAll(functionItem, endItem);
-
-		return functionsMenu;
-	}
-
-	private Menu createChangeNumbersMenu() {
-		Menu numbersMenu = new Menu("Change Numbers");
-
-		MindMapNodePart host = (MindMapNodePart) getHost();
-
-		Menu inputItem = new Menu("Number of Input ...");
-		MenuItem inputEnter = new MenuItem("Number enter...");
-		HashMap<String, ArrayList<String>> readName = ControllerJSON.readName(host.getContent(),
-				MindMapNode.PROP_INPUTS_NAME, "input");
-		int input_number = Integer
-				.parseInt(host.getContent().getNumberOfInputs() != null ? host.getContent().getNumberOfInputs() : "0");
-		Object[] keyset = readName.keySet().toArray();
-		Collection<ArrayList<String>> values = readName.values();
-		ArrayList<ArrayList<String>> list = new ArrayList<>();
-		for (ArrayList<String> arrayList : values) {
-			list.add(arrayList);
-		}
-		HashMap<String, ArrayList<String>> contentInputsName = host.getContent().getInputsName();
-		HashMap<String, HashMap<String, String>> contentInputs = host.getContent().getInputs();
-
-		inputEnter.setOnAction((e) -> {
-			String newInput = showDialog(host.getContent().getNumberOfInputs(), "Enter new Number of Input...");
-			try {
-				int newNumberinput = Integer.parseInt(newInput);
-
-				if (newNumberinput < 0 || newNumberinput > 2) {
-					Alert alert = new Alert(AlertType.WARNING);
-					alert.setTitle("Warning");
-					alert.setHeaderText(null);
-					alert.setContentText("New Number of Input must be between 0 and 2");
-					alert.showAndWait();
-				} else {
-					if (newNumberinput < input_number) {
-
-						String newName = showDialog("input", "Enter Remove Name of Input");
-
-						boolean flag = false;
-						for (int i = 0; i < keyset.length; i++) {
-							if (keyset[i].equals(newName)) {
-								flag = true;
-							}
-						}
-						if (flag) {
-							for (int i = 0; i < keyset.length; i++) {
-								if (keyset[i].equals(newName)) {
-									host.getContent().getInputsName().values().remove(list.get(i));
-									HashMap<String, ArrayList<String>> fgh = host.getContent().getInputsName();
-									fgh.put(newName, new ArrayList<String>() {
-										{
-											add("");
-										}
-									});
-									host.getContent().setInputsName(fgh);
-									break;
-								}
-							}
-							ITransactionalOperation opInput = new SetMindMapNodeNumberOfInputsOperation(host, newInput);
-							host.getRoot().getViewer().getDomain().execute(opInput, null);
-							ITransactionalOperation opInputsName = new SetMindMapNodeInputsNameOperation(host,
-									host.getContent().getInputsName());
-							host.getRoot().getViewer().getDomain().execute(opInputsName, null);
-							ControllerJSON.writeCustomJSON(host.getContent());
-						} else {
-							Alert alert = new Alert(AlertType.WARNING);
-							alert.setTitle("Warning");
-							alert.setHeaderText(null);
-							alert.setContentText("Don't have this name of input");
-							alert.showAndWait();
-						}
-					}
-					if (newNumberinput > input_number) {
-						String newName = "";
-						if (list.get(0).get(0).equals("")) {
-							newName = showDialog((String) keyset[0], "Enter Add Name of Input");
-						}
-						if (list.get(1).get(0).equals("")) {
-							newName = showDialog((String) keyset[1], "Enter Add Name of Input");
-						}
-
-						boolean flag = false;
-						for (int i = 0; i < keyset.length; i++) {
-							if (keyset[i].equals(newName)) {
-								flag = true;
-							}
-						}
-
-						if (flag) {
-							String newPIN = showDialog("PIN_", "Enter PIN of Input");
-							if (!newPIN.equals("")) {
-								ITransactionalOperation opInput = new SetMindMapNodeNumberOfInputsOperation(host,
-										newInput);
-								host.getRoot().getViewer().getDomain().execute(opInput, null);
-
-								contentInputsName.put(newName, new ArrayList<String>() {
-									{
-										add(newPIN);
-									}
-								});
-								ITransactionalOperation opInputsName = new SetMindMapNodeInputsNameOperation(host,
-										contentInputsName);
-								host.getRoot().getViewer().getDomain().execute(opInputsName, null);
-								ControllerJSON.writeCustomJSON(host.getContent());
-							} else {
-								Alert alert = new Alert(AlertType.WARNING);
-								alert.setTitle("Warning");
-								alert.setHeaderText(null);
-								alert.setContentText("Empty PIN");
-								alert.showAndWait();
-							}
-						} else {
-							Alert alert = new Alert(AlertType.WARNING);
-							alert.setTitle("Warning");
-							alert.setHeaderText(null);
-							alert.setContentText("Don't have this name of input");
-							alert.showAndWait();
-						}
-					}
-				}
-			} catch (Exception e1) {
-				Alert alert = new Alert(AlertType.WARNING);
-				alert.setTitle("Warning");
-				alert.setHeaderText(null);
-				alert.setContentText("New Number of Input is not Integer");
-				alert.showAndWait();
-			}
-		});
-
-		Menu inputExample = new Menu("Number example ...");
-		ArrayList<String> inputs = ControllerJSON.read(host.getContent(), MindMapNode.PROP_NUMBER_OF_INPUTS);
-		for (String input : inputs) {
-			MenuItem inputExampleItem = new MenuItem(input);
-			inputExampleItem.setOnAction((e) -> {
-				ITransactionalOperation op = new SetMindMapNodeNumberOfInputsOperation(host,
-						inputExampleItem.getText().toString());
-				try {
-					host.getRoot().getViewer().getDomain().execute(op, null);
-				} catch (ExecutionException e1) {
-					e1.printStackTrace();
-				}
-			});
-			inputExample.getItems().add(inputExampleItem);
-		}
-		inputItem.getItems().addAll(inputEnter, inputExample);
-
-		Menu outputItem = new Menu("Number of Output ...");
-		MenuItem outputEnter = new MenuItem("Output enter...");
-		outputEnter.setOnAction((e) -> {
-			try {
-				String newOutput = showDialog(host.getContent().getNumberOfOutputs(), "Enter new Number of Output...");
-				ITransactionalOperation op = new SetMindMapNodeNumberOfOutputsOperation(host, newOutput);
-				host.getRoot().getViewer().getDomain().execute(op, null);
-			} catch (ExecutionException e1) {
-				e1.printStackTrace();
-			}
-		});
-		Menu outputExample = new Menu("Output example ...");
-		ArrayList<String> outputs = ControllerJSON.read(host.getContent(), MindMapNode.PROP_NUMBER_OF_OUTPUTS);
-		for (String output : outputs) {
-			MenuItem outputExampleItem = new MenuItem(output);
-			outputExampleItem.setOnAction((e) -> {
-				ITransactionalOperation op = new SetMindMapNodeNumberOfOutputsOperation(host,
-						outputExampleItem.getText().toString());
-				try {
-					host.getRoot().getViewer().getDomain().execute(op, null);
-				} catch (ExecutionException e1) {
-					e1.printStackTrace();
-				}
-			});
-			outputExample.getItems().add(outputExampleItem);
-		}
-		outputItem.getItems().addAll(outputEnter, outputExample);
-
-		numbersMenu.getItems().addAll(inputItem, outputItem);
-
-		return numbersMenu;
-	}
+//	private Menu createChangeNumbersMenu() {
+//		Menu numbersMenu = new Menu("Change Numbers");
+//
+//		MindMapNodePart host = (MindMapNodePart) getHost();
+//
+//		Menu inputItem = new Menu("Number of Input ...");
+//		MenuItem inputEnter = new MenuItem("Number enter...");
+//		HashMap<String, ArrayList<String>> readName = ControllerJSON.readName(host.getContent(),
+//				MindMapNode.PROP_INPUTS_NAME, "input");
+//		int input_number = Integer
+//				.parseInt(host.getContent().getNumberOfInputs() != null ? host.getContent().getNumberOfInputs() : "0");
+//		Object[] keyset = readName.keySet().toArray();
+//		Collection<ArrayList<String>> values = readName.values();
+//		ArrayList<ArrayList<String>> list = new ArrayList<>();
+//		for (ArrayList<String> arrayList : values) {
+//			list.add(arrayList);
+//		}
+//		HashMap<String, ArrayList<String>> contentInputsName = host.getContent().getInputsName();
+//		HashMap<String, HashMap<String, String>> contentInputs = host.getContent().getInputs();
+//
+//		inputEnter.setOnAction((e) -> {
+//			String newInput = showDialog(host.getContent().getNumberOfInputs(), "Enter new Number of Input...");
+//			try {
+//				int newNumberinput = Integer.parseInt(newInput);
+//
+//				if (newNumberinput < 0 || newNumberinput > 2) {
+//					Alert alert = new Alert(AlertType.WARNING);
+//					alert.setTitle("Warning");
+//					alert.setHeaderText(null);
+//					alert.setContentText("New Number of Input must be between 0 and 2");
+//					alert.showAndWait();
+//				} else {
+//					if (newNumberinput < input_number) {
+//
+//						String newName = showDialog("input", "Enter Remove Name of Input");
+//
+//						boolean flag = false;
+//						for (int i = 0; i < keyset.length; i++) {
+//							if (keyset[i].equals(newName)) {
+//								flag = true;
+//							}
+//						}
+//						if (flag) {
+//							for (int i = 0; i < keyset.length; i++) {
+//								if (keyset[i].equals(newName)) {
+//									host.getContent().getInputsName().values().remove(list.get(i));
+//									HashMap<String, ArrayList<String>> fgh = host.getContent().getInputsName();
+//									fgh.put(newName, new ArrayList<String>() {
+//										{
+//											add("");
+//										}
+//									});
+//									host.getContent().setInputsName(fgh);
+//									break;
+//								}
+//							}
+//							ITransactionalOperation opInput = new SetMindMapNodeNumberOfInputsOperation(host, newInput);
+//							host.getRoot().getViewer().getDomain().execute(opInput, null);
+//							ITransactionalOperation opInputsName = new SetMindMapNodeInputsNameOperation(host,
+//									host.getContent().getInputsName());
+//							host.getRoot().getViewer().getDomain().execute(opInputsName, null);
+//							ControllerJSON.writeCustomJSON(host.getContent());
+//						} else {
+//							Alert alert = new Alert(AlertType.WARNING);
+//							alert.setTitle("Warning");
+//							alert.setHeaderText(null);
+//							alert.setContentText("Don't have this name of input");
+//							alert.showAndWait();
+//						}
+//					}
+//					if (newNumberinput > input_number) {
+//						String newName = "";
+//						if (list.get(0).get(0).equals("")) {
+//							newName = showDialog((String) keyset[0], "Enter Add Name of Input");
+//						}
+//						if (list.get(1).get(0).equals("")) {
+//							newName = showDialog((String) keyset[1], "Enter Add Name of Input");
+//						}
+//
+//						boolean flag = false;
+//						for (int i = 0; i < keyset.length; i++) {
+//							if (keyset[i].equals(newName)) {
+//								flag = true;
+//							}
+//						}
+//
+//						if (flag) {
+//							String newPIN = showDialog("PIN_", "Enter PIN of Input");
+//							if (!newPIN.equals("")) {
+//								ITransactionalOperation opInput = new SetMindMapNodeNumberOfInputsOperation(host,
+//										newInput);
+//								host.getRoot().getViewer().getDomain().execute(opInput, null);
+//
+//								contentInputsName.put(newName, new ArrayList<String>() {
+//									{
+//										add(newPIN);
+//									}
+//								});
+//								ITransactionalOperation opInputsName = new SetMindMapNodeInputsNameOperation(host,
+//										contentInputsName);
+//								host.getRoot().getViewer().getDomain().execute(opInputsName, null);
+//								ControllerJSON.writeCustomJSON(host.getContent());
+//							} else {
+//								Alert alert = new Alert(AlertType.WARNING);
+//								alert.setTitle("Warning");
+//								alert.setHeaderText(null);
+//								alert.setContentText("Empty PIN");
+//								alert.showAndWait();
+//							}
+//						} else {
+//							Alert alert = new Alert(AlertType.WARNING);
+//							alert.setTitle("Warning");
+//							alert.setHeaderText(null);
+//							alert.setContentText("Don't have this name of input");
+//							alert.showAndWait();
+//						}
+//					}
+//				}
+//			} catch (Exception e1) {
+//				Alert alert = new Alert(AlertType.WARNING);
+//				alert.setTitle("Warning");
+//				alert.setHeaderText(null);
+//				alert.setContentText("New Number of Input is not Integer");
+//				alert.showAndWait();
+//			}
+//		});
+//
+//		Menu inputExample = new Menu("Number example ...");
+//		ArrayList<String> inputs = ControllerJSON.read(host.getContent(), MindMapNode.PROP_NUMBER_OF_INPUTS);
+//		for (String input : inputs) {
+//			MenuItem inputExampleItem = new MenuItem(input);
+//			inputExampleItem.setOnAction((e) -> {
+//				ITransactionalOperation op = new SetMindMapNodeNumberOfInputsOperation(host,
+//						inputExampleItem.getText().toString());
+//				try {
+//					host.getRoot().getViewer().getDomain().execute(op, null);
+//				} catch (ExecutionException e1) {
+//					e1.printStackTrace();
+//				}
+//			});
+//			inputExample.getItems().add(inputExampleItem);
+//		}
+//		inputItem.getItems().addAll(inputEnter, inputExample);
+//
+//		Menu outputItem = new Menu("Number of Output ...");
+//		MenuItem outputEnter = new MenuItem("Output enter...");
+//		outputEnter.setOnAction((e) -> {
+//			try {
+//				String newOutput = showDialog(host.getContent().getNumberOfOutputs(), "Enter new Number of Output...");
+//				ITransactionalOperation op = new SetMindMapNodeNumberOfOutputsOperation(host, newOutput);
+//				host.getRoot().getViewer().getDomain().execute(op, null);
+//			} catch (ExecutionException e1) {
+//				e1.printStackTrace();
+//			}
+//		});
+//		Menu outputExample = new Menu("Output example ...");
+//		ArrayList<String> outputs = ControllerJSON.read(host.getContent(), MindMapNode.PROP_NUMBER_OF_OUTPUTS);
+//		for (String output : outputs) {
+//			MenuItem outputExampleItem = new MenuItem(output);
+//			outputExampleItem.setOnAction((e) -> {
+//				ITransactionalOperation op = new SetMindMapNodeNumberOfOutputsOperation(host,
+//						outputExampleItem.getText().toString());
+//				try {
+//					host.getRoot().getViewer().getDomain().execute(op, null);
+//				} catch (ExecutionException e1) {
+//					e1.printStackTrace();
+//				}
+//			});
+//			outputExample.getItems().add(outputExampleItem);
+//		}
+//		outputItem.getItems().addAll(outputEnter, outputExample);
+//
+//		numbersMenu.getItems().addAll(inputItem, outputItem);
+//
+//		return numbersMenu;
+//	}
 
 	private Menu createChangeTextsMenu() {
 		Menu textsMenu = new Menu("Change Text");
