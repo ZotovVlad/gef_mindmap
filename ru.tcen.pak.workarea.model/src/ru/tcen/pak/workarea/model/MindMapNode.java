@@ -45,6 +45,7 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	public static final String PROP_NUMBER_OF_HEX_PARAMETERS = "number_of_hex_parameters"; // for functional node
 	public static final String PROP_HEX_PARAMETERS = "hex_parameters"; // for functional node
 	public static final String PROP_PARAMETERS = "parameters"; // for functional node
+	public static final String PROP_FUNCTION_HEX_FIELD = "function_hex_field"; // for functional node
 
 	private String nodeCustomJSON = userDir + File.separator + "files" + File.separator + "nodes" + File.separator;
 	private String nodeAllJSON = userDir + File.separator + "files" + File.separator;
@@ -56,6 +57,7 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	private String name; // for functional node
 	private String description; // for functional node
 	private String number_of_hex_parameters; // for functional node
+	private String function_hex_field; // for functional node
 	private ArrayList<ArrayList<HashMap<String, String>>> hex_parameters; // for functional node
 	private ArrayList<ArrayList<HashMap<String, String>>> parameters; // for functional node
 
@@ -228,6 +230,10 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		return file;
 	}
 
+	public String getFunctionHexField() {
+		return function_hex_field;
+	}
+
 	public ArrayList<ArrayList<HashMap<String, String>>> getHexParameters() {
 		return hex_parameters;
 	}
@@ -332,6 +338,11 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 
 	public void setFile(File file) {
 		pcs.firePropertyChange(PROP_FILE, this.file, (this.file = file));
+	}
+
+	public void setFunctionHexField(String function_hex_field) {
+		pcs.firePropertyChange(PROP_FUNCTION_HEX_FIELD, this.function_hex_field,
+				(this.function_hex_field = function_hex_field));
 	}
 
 	public void setHexParameters(ArrayList<ArrayList<HashMap<String, String>>> hex_parameters) {

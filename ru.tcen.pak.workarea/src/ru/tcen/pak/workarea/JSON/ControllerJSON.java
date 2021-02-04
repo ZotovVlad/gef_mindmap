@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,7 +27,7 @@ public class ControllerJSON implements PropertyChangeListener {
 
 	public static final String userDir = System.getProperty("user.dir");
 	private static String nodeAllJSON = userDir + File.separator + "files" + File.separator + "properties"
-			+ File.separator + "allProperties" + ".json";
+			+ File.separator + "allProperties__" + ".json";
 	static String stringJSON = "";
 
 	public static final String PROP_TITLE = "title";
@@ -79,62 +78,50 @@ public class ControllerJSON implements PropertyChangeListener {
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject root = array.getJSONObject(i);
 				MindMapNode mmn = new MindMapNode();
-				mmn.setName(root.getString("name"));
-				mmn.setDescription(root.getString("description"));
-				mmn.setFunctionHexField(root.getString("function_hex_field"));
-				mmn.setNumberOfInputs(root.getString("number_of_inputs"));
-				mmn.setNumberOfOutputs(root.getString("number_of_outputs"));
-				mmn.setEnd(root.getString("end"));
-				JSONObject inputsJSON = root.getJSONObject("inputs");
-				HashMap<String, HashMap<String, String>> inputs = new HashMap<>();
-				for (int j = 1; j < inputsJSON.length() + 1; j++) {
-					HashMap<String, String> input = new HashMap<>();
-					Map<String, Object> inputJSON = inputsJSON.getJSONObject("input" + j).toMap();
-					for (Entry<String, Object> entry : inputJSON.entrySet()) {
-						input.put(entry.getKey(), (String) entry.getValue());
-					}
-					inputs.put("input" + j, input);
+				if (root.has("name")) {
+					mmn.setName(root.getString("name"));
 				}
-				mmn.setInputs(inputs);
-				JSONObject outputsJSON = root.getJSONObject("outputs");
-				HashMap<String, HashMap<String, String>> outputs = new HashMap<>();
-				for (int j = 1; j < outputsJSON.length() + 1; j++) {
-					HashMap<String, String> output = new HashMap<>();
-					Map<String, Object> outputJSON = outputsJSON.getJSONObject("output" + j).toMap();
-					for (Entry<String, Object> entry : outputJSON.entrySet()) {
-						output.put(entry.getKey(), (String) entry.getValue());
-					}
-					outputs.put("output" + j, output);
+				if (root.has("description")) {
+					mmn.setDescription(root.getString("description"));
 				}
-				mmn.setOutputs(outputs);
-				JSONObject inputsNameJSON = root.getJSONObject("inputs_name");
-				HashMap<String, ArrayList<String>> inputsName = new HashMap<>();
-				for (int j = 1; j < inputsNameJSON.length() + 1; j++) {
-					List<Object> arrayInput = inputsNameJSON.getJSONArray("input" + j).toList();
-					ArrayList<String> input = new ArrayList<>();
-					for (int k = 0; k < arrayInput.size(); k++) {
-						input.add((String) arrayInput.get(k));
-					}
-					inputsName.put("input" + j, input);
+				if (root.has("number_of_hex_parameters")) {
+					mmn.setNumberOfHexParameters(root.getString("number_of_hex_parameters"));
 				}
-				mmn.setInputsName(inputsName);
-				JSONObject outputsNameJSON = root.getJSONObject("outputs_name");
-				HashMap<String, ArrayList<String>> outputsName = new HashMap<>();
-				for (int j = 1; j < outputsNameJSON.length() + 1; j++) {
-					List<Object> arrayOutput = outputsNameJSON.getJSONArray("output" + j).toList();
-					ArrayList<String> output = new ArrayList<>();
-					for (int k = 0; k < arrayOutput.size(); k++) {
-						output.add((String) arrayOutput.get(k));
-					}
-					outputsName.put("output" + j, output);
+				if (root.has("function_hex_field")) {
+					mmn.setFunctionHexField(root.getString("function_hex_field"));
 				}
-				mmn.setOutputsName(outputsName);
-				try {
-					Writer file = new FileWriter(mmn.getNodeCustomJSON());
-					file.write(root.toString());
-					file.flush();
-				} catch (IOException e) {
-					e.printStackTrace();
+				if (root.has("hex_parameters")) {
+					JSONArray array_hex_parameters = root.getJSONArray("hex_parameters");
+					ArrayList<ArrayList<HashMap<String, String>>> hex_parameters = new ArrayList<>();
+					for (int j = 0; j < array_hex_parameters.length(); j++) {
+						JSONObject root_hex_parameters = array_hex_parameters.getJSONObject(j);
+						ArrayList<HashMap<String, String>> hex_parameter = new ArrayList<>();
+						for (int k = 0; k < root_hex_parameters.length(); k++) {
+							HashMap<String, String> parameter = new HashMap<>();
+							parameter.put(root_hex_parameters.names().getString(k),
+									root_hex_parameters.getString(root_hex_parameters.names().getString(k)));
+							hex_parameter.add(parameter);
+						}
+						hex_parameters.add(hex_parameter);
+					}
+					mmn.setHexParameters(hex_parameters);
+				}
+
+				if (root.has("parameters")) {
+					JSONArray array_parameters = root.getJSONArray("parameters");
+					ArrayList<ArrayList<HashMap<String, String>>> parameters = new ArrayList<>();
+					for (int j = 0; j < array_parameters.length(); j++) {
+						JSONObject root_parameters = array_parameters.getJSONObject(j);
+						ArrayList<HashMap<String, String>> parameter = new ArrayList<>();
+						for (int k = 0; k < root_parameters.length(); k++) {
+							HashMap<String, String> parameterOne = new HashMap<>();
+							parameterOne.put(root_parameters.names().getString(k),
+									root_parameters.getString(root_parameters.names().getString(k)));
+							parameter.add(parameterOne);
+						}
+						parameters.add(parameter);
+					}
+					mmn.setParameters(parameters);
 				}
 
 				mindMapNodeJSON.add(root);
