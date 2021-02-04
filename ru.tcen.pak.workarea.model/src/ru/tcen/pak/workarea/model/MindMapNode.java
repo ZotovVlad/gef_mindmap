@@ -39,16 +39,12 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	public static final String PROP_FILE = "file";
 	public static final String PROP_QUANTITYANCHORS = "quantityAnchors";
 	public static final String PROP_ANCHORS = "anchors";
+
 	public static final String PROP_NAME = "name"; // for functional node
 	public static final String PROP_DESCRIPTION = "description"; // for functional node
-	public static final String PROP_FUNCTION_HEX_FIELD = "function_hex_field"; // for functional node
-	public static final String PROP_NUMBER_OF_INPUTS = "number_of_inputs"; // for functional node
-	public static final String PROP_NUMBER_OF_OUTPUTS = "number_of_outputs"; // for functional node
-	public static final String PROP_INPUTS_NAME = "inputs_name"; // for functional node
-	public static final String PROP_OUTPUTS_NAME = "outputs_name"; // for functional node
-	public static final String PROP_INPUTS = "inputs"; // for functional node
-	public static final String PROP_OUTPUTS = "outputs"; // for functional node
-	public static final String PROP_END = "end"; // for functional node
+	public static final String PROP_NUMBER_OF_HEX_PARAMETERS = "number_of_hex_parameters"; // for functional node
+	public static final String PROP_HEX_PARAMETERS = "hex_parameters"; // for functional node
+	public static final String PROP_PARAMETERS = "parameters"; // for functional node
 
 	private String nodeCustomJSON = userDir + File.separator + "files" + File.separator + "nodes" + File.separator;
 	private String nodeAllJSON = userDir + File.separator + "files" + File.separator;
@@ -56,23 +52,12 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	private String nodeDirectory = userDir + File.separator + "files" + File.separator + "nodes" + File.separator;
 	private Set<String> titlesIncomingConnection = new HashSet<>();
 	private Set<String> titlesOutgoingConnection = new HashSet<>();
+
 	private String name; // for functional node
 	private String description; // for functional node
-	private String function_hex_field; // for functional node
-	private String number_of_inputs; // for functional node
-	private String number_of_outputs; // for functional node
-	private HashMap<String, ArrayList<String>> inputs_name = new HashMap<>(); // for functional
-																				// node
-	private HashMap<String, ArrayList<String>> outputs_name = new HashMap<>(); // for
-																				// functional
-																				// node
-	private HashMap<String, HashMap<String, String>> inputs = new HashMap<>(); // for
-																				// functional
-																				// node
-	private HashMap<String, HashMap<String, String>> outputs = new HashMap<>(); // for
-																				// functional
-																				// node
-	private String end; // for functional node
+	private String number_of_hex_parameters; // for functional node
+	private ArrayList<ArrayList<HashMap<String, String>>> hex_parameters; // for functional node
+	private ArrayList<ArrayList<HashMap<String, String>>> parameters; // for functional node
 
 	/**
 	 * The title of the node
@@ -239,16 +224,12 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		return description;
 	}
 
-	public String getEnd() {
-		return end;
-	}
-
 	public File getFile() {
 		return file;
 	}
 
-	public String getFunctionHexField() {
-		return function_hex_field;
+	public ArrayList<ArrayList<HashMap<String, String>>> getHexParameters() {
+		return hex_parameters;
 	}
 
 	public Image getImage() {
@@ -257,14 +238,6 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 
 	public List<MindMapConnection> getIncomingConnections() {
 		return incomingConnections;
-	}
-
-	public HashMap<String, HashMap<String, String>> getInputs() {
-		return inputs;
-	}
-
-	public HashMap<String, ArrayList<String>> getInputsName() {
-		return inputs_name;
 	}
 
 	public String getName() {
@@ -287,24 +260,16 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		return nodeDirectory;
 	}
 
-	public String getNumberOfInputs() {
-		return number_of_inputs;
-	}
-
-	public String getNumberOfOutputs() {
-		return number_of_outputs;
+	public String getNumberOfHexParameters() {
+		return number_of_hex_parameters;
 	}
 
 	public List<MindMapConnection> getOutgoingConnections() {
 		return outgoingConnections;
 	}
 
-	public HashMap<String, HashMap<String, String>> getOutputs() {
-		return outputs;
-	}
-
-	public HashMap<String, ArrayList<String>> getOutputsName() {
-		return outputs_name;
+	public ArrayList<ArrayList<HashMap<String, String>>> getParameters() {
+		return parameters;
 	}
 
 	public String getTitle() {
@@ -339,6 +304,10 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		return false;
 	}
 
+	public boolean isStatic() {
+		return isStatic;
+	}
+
 	public void removeIncomingConnection(MindMapConnection conn) {
 		incomingConnections.remove(conn);
 		pcs.firePropertyChange(PROP_INCOMING_CONNECTIONS, conn, null);
@@ -359,32 +328,18 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 
 	public void setDescription(String description) {
 		pcs.firePropertyChange(PROP_DESCRIPTION, this.description, (this.description = description));
-		// System.out.println(description);
-	}
-
-	public void setEnd(String end) {
-		pcs.firePropertyChange(PROP_END, this.end, (this.end = end));
 	}
 
 	public void setFile(File file) {
 		pcs.firePropertyChange(PROP_FILE, this.file, (this.file = file));
 	}
 
-	public void setFunctionHexField(String function_hex_field) {
-		pcs.firePropertyChange(PROP_FUNCTION_HEX_FIELD, this.function_hex_field,
-				(this.function_hex_field = function_hex_field));
+	public void setHexParameters(ArrayList<ArrayList<HashMap<String, String>>> hex_parameters) {
+		pcs.firePropertyChange(PROP_HEX_PARAMETERS, this.hex_parameters, (this.hex_parameters = hex_parameters));
 	}
 
 	public void setImage(Image image) {
 		pcs.firePropertyChange(PROP_IMAGE, this.image, (this.image = image));
-	}
-
-	public void setInputs(HashMap<String, HashMap<String, String>> inputs) {
-		pcs.firePropertyChange(PROP_INPUTS, this.inputs, (this.inputs = inputs));
-	}
-
-	public void setInputsName(HashMap<String, ArrayList<String>> inputs_name) {
-		pcs.firePropertyChange(PROP_INPUTS_NAME, this.inputs_name, (this.inputs_name = inputs_name));
 	}
 
 	public void setName(String name) {
@@ -407,35 +362,22 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		this.nodeDirectory = nodeDirectory;
 	}
 
-	public void setNumberOfInputs(String number_of_inputs) {
-		pcs.firePropertyChange(PROP_NUMBER_OF_INPUTS, this.number_of_inputs,
-				(this.number_of_inputs = number_of_inputs));
+	public void setNumberOfHexParameters(String number_of_hex_parameters) {
+		pcs.firePropertyChange(PROP_NUMBER_OF_HEX_PARAMETERS, this.number_of_hex_parameters,
+				(this.number_of_hex_parameters = number_of_hex_parameters));
 	}
 
-	public void setNumberOfOutputs(String number_of_outputs) {
-		pcs.firePropertyChange(PROP_NUMBER_OF_OUTPUTS, this.number_of_outputs,
-				(this.number_of_outputs = number_of_outputs));
+	public void setParameters(ArrayList<ArrayList<HashMap<String, String>>> parameters) {
+		pcs.firePropertyChange(PROP_PARAMETERS, this.parameters, (this.parameters = parameters));
 	}
 
-	public void setOutputs(HashMap<String, HashMap<String, String>> outputs) {
-		pcs.firePropertyChange(PROP_OUTPUTS, this.outputs, (this.outputs = outputs));
-	}
-
-	public void setOutputsName(HashMap<String, ArrayList<String>> outputs_name) {
-		pcs.firePropertyChange(PROP_OUTPUTS_NAME, this.outputs_name, (this.outputs_name = outputs_name));
+	public void setStatic(boolean isStatic) {
+		this.isStatic = isStatic;
 	}
 
 	public void setTitle(String title) {
 		titlesIncomingConnection.add(title);
 		titlesOutgoingConnection.add(title);
 		pcs.firePropertyChange(PROP_TITLE, this.title, (this.title = title));
-	}
-
-	public boolean isStatic() {
-		return isStatic;
-	}
-
-	public void setStatic(boolean isStatic) {
-		this.isStatic = isStatic;
 	}
 }
