@@ -16,9 +16,11 @@ import com.google.inject.Guice;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
@@ -95,7 +97,7 @@ public class SimpleMindMapApplication extends Application {
 		ToggleButton createNode = new ToggleButton("New Node");
 		createNode.setToggleGroup(toggleGroup);
 		createNode.setMaxWidth(Double.MAX_VALUE);
-		createNode.setMinHeight(50);
+		createNode.setMinHeight(25);
 		createNode.selectedProperty().addListener((e, oldVal, newVal) -> {
 			creationModel.setType(newVal ? Type.Node : Type.None);
 		});
@@ -103,7 +105,7 @@ public class SimpleMindMapApplication extends Application {
 		ToggleButton createConn = new ToggleButton("New Connection");
 		createConn.setToggleGroup(toggleGroup);
 		createConn.setMaxWidth(Double.MAX_VALUE);
-		createConn.setMinHeight(50);
+		createConn.setMinHeight(25);
 		createConn.selectedProperty().addListener((e, oldVal, newVal) -> {
 			creationModel.setType(newVal ? Type.Connection : Type.None);
 		});
@@ -111,58 +113,60 @@ public class SimpleMindMapApplication extends Application {
 		vBox_root.getChildren().add(vBox_new);
 
 		VBox vBox_text = new VBox(0);
-		Text text = new Text("Nodes in library:");
-		vBox_text.getChildren().add(text);
-		vBox_root.getChildren().add(vBox_text);
+		vBox_text.setPadding(new Insets(20, 10, 0, 10));
 
-		VBox vBox_lib = new VBox(0);
+		VBox vBox_list = new VBox(0);
+		ListView list = new ListView();
 		List<MindMapNode> nodeLib = ControllerJSON.readMindMapNodeLib();
-		List<ToggleButton> nodeLibButton = new ArrayList<>();
-		for (int i = 0; i < nodeLib.size(); i++) {
-			ToggleButton oneNodeLibButton = new ToggleButton(nodeLib.get(i).getName());
-			oneNodeLibButton.setToggleGroup(toggleGroup);
-			oneNodeLibButton.setMaxWidth(Double.MAX_VALUE);
-			oneNodeLibButton.setMinHeight(50);
-			oneNodeLibButton.setOnAction(new EventHandler<ActionEvent>() {
-
-				boolean flag = true;
-
-				@Override
-				public void handle(ActionEvent arg0) {
-					Type.Node.setString(((ToggleButton) arg0.getSource()).getText().toString());
-					flag = !flag;
-				}
-			});
-
-			oneNodeLibButton.selectedProperty().addListener((e, oldVal, newVal) -> {
-				creationModel.setType(newVal ? Type.Node : Type.None);
-			});
-
-			vBox_lib.getChildren().add(oneNodeLibButton);
-			nodeLibButton.add(oneNodeLibButton);
-		}
-
 		if (nodeLib.size() == 0) {
-			Text textEmptyLib = new Text("Not library!");
-			vBox_lib.getChildren().add(textEmptyLib);
+			Text text = new Text("Not library!");
+			vBox_text.getChildren().add(text);
+			vBox_root.getChildren().add(vBox_text);
+		} else {
+			List<ToggleButton> nodeLibButton = new ArrayList<>();
+			for (int i = 0; i < nodeLib.size(); i++) {
+				ToggleButton oneNodeLibButton = new ToggleButton(nodeLib.get(i).getName());
+				oneNodeLibButton.setToggleGroup(toggleGroup);
+				oneNodeLibButton.setMaxWidth(Double.MAX_VALUE);
+				oneNodeLibButton.setMinHeight(20);
+				oneNodeLibButton.setOnAction(new EventHandler<ActionEvent>() {
+
+					boolean flag = true;
+
+					@Override
+					public void handle(ActionEvent arg0) {
+						Type.Node.setString(((ToggleButton) arg0.getSource()).getText().toString());
+						flag = !flag;
+					}
+				});
+
+				oneNodeLibButton.selectedProperty().addListener((e, oldVal, newVal) -> {
+					creationModel.setType(newVal ? Type.Node : Type.None);
+				});
+
+				list.getItems().add(oneNodeLibButton);
+				nodeLibButton.add(oneNodeLibButton);
+			}
+			// now listen to changes in the model, and deactivate buttons, if
+			// necessary
+			creationModel.getTypeProperty().addListener((e, oldVal, newVal) -> {
+				if (Type.None == newVal) {
+					// unselect the toggle button
+					Toggle selectedToggle = toggleGroup.getSelectedToggle();
+					if (selectedToggle != null) {
+						selectedToggle.setSelected(false);
+					}
+				}
+			});
+			vBox_list.getChildren().add(list);
+
+			Text text = new Text("Nodes in library:");
+			vBox_text.getChildren().add(text);
+			vBox_root.getChildren().add(vBox_text);
+			vBox_root.getChildren().add(vBox_list);
 		}
 
-		// ListView list = new ListView();
 		// VBox.setVgrow(list, Priority.ALWAYS);
-		// vBox.getChildren().add(list);
-
-		// now listen to changes in the model, and deactivate buttons, if
-		// necessary
-		creationModel.getTypeProperty().addListener((e, oldVal, newVal) -> {
-			if (Type.None == newVal) {
-				// unselect the toggle button
-				Toggle selectedToggle = toggleGroup.getSelectedToggle();
-				if (selectedToggle != null) {
-					selectedToggle.setSelected(false);
-				}
-			}
-		});
-		vBox_root.getChildren().add(vBox_lib);
 
 		return vBox_root;
 	}
@@ -217,7 +221,7 @@ public class SimpleMindMapApplication extends Application {
 
 		pane.setTop(createButtonBar());
 		pane.setCenter(getContentViewer().getCanvas());
-		pane.setRight(createToolPalette());
+		pane.setLeft(createToolPalette());
 
 		pane.setMinWidth(1400);
 		pane.setMinHeight(850);

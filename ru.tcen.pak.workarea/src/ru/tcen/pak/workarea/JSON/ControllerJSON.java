@@ -127,8 +127,8 @@ public class ControllerJSON implements PropertyChangeListener {
 				mindMapNodeJSON.add(root);
 				mindMapNodeLib.add(mmn);
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+//			e.printStackTrace();
 		}
 		return mindMapNodeLib;
 	}
