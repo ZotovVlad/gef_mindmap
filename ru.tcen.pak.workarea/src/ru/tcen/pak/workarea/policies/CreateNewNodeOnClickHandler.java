@@ -67,14 +67,10 @@ public class CreateNewNodeOnClickHandler extends AbstractHandler implements IOnC
 				newNode.setTitle("");
 				newNode.setName(customNode.getName());
 				newNode.setDescription(customNode.getDescription());
+				newNode.setNumberOfHexParameters(customNode.getNumberOfHexParameters());
+				newNode.setHexParameters(customNode.getHexParameters());
+				newNode.setParameters(customNode.getParameters());
 				newNode.setFunctionHexField(customNode.getFunctionHexField());
-				newNode.setNumberOfInputs(customNode.getNumberOfInputs());
-				newNode.setNumberOfOutputs(customNode.getNumberOfOutputs());
-				newNode.setInputsName(customNode.getInputsName());
-				newNode.setOutputsName(customNode.getOutputsName());
-				newNode.setInputs(customNode.getInputs());
-				newNode.setOutputs(customNode.getOutputs());
-				newNode.setEnd(customNode.getEnd());
 			} else {
 				newNode.setTitle("Node" + i++);
 				newNode.setDescription("no description");
