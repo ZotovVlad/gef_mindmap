@@ -24,7 +24,7 @@ public class SetMindMapNodeColorOperation extends AbstractOperation implements I
 	private final Color oldColor;
 
 	public SetMindMapNodeColorOperation(MindMapNodePart nodePart, Color newColor) {
-		super("Change color");
+		super("Change Color");
 		this.nodePart = nodePart;
 		this.newColor = newColor;
 		this.oldColor = nodePart.getContent().getColor();

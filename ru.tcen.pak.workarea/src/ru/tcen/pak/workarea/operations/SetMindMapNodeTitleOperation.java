@@ -23,7 +23,7 @@ public class SetMindMapNodeTitleOperation extends AbstractOperation implements I
 	private final String newTitle;
 
 	public SetMindMapNodeTitleOperation(MindMapNodePart nodePart, String newTitle) {
-		super("Change color");
+		super("Change Title");
 		this.nodePart = nodePart;
 		this.newTitle = newTitle;
 		this.oldTitle = nodePart.getContent().getTitle();

@@ -23,7 +23,7 @@ public class SetMindMapNodeNameOperation extends AbstractOperation implements IT
 	private final String newName;
 
 	public SetMindMapNodeNameOperation(MindMapNodePart nodePart, String newName) {
-		super("Change color");
+		super("Change Name");
 		this.nodePart = nodePart;
 		this.newName = newName;
 		this.oldName = nodePart.getContent().getName();

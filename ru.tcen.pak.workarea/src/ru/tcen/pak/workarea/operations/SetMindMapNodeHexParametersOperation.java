@@ -14,28 +14,28 @@ import org.eclipse.gef.mvc.fx.operations.ITransactionalOperation;
 import ru.tcen.pak.workarea.parts.MindMapNodePart;
 
 /**
- * operation to change the InputsName property of a MindMapNode
+ * operation to change the HexParameters property of a MindMapNode
  *
  * @author bajurus
  *
  */
-public class SetMindMapNodeInputsNameOperation extends AbstractOperation implements ITransactionalOperation {
+public class SetMindMapNodeHexParametersOperation extends AbstractOperation implements ITransactionalOperation {
 
 	private final MindMapNodePart nodePart;
-	private final HashMap<String, ArrayList<String>> oldInputsName;
-	private final HashMap<String, ArrayList<String>> newInputsName;
+	private final ArrayList<ArrayList<HashMap<String, String>>> oldHexParameters;
+	private final ArrayList<ArrayList<HashMap<String, String>>> newHexParameters;
 
-	public SetMindMapNodeInputsNameOperation(MindMapNodePart nodePart,
-			HashMap<String, ArrayList<String>> newInputsName) {
-		super("Change color");
+	public SetMindMapNodeHexParametersOperation(MindMapNodePart nodePart,
+			ArrayList<ArrayList<HashMap<String, String>>> newHexParameters) {
+		super("Change HexParameters");
 		this.nodePart = nodePart;
-		this.newInputsName = newInputsName;
-		this.oldInputsName = nodePart.getContent().getInputsName();
+		this.newHexParameters = newHexParameters;
+		this.oldHexParameters = nodePart.getContent().getHexParameters();
 	}
 
 	@Override
 	public IStatus execute(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
-		nodePart.getContent().setInputsName(newInputsName);
+		nodePart.getContent().setHexParameters(newHexParameters);
 		return Status.OK_STATUS;
 	}
 
@@ -47,7 +47,7 @@ public class SetMindMapNodeInputsNameOperation extends AbstractOperation impleme
 
 	@Override
 	public boolean isNoOp() {
-		return newInputsName.equals(oldInputsName);
+		return newHexParameters.equals(oldHexParameters);
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class SetMindMapNodeInputsNameOperation extends AbstractOperation impleme
 
 	@Override
 	public IStatus undo(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
-		nodePart.getContent().setInputsName(oldInputsName);
+		nodePart.getContent().setHexParameters(oldHexParameters);
 		return Status.OK_STATUS;
 	}
 }

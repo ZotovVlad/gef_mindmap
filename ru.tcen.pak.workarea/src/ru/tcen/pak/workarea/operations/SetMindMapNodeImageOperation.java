@@ -24,7 +24,7 @@ public class SetMindMapNodeImageOperation extends AbstractOperation implements I
 	private final Image newImage;
 
 	public SetMindMapNodeImageOperation(MindMapNodePart nodePart, Image newImage) {
-		super("Change color");
+		super("Change Image");
 		this.nodePart = nodePart;
 		this.newImage = newImage;
 		this.oldImage = nodePart.getContent().getImage();

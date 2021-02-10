@@ -23,7 +23,7 @@ public class SetMindMapNodeDescriptionOperation extends AbstractOperation implem
 	private final String newDescription;
 
 	public SetMindMapNodeDescriptionOperation(MindMapNodePart nodePart, String newDescription) {
-		super("Change color");
+		super("Change Description");
 		this.nodePart = nodePart;
 		this.newDescription = newDescription;
 		this.oldDescription = nodePart.getContent().getDescription();

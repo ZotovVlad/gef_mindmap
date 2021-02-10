@@ -1,7 +1,5 @@
 package ru.tcen.pak.workarea.operations;
 
-import java.util.HashMap;
-
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.AbstractOperation;
 import org.eclipse.core.runtime.IAdaptable;
@@ -13,28 +11,27 @@ import org.eclipse.gef.mvc.fx.operations.ITransactionalOperation;
 import ru.tcen.pak.workarea.parts.MindMapNodePart;
 
 /**
- * operation to change the Outputs property of a MindMapNode
+ * operation to change the NumberOfHexParameters property of a MindMapNode
  *
  * @author bajurus
  *
  */
-public class SetMindMapNodeOutputsOperation extends AbstractOperation implements ITransactionalOperation {
+public class SetMindMapNodeNumberOfHexParametersOperation extends AbstractOperation implements ITransactionalOperation {
 
 	private final MindMapNodePart nodePart;
-	private final HashMap<String, HashMap<String, String>> oldOutputs;
-	private final HashMap<String, HashMap<String, String>> newOutputs;
+	private final String oldNumberOfHexParameters;
+	private final String newNumberOfHexParameters;
 
-	public SetMindMapNodeOutputsOperation(MindMapNodePart nodePart,
-			HashMap<String, HashMap<String, String>> newOutputs) {
-		super("Change color");
+	public SetMindMapNodeNumberOfHexParametersOperation(MindMapNodePart nodePart, String newInputsName) {
+		super("Change NumberOfHexParameters");
 		this.nodePart = nodePart;
-		this.newOutputs = newOutputs;
-		this.oldOutputs = nodePart.getContent().getOutputs();
+		this.newNumberOfHexParameters = newInputsName;
+		this.oldNumberOfHexParameters = nodePart.getContent().getNumberOfHexParameters();
 	}
 
 	@Override
 	public IStatus execute(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
-		nodePart.getContent().setOutputs(newOutputs);
+		nodePart.getContent().setNumberOfHexParameters(newNumberOfHexParameters);
 		return Status.OK_STATUS;
 	}
 
@@ -46,7 +43,7 @@ public class SetMindMapNodeOutputsOperation extends AbstractOperation implements
 
 	@Override
 	public boolean isNoOp() {
-		return newOutputs.equals(oldOutputs);
+		return newNumberOfHexParameters.equals(oldNumberOfHexParameters);
 	}
 
 	@Override
@@ -56,7 +53,7 @@ public class SetMindMapNodeOutputsOperation extends AbstractOperation implements
 
 	@Override
 	public IStatus undo(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
-		nodePart.getContent().setOutputs(oldOutputs);
+		nodePart.getContent().setNumberOfHexParameters(oldNumberOfHexParameters);
 		return Status.OK_STATUS;
 	}
 }

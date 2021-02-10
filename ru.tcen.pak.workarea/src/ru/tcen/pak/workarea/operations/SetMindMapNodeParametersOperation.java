@@ -1,5 +1,8 @@
 package ru.tcen.pak.workarea.operations;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.AbstractOperation;
 import org.eclipse.core.runtime.IAdaptable;
@@ -11,27 +14,28 @@ import org.eclipse.gef.mvc.fx.operations.ITransactionalOperation;
 import ru.tcen.pak.workarea.parts.MindMapNodePart;
 
 /**
- * operation to change the End property of a MindMapNode
+ * operation to change the Parameters property of a MindMapNode
  *
  * @author bajurus
  *
  */
-public class SetMindMapNodeEndOperation extends AbstractOperation implements ITransactionalOperation {
+public class SetMindMapNodeParametersOperation extends AbstractOperation implements ITransactionalOperation {
 
 	private final MindMapNodePart nodePart;
-	private final String oldEnd;
-	private final String newEnd;
+	private final ArrayList<ArrayList<HashMap<String, String>>> oldParameters;
+	private final ArrayList<ArrayList<HashMap<String, String>>> newParameters;
 
-	public SetMindMapNodeEndOperation(MindMapNodePart nodePart, String newEnd) {
-		super("Change color");
+	public SetMindMapNodeParametersOperation(MindMapNodePart nodePart,
+			ArrayList<ArrayList<HashMap<String, String>>> newParameters) {
+		super("Change Parameters");
 		this.nodePart = nodePart;
-		this.newEnd = newEnd;
-		this.oldEnd = nodePart.getContent().getEnd();
+		this.newParameters = newParameters;
+		this.oldParameters = nodePart.getContent().getParameters();
 	}
 
 	@Override
 	public IStatus execute(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
-		nodePart.getContent().setEnd(newEnd);
+		nodePart.getContent().setParameters(newParameters);
 		return Status.OK_STATUS;
 	}
 
@@ -43,7 +47,7 @@ public class SetMindMapNodeEndOperation extends AbstractOperation implements ITr
 
 	@Override
 	public boolean isNoOp() {
-		return newEnd.equals(oldEnd);
+		return newParameters.equals(oldParameters);
 	}
 
 	@Override
@@ -53,7 +57,7 @@ public class SetMindMapNodeEndOperation extends AbstractOperation implements ITr
 
 	@Override
 	public IStatus undo(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
-		nodePart.getContent().setEnd(oldEnd);
+		nodePart.getContent().setParameters(oldParameters);
 		return Status.OK_STATUS;
 	}
 }

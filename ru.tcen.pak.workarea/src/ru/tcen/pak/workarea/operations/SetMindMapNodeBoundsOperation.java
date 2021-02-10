@@ -24,7 +24,7 @@ public class SetMindMapNodeBoundsOperation extends AbstractOperation implements 
 	private final Rectangle oldBounds;
 
 	public SetMindMapNodeBoundsOperation(MindMapNodePart nodePart, Rectangle newBounds) {
-		super("Change bounds");
+		super("Change Bounds");
 		this.nodePart = nodePart;
 		this.newBounds = newBounds;
 		this.oldBounds = nodePart.getContent().getBounds();

@@ -23,7 +23,7 @@ public class SetMindMapNodeFunctionHexFieldOperation extends AbstractOperation i
 	private final String newFunctionHexField;
 
 	public SetMindMapNodeFunctionHexFieldOperation(MindMapNodePart nodePart, String newFunctionHexField) {
-		super("Change color");
+		super("Change FunctionHexField");
 		this.nodePart = nodePart;
 		this.newFunctionHexField = newFunctionHexField;
 		this.oldFunctionHexField = nodePart.getContent().getFunctionHexField();
