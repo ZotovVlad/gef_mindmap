@@ -97,52 +97,15 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 
 		this.nodeCustomJSON += this.hashCode() + File.separator + this.hashCode() + ".json";
 		this.nodeAllJSON += "properties" + File.separator + "allProperties" + ".json";
-//		this.nodeCode += this.hashCode() + File.separator + this.hashCode() + ".txt";
-		this.nodeCode += this.hashCode() + File.separator + this.hashCode() + ".json";// for testing
+		this.nodeCode += this.hashCode() + File.separator + this.hashCode() + ".txt";
+//		this.nodeCode += this.hashCode() + File.separator + this.hashCode() + ".json";// for testing
 		this.nodeDirectory += this.hashCode();
 
 		File file = new File(this.nodeDirectory);
 		file.mkdir();
 
 		createFile(nodeCustomJSON, "");
-//		createFile(nodeAllJSON, "[\r\n" + "  {\r\n" + "    \"name\": \"inv1\",\r\n"
-//				+ "    \"description\": \"Invertor 1\",\r\n" + "    \"function_hex_field\": \"inv1_field.hex\",\r\n"
-//				+ "    \"number_of_inputs\": \"1\",\r\n" + "    \"number_of_outputs\": \"1\",\r\n"
-//				+ "    \"inputs_name\": {\r\n" + "      \"input1\": [\r\n" + "        \"PIN_0\",\r\n"
-//				+ "        \"PIN_1\"\r\n" + "      ],\r\n" + "      \"input2\": [\r\n" + "        \"\"\r\n"
-//				+ "      ]\r\n" + "    },\r\n" + "    \"outputs_name\": {\r\n" + "      \"output1\": [\r\n"
-//				+ "        \"PAD_Out0\",\r\n" + "        \"PAD_Out1\",\r\n" + "        \"PAD_Out2\",\r\n"
-//				+ "        \"PAD_Out3\"\r\n" + "      ],\r\n" + "      \"output2\": [\r\n" + "        \"\"\r\n"
-//				+ "      ],\r\n" + "      \"output3\": [\r\n" + "        \"\"\r\n" + "      ],\r\n"
-//				+ "      \"output4\": [\r\n" + "        \"\"\r\n" + "      ]\r\n" + "    },\r\n"
-//				+ "    \"inputs\": {\r\n" + "      \"input1\": {\r\n"
-//				+ "        \"PIN_0\": \"inv1_pin_0_field.hex\"\r\n" + "      },\r\n" + "      \"input2\": {\r\n"
-//				+ "        \"PIN_1\": \"inv1_pin_1_field.hex\"\r\n" + "      }\r\n" + "    },\r\n"
-//				+ "    \"outputs\": {\r\n" + "      \"output1\": {\r\n"
-//				+ "        \"PAD_Out0\": \"inv1_pad_out0_field.hex\"\r\n" + "      },\r\n" + "      \"output2\": {\r\n"
-//				+ "        \"PAD_Out1\": \"inv1_pad_out1_field.hex\"\r\n" + "      },\r\n" + "      \"output3\": {\r\n"
-//				+ "        \"PAD_Out2\": \"inv1_pad_out2_field.hex\"\r\n" + "      },\r\n" + "      \"output4\": {\r\n"
-//				+ "        \"PAD_Out3\": \"inv1_pad_out3_field.hex\"\r\n" + "      }\r\n" + "    },\r\n"
-//				+ "    \"end\": \"inv1_flash_read_end_field.hex\"\r\n" + "  },\r\n" + "  {\r\n"
-//				+ "    \"name\": \"and1\",\r\n" + "    \"description\": \"And\",\r\n"
-//				+ "    \"function_hex_field\": \"and1_field.hex\",\r\n" + "    \"number_of_inputs\": \"2\",\r\n"
-//				+ "    \"number_of_outputs\": \"1\",\r\n" + "    \"inputs_name\": {\r\n" + "      \"input1\": [\r\n"
-//				+ "        \"PIN_0\",\r\n" + "        \"PIN_1\"\r\n" + "      ],\r\n" + "      \"input2\": [\r\n"
-//				+ "        \"PIN_0\",\r\n" + "        \"PIN_1\"\r\n" + "      ]\r\n" + "    },\r\n"
-//				+ "    \"outputs_name\": {\r\n" + "      \"output1\": [\r\n" + "        \"PAD_Out0\",\r\n"
-//				+ "        \"PAD_Out1\",\r\n" + "        \"PAD_Out2\",\r\n" + "        \"PAD_Out3\"\r\n"
-//				+ "      ],\r\n" + "      \"output2\": [\r\n" + "        \"\"\r\n" + "      ],\r\n"
-//				+ "      \"output3\": [\r\n" + "        \"\"\r\n" + "      ],\r\n" + "      \"output4\": [\r\n"
-//				+ "        \"\"\r\n" + "      ]\r\n" + "    },\r\n" + "    \"inputs\": {\r\n"
-//				+ "      \"input1\": {\r\n" + "        \"PIN_0\": \"and1_pin_0_field.hex\"\r\n" + "      },\r\n"
-//				+ "      \"input2\": {\r\n" + "        \"PIN_1\": \"and1_pin_1_field.hex\"\r\n" + "      }\r\n"
-//				+ "    },\r\n" + "    \"outputs\": {\r\n" + "      \"output1\": {\r\n"
-//				+ "        \"PAD_Out0\": \"and1_pad_out0_field.hex\"\r\n" + "      },\r\n" + "      \"output2\": {\r\n"
-//				+ "        \"PAD_Out1\": \"and1_pad_out1_field.hex\"\r\n" + "      },\r\n" + "      \"output3\": {\r\n"
-//				+ "        \"PAD_Out2\": \"and1_pad_out2_field.hex\"\r\n" + "      },\r\n" + "      \"output4\": {\r\n"
-//				+ "        \"PAD_Out3\": \"and1_pad_out3_field.hex\"\r\n" + "      }\r\n" + "    },\r\n"
-//				+ "    \"end\": \"and1_flash_read_end_field.hex\"\r\n" + "  }\r\n" + "]");
-		createFile(nodeCode, "//This is the file with the node code.\n");
+		createFile(nodeCode, "//This is the file with code at the node " + this.hashCode() + "\n");
 	}
 
 	public void addIncomingConnection(MindMapConnection conn) {
