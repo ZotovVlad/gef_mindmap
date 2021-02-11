@@ -97,7 +97,8 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 
 		this.nodeCustomJSON += this.hashCode() + File.separator + this.hashCode() + ".json";
 		this.nodeAllJSON += "properties" + File.separator + "allProperties" + ".json";
-		this.nodeCode += this.hashCode() + File.separator + this.hashCode() + ".txt";
+//		this.nodeCode += this.hashCode() + File.separator + this.hashCode() + ".txt";
+		this.nodeCode += this.hashCode() + File.separator + this.hashCode() + ".json";// for testing
 		this.nodeDirectory += this.hashCode();
 
 		File file = new File(this.nodeDirectory);

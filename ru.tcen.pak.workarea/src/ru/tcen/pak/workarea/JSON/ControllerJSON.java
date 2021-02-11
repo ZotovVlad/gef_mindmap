@@ -11,7 +11,6 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -174,71 +173,95 @@ public class ControllerJSON implements PropertyChangeListener {
 		root.put(MindMapNode.PROP_NAME, mindMapNode.getName() == null ? "" : mindMapNode.getName());
 		root.put(MindMapNode.PROP_DESCRIPTION,
 				mindMapNode.getDescription() == null ? "" : mindMapNode.getDescription());
-		root.put(MindMapNode.PROP_FUNCTION_HEX_FIELD,
-				mindMapNode.getFunctionHexField() == null ? "" : mindMapNode.getFunctionHexField());
-		root.put(MindMapNode.PROP_NUMBER_OF_INPUTS,
-				mindMapNode.getNumberOfInputs() == null ? "" : mindMapNode.getNumberOfInputs());
-		root.put(MindMapNode.PROP_NUMBER_OF_OUTPUTS,
-				mindMapNode.getNumberOfOutputs() == null ? "" : mindMapNode.getNumberOfOutputs());
-		root.put(MindMapNode.PROP_END, mindMapNode.getEnd() == null ? "" : mindMapNode.getEnd());
+		if (mindMapNode.getFunctionHexField() != null) {
+			root.put(MindMapNode.PROP_FUNCTION_HEX_FIELD, mindMapNode.getFunctionHexField());
+		}
+		if (mindMapNode.getNumberOfHexParameters() != null) {
+			root.put(MindMapNode.PROP_NUMBER_OF_HEX_PARAMETERS, mindMapNode.getNumberOfHexParameters());
+		}
 
-		JSONObject root_inputs_name = new JSONObject();
-		HashMap<String, ArrayList<String>> inputs_name = mindMapNode.getInputsName();
-		for (Map.Entry<String, ArrayList<String>> entry : inputs_name.entrySet()) {
-			String key = entry.getKey();
-			ArrayList<String> value = entry.getValue();
-			JSONArray input_number = new JSONArray();
-			if (value.get(0) == null) {
-				input_number.put("");
-			} else {
-				for (String string : value) {
-					input_number.put(string);
+		ArrayList<ArrayList<HashMap<String, String>>> hexParameters = mindMapNode.getHexParameters();
+		if (hexParameters != null) {
+			JSONArray hexParametersJSON = new JSONArray();
+			for (ArrayList<HashMap<String, String>> hexParameter : hexParameters) {
+				JSONObject hexParameterJSON = new JSONObject();
+				for (HashMap<String, String> oneParameter : hexParameter) {
+					hexParameterJSON.put((String) oneParameter.keySet().toArray()[0],
+							oneParameter.values().toArray()[0]);
 				}
+				hexParametersJSON.put(hexParameterJSON);
 			}
-			root_inputs_name.put(key, input_number);
+			root.put(MindMapNode.PROP_HEX_PARAMETERS, hexParametersJSON);
 		}
-		root.put("inputs_name", root_inputs_name);
 
-		JSONObject root_outputs_name = new JSONObject();
-		HashMap<String, ArrayList<String>> outputs_name = mindMapNode.getOutputsName();
-		for (Map.Entry<String, ArrayList<String>> entry : outputs_name.entrySet()) {
-			String key = entry.getKey();
-			ArrayList<String> value = entry.getValue();
-			JSONArray output_number = new JSONArray();
-			if (value.get(0) == null) {
-				output_number.put("");
-			} else {
-				for (String string : value) {
-					output_number.put(string);
+		ArrayList<ArrayList<HashMap<String, String>>> parameters = mindMapNode.getParameters();
+		if (parameters != null) {
+			JSONArray parametersJSON = new JSONArray();
+			for (ArrayList<HashMap<String, String>> parameter : parameters) {
+				JSONObject parameterJSON = new JSONObject();
+				for (HashMap<String, String> oneParameter : parameter) {
+					parameterJSON.put((String) oneParameter.keySet().toArray()[0], oneParameter.values().toArray()[0]);
 				}
+				parametersJSON.put(parameterJSON);
 			}
-			root_outputs_name.put(key, output_number);
+			root.put(MindMapNode.PROP_PARAMETERS, parametersJSON);
 		}
-		root.put("outputs_name", root_outputs_name);
 
-		JSONObject root_inputs = new JSONObject();
-		HashMap<String, HashMap<String, String>> inputs = mindMapNode.getInputs();
-		for (Map.Entry<String, HashMap<String, String>> entry : inputs.entrySet()) {
-			String key = entry.getKey();
-			JSONObject input = new JSONObject();
-			for (Map.Entry<String, String> value : entry.getValue().entrySet()) {
-				input.put(value.getKey(), value.getValue());
-			}
-			root_inputs.put(key, input);
-		}
-		root.put("inputs", root_inputs);
-
-		JSONObject root_outputs = new JSONObject();
-		HashMap<String, HashMap<String, String>> outputs = mindMapNode.getOutputs();
-		for (Map.Entry<String, HashMap<String, String>> entry : outputs.entrySet()) {
-			String key = entry.getKey();
-			JSONObject output = new JSONObject();
-			for (Map.Entry<String, String> value : entry.getValue().entrySet()) {
-				output.put(value.getKey(), value.getValue());
-			}
-			root_outputs.put(key, output);
-		}
-		root.put("outputs", root_outputs);
+//		for (Map.Entry<String, ArrayList<String>> entry : inputs_name.entrySet()) {
+//			String key = entry.getKey();
+//			ArrayList<String> value = entry.getValue();
+//			JSONArray input_number = new JSONArray();
+//			if (value.get(0) == null) {
+//				input_number.put("");
+//			} else {
+//				for (String string : value) {
+//					input_number.put(string);
+//				}
+//			}
+//			root_inputs_name.put(key, input_number);
+//		}
+//		root.put("inputs_name", root_inputs_name);
+//
+//		JSONObject root_outputs_name = new JSONObject();
+//		HashMap<String, ArrayList<String>> outputs_name = mindMapNode.getOutputsName();
+//		for (Map.Entry<String, ArrayList<String>> entry : outputs_name.entrySet()) {
+//			String key = entry.getKey();
+//			ArrayList<String> value = entry.getValue();
+//			JSONArray output_number = new JSONArray();
+//			if (value.get(0) == null) {
+//				output_number.put("");
+//			} else {
+//				for (String string : value) {
+//					output_number.put(string);
+//				}
+//			}
+//			root_outputs_name.put(key, output_number);
+//		}
+//		root.put("outputs_name", root_outputs_name);
+//
+//		JSONObject root_inputs = new JSONObject();
+//		HashMap<String, HashMap<String, String>> inputs = mindMapNode.getInputs();
+//		for (Map.Entry<String, HashMap<String, String>> entry : inputs.entrySet()) {
+//			String key = entry.getKey();
+//			JSONObject input = new JSONObject();
+//			for (Map.Entry<String, String> value : entry.getValue().entrySet()) {
+//				input.put(value.getKey(), value.getValue());
+//			}
+//			root_inputs.put(key, input);
+//		}
+//		root.put("inputs", root_inputs);
+//
+//		JSONObject root_outputs = new JSONObject();
+//		HashMap<String, HashMap<String, String>> outputs = mindMapNode.getOutputs();
+//		for (Map.Entry<String, HashMap<String, String>> entry : outputs.entrySet()) {
+//			String key = entry.getKey();
+//			JSONObject output = new JSONObject();
+//			for (Map.Entry<String, String> value : entry.getValue().entrySet()) {
+//				output.put(value.getKey(), value.getValue());
+//			}
+//			root_outputs.put(key, output);
+//		}
+//		root.put("outputs", root_outputs);
 
 		try {
 			Writer file = new FileWriter(mindMapNode.getNodeCustomJSON());
