@@ -30,7 +30,6 @@ public class MindMapNodeVisual extends Region {
 	private static final double NODE_HEIGH = 170;
 	private static final int SIZERECTANGLEBOX = 10;
 
-	private Text titleText;
 	private TextFlow descriptionFlow;
 	private Text descriptionText;
 	private Text nameText;
@@ -62,10 +61,6 @@ public class MindMapNodeVisual extends Region {
 		labelVBox.prefWidthProperty().bind(widthProperty());
 		labelVBox.prefHeightProperty().bind(heightProperty());
 
-		// create title text
-		titleText = new Text();
-		titleText.setTextOrigin(VPos.TOP);
-
 		// create name text
 		nameText = new Text();
 		nameText.setTextOrigin(VPos.TOP);
@@ -82,7 +77,7 @@ public class MindMapNodeVisual extends Region {
 		descriptionFlow.maxWidthProperty().bind(shape.widthProperty().subtract(HORIZONTAL_PADDING * 2));
 
 		// vertically lay out title and description
-		labelVBox.getChildren().addAll(titleText, nameText, descriptionFlow);
+		labelVBox.getChildren().addAll(nameText, descriptionFlow);
 
 		// ensure title is always visible (see also #computeMinWidth(double) and
 		// #computeMinHeight(double) methods)
@@ -236,7 +231,7 @@ public class MindMapNodeVisual extends Region {
 	@Override
 	public double computeMinWidth(double height) {
 		// ensure title is always visible
-		return titleText.getLayoutBounds().getWidth() + HORIZONTAL_PADDING * 2;
+		return nameText.getLayoutBounds().getWidth() + HORIZONTAL_PADDING * 2;
 	}
 
 	@Override
@@ -282,10 +277,6 @@ public class MindMapNodeVisual extends Region {
 		return pointsBox;
 	}
 
-	public Text getTitleText() {
-		return titleText;
-	}
-
 	public String getUrlImage() {
 		return urlImage;
 	}
@@ -323,10 +314,6 @@ public class MindMapNodeVisual extends Region {
 
 	public void setStatic(boolean isStatic) {
 		this.isStatic = isStatic;
-	}
-
-	public void setTitle(String title) {
-		this.titleText.setText(title);
 	}
 
 	public void setUrlImage(String urlImage) {

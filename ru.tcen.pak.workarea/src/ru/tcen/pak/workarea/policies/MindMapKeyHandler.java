@@ -81,7 +81,7 @@ public class MindMapKeyHandler extends AbstractHandler implements IOnStrokeHandl
 	private MindMapNode createMindMapNode() {
 		Scene scene = getHost().getVisual().getScene();
 		MindMapNode newNode = new MindMapNode();
-		newNode.setTitle("Title");
+		newNode.setName("Title");
 		newNode.setDescription("Description");
 		newNode.setColor(Color.GREENYELLOW);
 		newNode.setBounds(new Rectangle(scene.getWidth() / 2 - 120 / 2, scene.getHeight() / 2 - 80 / 2, 120, 80));
@@ -181,14 +181,14 @@ public class MindMapKeyHandler extends AbstractHandler implements IOnStrokeHandl
 		for (Object node : mindMap.keySet()) {
 			if (node instanceof MindMapNode) {
 				for (MindMapConnection connection : ((MindMapNode) node).getIncomingConnections()) {
-					builder.append(connection.getSource().getTitle());
+					builder.append(connection.getSource().getName());
 					builder.append(", ");
 				}
 
-				System.out.print(builder.toString() + " -> " + ((MindMapNode) node).getTitle() + " -> ");
+				System.out.print(builder.toString() + " -> " + ((MindMapNode) node).getName() + " -> ");
 				builder = new StringBuilder();
 				for (MindMapConnection connection : ((MindMapNode) node).getOutgoingConnections()) {
-					builder.append(connection.getTarget().getTitle());
+					builder.append(connection.getTarget().getName());
 					builder.append(", ");
 				}
 			}

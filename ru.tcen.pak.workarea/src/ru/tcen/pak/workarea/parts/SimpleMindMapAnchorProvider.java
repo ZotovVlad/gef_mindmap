@@ -38,9 +38,9 @@ public class SimpleMindMapAnchorProvider extends IAdaptable.Bound.Impl<IVisualPa
 		MindMapNodeVisual mindMapNodeVisual = (MindMapNodeVisual) getAdaptable().getVisual();
 
 		// default node visual "settings"
-		if (mindMapNodeVisual.getTitleText().getText().toString().equals("START")) {
+		if (mindMapNodeVisual.getNameText().getText().toString().equals("START")) {
 			mindMapNodeVisual.pointConnection.add(new Point(170, 170 / 2));
-		} else if (mindMapNodeVisual.getTitleText().getText().toString().equals("FINISH")) {
+		} else if (mindMapNodeVisual.getNameText().getText().toString().equals("FINISH")) {
 			mindMapNodeVisual.pointConnection.add(new Point(0, 170 / 2));
 		}
 

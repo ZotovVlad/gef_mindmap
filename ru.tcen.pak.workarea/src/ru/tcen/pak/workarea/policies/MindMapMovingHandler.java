@@ -41,7 +41,7 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnDragHand
 				MindMapMovingHandler.mindMapNodeBottomMoved = mindMapNodeTopMoved;
 			}
 
-			mindMapNodeBottomMoved.setTitle(mindMapNodeTopMoved.getTitle());
+			mindMapNodeBottomMoved.setName(mindMapNodeTopMoved.getName());
 			mindMapNodeTopMoved.setBounds(mindMapNodeBottomMoved.getBounds().getCopy());
 		}
 
@@ -86,7 +86,7 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnDragHand
 
 	private void verifyAndMoveCoordinatesAtNodesAtField(MouseEvent e) {
 		for (MindMapNode mindMapNode : mindMapNodesAtField) {
-			if (mindMapNode.getTitle() != MindMapMovingHandler.mindMapNodeTopMoved.getTitle()) {
+			if (mindMapNode.getName() != MindMapMovingHandler.mindMapNodeTopMoved.getName()) {
 				Rectangle bounds = mindMapNode.getBounds();
 				if (e.getX() >= bounds.getX() && e.getX() <= bounds.getX() + bounds.getWidth()
 						&& e.getY() >= bounds.getY() && e.getY() <= bounds.getY() + bounds.getHeight()) {

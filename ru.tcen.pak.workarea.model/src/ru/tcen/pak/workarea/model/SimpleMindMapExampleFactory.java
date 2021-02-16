@@ -20,7 +20,7 @@ public class SimpleMindMapExampleFactory {
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				MindMapNode node = new MindMapNode();
-				node.setTitle(i + "" + j);
+				node.setName(i + "" + j);
 				node.setColor(Color.PALEVIOLETRED);
 				node.setStatic(true);
 				node.setBounds(
@@ -126,7 +126,7 @@ public class SimpleMindMapExampleFactory {
 		SimpleMindMap mindMap = new SimpleMindMap();
 
 		MindMapNode center = new MindMapNode();
-		center.setTitle("The Core Idea");
+		center.setName("The Core Idea");
 		center.setDescription("This is my Core idea. I need a larger Explanation to it, so I can test the warpping.");
 		center.setColor(Color.GREENYELLOW);
 		center.setBounds(new Rectangle(20, 50, WIDTH, HEIGHT));

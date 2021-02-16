@@ -64,7 +64,7 @@ public class CreateNewNodeOnClickHandler extends AbstractHandler implements IOnC
 
 			MindMapNode customNode = ControllerJSON.search(Type.Node.getString());
 			if (!(customNode == null)) {
-				newNode.setTitle("");
+				newNode.setName("");
 				newNode.setName(customNode.getName());
 				newNode.setDescription(customNode.getDescription());
 				newNode.setNumberOfHexParameters(customNode.getNumberOfHexParameters());
@@ -72,7 +72,7 @@ public class CreateNewNodeOnClickHandler extends AbstractHandler implements IOnC
 				newNode.setParameters(customNode.getParameters());
 				newNode.setFunctionHexField(customNode.getFunctionHexField());
 			} else {
-				newNode.setTitle("Node" + i++);
+				newNode.setName("Node" + i++);
 				newNode.setDescription("no description");
 				try {
 					newNode.setImage(new Image(new FileInputStream("Icons/" + "icon0" + ".png")));

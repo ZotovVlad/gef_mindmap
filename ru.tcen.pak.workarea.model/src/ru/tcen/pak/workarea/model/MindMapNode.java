@@ -30,7 +30,6 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 
 	public static final String userDir = System.getProperty("user.dir");
 
-	public static final String PROP_TITLE = "title";
 	public static final String PROP_COLOR = "color";
 	public static final String PROP_BOUNDS = "bounds";
 	public static final String PROP_INCOMING_CONNECTIONS = "incomingConnections";
@@ -60,11 +59,6 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	private String function_hex_field; // for functional node
 	private ArrayList<ArrayList<HashMap<String, String>>> hex_parameters; // for functional node
 	private ArrayList<ArrayList<HashMap<String, String>>> parameters; // for functional node
-
-	/**
-	 * The title of the node
-	 */
-	private String title;
 
 	/**
 	 * The background color of the node
@@ -242,10 +236,6 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		return parameters;
 	}
 
-	public String getTitle() {
-		return title;
-	}
-
 	public Set<String> getTitlesIncomingConnection() {
 		return titlesIncomingConnection;
 	}
@@ -318,6 +308,8 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	}
 
 	public void setName(String name) {
+		titlesIncomingConnection.add(name);
+		titlesOutgoingConnection.add(name);
 		pcs.firePropertyChange(PROP_NAME, this.name, (this.name = name));
 	}
 
@@ -350,9 +342,4 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		this.isStatic = isStatic;
 	}
 
-	public void setTitle(String title) {
-		titlesIncomingConnection.add(title);
-		titlesOutgoingConnection.add(title);
-		pcs.firePropertyChange(PROP_TITLE, this.title, (this.title = title));
-	}
 }

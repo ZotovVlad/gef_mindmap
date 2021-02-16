@@ -75,8 +75,8 @@ public class MindMapConnection extends AbstractMindMapItem {
 					.addTitlesOutgoingConnection(this.target.getTitlesOutgoingConnection());
 			IncomingConnections = IncomingConnections.get(0).getSource().getIncomingConnections();
 			if (!(IncomingConnections.isEmpty())) {
-				if (IncomingConnections.get(0).getTarget().getTitle().equals("START")
-						|| IncomingConnections.get(0).getTarget().getTitle().equals("")) {
+				if (IncomingConnections.get(0).getTarget().getName().equals("START")
+						|| IncomingConnections.get(0).getTarget().getName().equals("")) {
 					break;
 				}
 			}
@@ -89,8 +89,8 @@ public class MindMapConnection extends AbstractMindMapItem {
 					.addTitlesIncomingConnection(this.source.getTitlesIncomingConnection());
 			OutgoingConnections = OutgoingConnections.get(0).getTarget().getOutgoingConnections();
 			if (!(OutgoingConnections.isEmpty())) {
-				if (OutgoingConnections.get(0).getSource().getTitle().equals("FINISH")
-						|| IncomingConnections.get(0).getTarget().getTitle().equals("")) {
+				if (OutgoingConnections.get(0).getSource().getName().equals("FINISH")
+						|| IncomingConnections.get(0).getTarget().getName().equals("")) {
 					break;
 				}
 			}

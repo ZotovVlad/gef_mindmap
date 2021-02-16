@@ -43,7 +43,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 	public void deleteColorContent() {
 		MindMapNode mindMapNodeDeleted = null;
 		for (MindMapNode mindMapNode2 : MindMapNodePart.mindMapNode) {
-			if (this.getVisual().getTitleText().getText().toString().equals(mindMapNode2.getTitle())) {
+			if (this.getVisual().getNameText().getText().toString().equals(mindMapNode2.getName())) {
 
 				mindMapNodeDeleted = mindMapNode2;
 
@@ -51,7 +51,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 					MindMapNode mindMapNodeNext = mindMapNode2;
 					// reset all nodes until node START
 					while (true) {
-						if (mindMapNodeNext.getTitle().equals("START")
+						if (mindMapNodeNext.getName().equals("START")
 								|| mindMapNodeNext.getIncomingConnections().isEmpty()) {
 							break;
 						} else {
@@ -67,7 +67,7 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 					MindMapNode mindMapNodeNext = mindMapNode2;
 					// reset all nodes until node FINISH
 					while (true) {
-						if (mindMapNodeNext.getTitle().equals("FINISH")
+						if (mindMapNodeNext.getName().equals("FINISH")
 								|| mindMapNodeNext.getOutgoingConnections().isEmpty()) {
 							break;
 						} else {
@@ -120,7 +120,6 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 
 		MindMapNode node = getContent();
 
-		visual.setTitle(node.getTitle());
 		visual.setName(node.getName());
 		visual.setDescription(node.getDescription());
 		if (node.getImage() != null) {
@@ -182,16 +181,16 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 	public void propertyChange(PropertyChangeEvent event) {
 		String prop = event.getPropertyName();
 		if (MindMapNode.PROP_COLOR.equals(prop) || MindMapNode.PROP_DESCRIPTION.equals(prop)
-				|| MindMapNode.PROP_TITLE.equals(prop) || MindMapNode.PROP_IMAGE.equals(prop)
-				|| MindMapNode.PROP_NAME.equals(prop) || MindMapNode.PROP_BOUNDS.equals(prop)) {
+				|| MindMapNode.PROP_IMAGE.equals(prop) || MindMapNode.PROP_NAME.equals(prop)
+				|| MindMapNode.PROP_BOUNDS.equals(prop)) {
 			refreshVisual();
 		}
 	}
 
 	private void propertySet() {
 		MindMapNode node = getContent();
-		if (!(node.getTitle() == null)) {
-			switch (node.getTitle()) {
+		if (!(node.getName() == null)) {
+			switch (node.getName()) {
 			case "START":
 				quantityRectangleConnection = 1;
 				connectionOnlyRight = true;

@@ -32,14 +32,14 @@ public class MindMapVisualApplication extends Application {
 		// create state visuals
 
 		MindMapNodeVisual node = new MindMapNodeVisual(6, false, false);
-		node.setTitle("Test Node");
+		node.setName("Test Node");
 		node.setName("NAME1");
 		node.setDescription("This is just a test node, to see, how it looks :)");
 		node.relocate(500, 50);
 		// node.setImage(image);
 
 		MindMapNodeVisual node2 = new MindMapNodeVisual(6, false, false);
-		node2.setTitle("Test Node 2");
+		node2.setName("Test Node 2");
 		node2.setName("NAME2");
 		node2.setDescription("This is just a test node, to see, how it looks :)");
 		node2.relocate(150, 250);
