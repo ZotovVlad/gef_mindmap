@@ -88,7 +88,8 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnDragHand
 
 	private void verifyAndMoveCoordinatesAtNodesAtField(MouseEvent e) {
 		for (MindMapNode mindMapNode : mindMapNodesAtField) {
-			if (mindMapNode.hashCode() != MindMapMovingHandler.mindMapNodeTopMoved.hashCode()) {
+			if (mindMapNode.hashCode() != MindMapMovingHandler.mindMapNodeTopMoved.hashCode()
+					&& mindMapNode.isStatic()) {
 				Rectangle bounds = mindMapNode.getBounds();
 				if (e.getX() - offsetMenu >= bounds.getX() && e.getX() - offsetMenu <= bounds.getX() + bounds.getWidth()
 						&& e.getY() >= bounds.getY() && e.getY() <= bounds.getY() + bounds.getHeight()) {
