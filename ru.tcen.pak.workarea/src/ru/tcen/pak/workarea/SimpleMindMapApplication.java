@@ -90,6 +90,8 @@ public class SimpleMindMapApplication extends Application {
 	private Node createToolPalette() {
 		ItemCreationModel creationModel = getContentViewer().getAdapter(ItemCreationModel.class);
 		VBox vBox_root = new VBox(10);
+		vBox_root.setMinSize(300, 1000);
+		vBox_root.setMaxSize(300, 1000);
 
 		VBox vBox_new = new VBox(0);
 		// the toggleGroup makes sure, we only select one
@@ -116,7 +118,11 @@ public class SimpleMindMapApplication extends Application {
 		vBox_text.setPadding(new Insets(20, 10, 0, 10));
 
 		VBox vBox_list = new VBox(0);
+		vBox_list.setMinSize(300, 700);
+		vBox_list.setMaxSize(300, 700);
 		ListView list = new ListView();
+		list.setMinSize(300, 700);
+		list.setMaxSize(300, 700);
 		List<MindMapNode> nodeLib = ControllerJSON.readMindMapNodeLib();
 		if (nodeLib.size() == 0) {
 			Text text = new Text("Not library!");

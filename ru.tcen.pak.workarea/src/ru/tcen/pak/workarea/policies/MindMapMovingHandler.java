@@ -23,6 +23,8 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnDragHand
 
 	static List<MindMapNode> mindMapNodesAtField = new ArrayList<>();
 
+	private double offsetMenu = 300; // offset generated Tool Palette
+
 	@Override
 	public void abortDrag() {
 		// TODO Auto-generated method stub
@@ -86,12 +88,12 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnDragHand
 
 	private void verifyAndMoveCoordinatesAtNodesAtField(MouseEvent e) {
 		for (MindMapNode mindMapNode : mindMapNodesAtField) {
-			if (mindMapNode.getName() != MindMapMovingHandler.mindMapNodeTopMoved.getName()) {
+			if (!mindMapNode.getName().equals(MindMapMovingHandler.mindMapNodeTopMoved.getName())) {
 				Rectangle bounds = mindMapNode.getBounds();
-				if (e.getX() >= bounds.getX() && e.getX() <= bounds.getX() + bounds.getWidth()
+				if (e.getX() - offsetMenu >= bounds.getX() && e.getX() - offsetMenu <= bounds.getX() + bounds.getWidth()
 						&& e.getY() >= bounds.getY() && e.getY() <= bounds.getY() + bounds.getHeight()) {
 					MindMapMovingHandler.mindMapNodeBottomMoved = mindMapNode;
-					// System.out.println(mindMapNode.getTitle() + " bottom");
+//					System.out.println(mindMapNode.getName() + " bottom");
 					break;
 				}
 			}
