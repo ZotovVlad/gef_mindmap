@@ -103,6 +103,12 @@ public class MindMapNodeVisual extends Region {
 		// descriptionFlow.minHeight(width) +
 		// titleText.getLayoutBounds().getHeight() + VERTICAL_PADDING * 2;
 		// return labelVBox.minHeight(width);
+
+//		labelVBox.minHeight(height)
+//		private TextFlow descriptionFlow; 	descriptionFlow.minHeight(height)
+//		private Text descriptionText; 		descriptionText.minHeight(height)
+//		private Text nameText;				nameText.minHeight(height)
+
 		this.NODE_HEIGH = labelVBox.minHeight(height);
 		return labelVBox.minHeight(height);// + nameText.minHeight(width) +
 											// descriptionText.minHeight(width);
