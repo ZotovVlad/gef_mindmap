@@ -27,6 +27,7 @@ public class MindMapNodeVisual extends Region {
 	private static final double VERTICAL_PADDING = 10d;
 	private static final double VERTICAL_SPACING = 5d;
 	private static final int SIZERECTANGLEBOX = 10;
+
 	private double NODE_WIDTH = 170;
 	private double NODE_HEIGH = 170;
 
@@ -42,13 +43,12 @@ public class MindMapNodeVisual extends Region {
 	private List<Rectangle> pointsBox = new ArrayList<>();
 	private Color color;
 	private boolean isStatic;
+	private boolean connectionOnlyRight;
+	private int quantityRectangleConnection;
+
 	public List<Point> pointConnection = new ArrayList<>();
 
-	public MindMapNodeVisual(org.eclipse.gef.geometry.planar.Rectangle rectangle, int quantityRectangleConnection,
-			boolean connectionOnlyRight, boolean isStatic) {
-
-		this.NODE_WIDTH = rectangle.getWidth();
-		this.NODE_HEIGH = rectangle.getHeight();
+	public MindMapNodeVisual(int quantityRectangleConnection, boolean connectionOnlyRight, boolean isStatic) {
 
 		// create background shape
 		shape = new GeometryNode<>(new RoundedRectangle(0, 0, NODE_WIDTH, NODE_HEIGH, 8, 8));
@@ -91,6 +91,90 @@ public class MindMapNodeVisual extends Region {
 		// considered when determining the layout-bounds of this visual
 		getChildren().addAll(new Group(shape), new Group(labelVBox));
 
+		this.setQuantityRectangleConnection(quantityRectangleConnection);
+		this.setConnectionOnlyRight(connectionOnlyRight);
+		this.setStatic(isStatic);
+
+	}
+
+	@Override
+	public double computeMinHeight(double height) {
+		// ensure title is always visible
+		// descriptionFlow.minHeight(width) +
+		// titleText.getLayoutBounds().getHeight() + VERTICAL_PADDING * 2;
+		// return labelVBox.minHeight(width);
+		this.NODE_HEIGH = labelVBox.minHeight(height);
+		return labelVBox.minHeight(height);// + nameText.minHeight(width) +
+											// descriptionText.minHeight(width);
+	}
+
+	@Override
+	public double computeMinWidth(double width) {
+		// ensure title is always visible
+		this.NODE_WIDTH = labelVBox.minWidth(width);
+		return labelVBox.minWidth(width);
+	}
+
+	@Override
+	protected double computePrefHeight(double width) {
+		return minHeight(width);
+	}
+
+	@Override
+	protected double computePrefWidth(double height) {
+		return minWidth(height);
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	@Override
+	public Orientation getContentBias() {
+		return Orientation.HORIZONTAL;
+	}
+
+	public Text getDescriptionText() {
+		return descriptionText;
+	}
+
+	public GeometryNode<?> getGeometryNode() {
+		return shape;
+	}
+
+	public Image getImage() {
+		return descriptionImage;
+	}
+
+	public Text getNameText() {
+		return nameText;
+	}
+
+	public List<Point> getPoints() {
+		return points;
+	}
+
+	public List<Rectangle> getPointsBox() {
+		return pointsBox;
+	}
+
+	public int getQuantityRectangleConnection() {
+		return quantityRectangleConnection;
+	}
+
+	public String getUrlImage() {
+		return urlImage;
+	}
+
+	public boolean isConnectionOnlyRight() {
+		return connectionOnlyRight;
+	}
+
+	public boolean isStatic() {
+		return isStatic;
+	}
+
+	public void paintingRectangleConnection() {
 		Rectangle rec = null;
 
 		if (quantityRectangleConnection == 6) {
@@ -220,78 +304,15 @@ public class MindMapNodeVisual extends Region {
 			}
 			getChildren().addAll(pointsBox);
 		}
-		this.setStatic(isStatic);
-
-	}
-
-	@Override
-	public double computeMinHeight(double width) {
-		// ensure title is always visible
-		// descriptionFlow.minHeight(width) +
-		// titleText.getLayoutBounds().getHeight() + VERTICAL_PADDING * 2;
-		return labelVBox.minHeight(width);
-	}
-
-	@Override
-	public double computeMinWidth(double height) {
-		// ensure title is always visible
-		return nameText.getLayoutBounds().getWidth() + HORIZONTAL_PADDING * 2;
-	}
-
-	@Override
-	protected double computePrefHeight(double width) {
-		return minHeight(width);
-	}
-
-	@Override
-	protected double computePrefWidth(double height) {
-		return minWidth(height);
-	}
-
-	public Color getColor() {
-		return color;
-	}
-
-	@Override
-	public Orientation getContentBias() {
-		return Orientation.HORIZONTAL;
-	}
-
-	public Text getDescriptionText() {
-		return descriptionText;
-	}
-
-	public GeometryNode<?> getGeometryNode() {
-		return shape;
-	}
-
-	public Image getImage() {
-		return descriptionImage;
-	}
-
-	public Text getNameText() {
-		return nameText;
-	}
-
-	public List<Point> getPoints() {
-		return points;
-	}
-
-	public List<Rectangle> getPointsBox() {
-		return pointsBox;
-	}
-
-	public String getUrlImage() {
-		return urlImage;
-	}
-
-	public boolean isStatic() {
-		return isStatic;
 	}
 
 	public void setColor(Color color) {
 		this.color = color;
 		shape.setFill(color);
+	}
+
+	public void setConnectionOnlyRight(boolean connectionOnlyRight) {
+		this.connectionOnlyRight = connectionOnlyRight;
 	}
 
 	public void setDescription(String description) {
@@ -314,6 +335,10 @@ public class MindMapNodeVisual extends Region {
 
 	public void setName(String name) {
 		this.nameText.setText(name);
+	}
+
+	public void setQuantityRectangleConnection(int quantityRectangleConnection) {
+		this.quantityRectangleConnection = quantityRectangleConnection;
 	}
 
 	public void setStatic(boolean isStatic) {
