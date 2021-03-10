@@ -3,6 +3,7 @@ package ru.tcen.pak.workarea.visuals;
 import org.eclipse.gef.fx.anchors.ChopBoxStrategy;
 import org.eclipse.gef.fx.anchors.DynamicAnchor;
 import org.eclipse.gef.fx.nodes.Connection;
+import org.eclipse.gef.geometry.planar.Rectangle;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -31,14 +32,14 @@ public class MindMapVisualApplication extends Application {
 
 		// create state visuals
 
-		MindMapNodeVisual node = new MindMapNodeVisual(6, false, false);
+		MindMapNodeVisual node = new MindMapNodeVisual(new Rectangle(100, 100, 100, 100), 0, false, false);
 		node.setName("Test Node");
 		node.setName("NAME1");
 		node.setDescription("This is just a test node, to see, how it looks :)");
 		node.relocate(500, 50);
 		// node.setImage(image);
 
-		MindMapNodeVisual node2 = new MindMapNodeVisual(6, false, false);
+		MindMapNodeVisual node2 = new MindMapNodeVisual(new Rectangle(100, 100, 100, 100), 6, false, false);
 		node2.setName("Test Node 2");
 		node2.setName("NAME2");
 		node2.setDescription("This is just a test node, to see, how it looks :)");

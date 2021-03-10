@@ -94,7 +94,8 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 	@Override
 	protected MindMapNodeVisual doCreateVisual() {
 		propertySet();
-		return new MindMapNodeVisual(quantityRectangleConnection, connectionOnlyRight, isStatic);
+		return new MindMapNodeVisual(getContent().getBounds(), quantityRectangleConnection, connectionOnlyRight,
+				isStatic);
 	}
 
 	@Override

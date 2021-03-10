@@ -26,9 +26,9 @@ public class MindMapNodeVisual extends Region {
 	private static final double HORIZONTAL_PADDING = 20d;
 	private static final double VERTICAL_PADDING = 10d;
 	private static final double VERTICAL_SPACING = 5d;
-	private static final double NODE_WIDTH = 170;
-	private static final double NODE_HEIGH = 170;
 	private static final int SIZERECTANGLEBOX = 10;
+	private double NODE_WIDTH = 170;
+	private double NODE_HEIGH = 170;
 
 	private TextFlow descriptionFlow;
 	private Text descriptionText;
@@ -44,7 +44,11 @@ public class MindMapNodeVisual extends Region {
 	private boolean isStatic;
 	public List<Point> pointConnection = new ArrayList<>();
 
-	public MindMapNodeVisual(int quantityRectangleConnection, boolean connectionOnlyRight, boolean isStatic) {
+	public MindMapNodeVisual(org.eclipse.gef.geometry.planar.Rectangle rectangle, int quantityRectangleConnection,
+			boolean connectionOnlyRight, boolean isStatic) {
+
+		this.NODE_WIDTH = rectangle.getWidth();
+		this.NODE_HEIGH = rectangle.getHeight();
 
 		// create background shape
 		shape = new GeometryNode<>(new RoundedRectangle(0, 0, NODE_WIDTH, NODE_HEIGH, 8, 8));
