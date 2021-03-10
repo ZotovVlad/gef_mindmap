@@ -157,6 +157,8 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 		// use the ITransformableContentPart API to position the visual
 		setVisualTransform(getContentTransform());
 
+		visual.rePaintingRectangleConnection();
+
 	}
 
 	@Override

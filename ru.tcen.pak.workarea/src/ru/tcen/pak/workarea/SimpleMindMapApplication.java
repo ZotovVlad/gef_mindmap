@@ -37,8 +37,6 @@ import ru.tcen.pak.workarea.model.SimpleMindMap;
 import ru.tcen.pak.workarea.model.SimpleMindMapExampleFactory;
 import ru.tcen.pak.workarea.models.ItemCreationModel;
 import ru.tcen.pak.workarea.models.ItemCreationModel.Type;
-import ru.tcen.pak.workarea.parts.MindMapNodePart;
-import ru.tcen.pak.workarea.visuals.MindMapNodeVisual;
 
 /**
  * Entry point for our Simple Mind Map Editor, creating and rendering a JavaFX
@@ -299,9 +297,6 @@ public class SimpleMindMapApplication extends Application {
 		primaryStage.setTitle("GEF Simple Mindmap");
 		primaryStage.sizeToScene();
 		primaryStage.show();
-
-		// for adding rectangle connection on the node
-		this.updateShow();
 	}
 
 	/**
@@ -312,12 +307,6 @@ public class SimpleMindMapApplication extends Application {
 			domain.getOperationHistory().undo(domain.getUndoContext(), null, null);
 		} catch (ExecutionException e1) {
 			e1.printStackTrace();
-		}
-	}
-
-	private void updateShow() {
-		for (MindMapNodeVisual mindMapNodeVisual : MindMapNodePart.mindMapNodeVisual) {
-			mindMapNodeVisual.paintingRectangleConnection();
 		}
 	}
 

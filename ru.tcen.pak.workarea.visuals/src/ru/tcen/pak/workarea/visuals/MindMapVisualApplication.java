@@ -64,6 +64,6 @@ public class MindMapVisualApplication extends Application {
 		primaryStage.setTitle("This is an JavaFX Environment Test");
 		primaryStage.sizeToScene();
 		primaryStage.show();
-		node.paintingRectangleConnection();
+		node.rePaintingRectangleConnection();
 	}
 }
