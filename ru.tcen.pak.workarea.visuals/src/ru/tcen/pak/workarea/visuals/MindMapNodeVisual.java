@@ -100,6 +100,16 @@ public class MindMapNodeVisual extends Region {
 
 	}
 
+	public void clearRectangleConnection() {
+		System.out.println();
+		for (int i = quantityRectangleConnection; i > 0; i--) {
+			getChildren().remove(i + 1);
+			points.remove(i - 1);
+			pointsBox.remove(i - 1);
+		}
+		System.out.println();
+	}
+
 	@Override
 	public double computeMinHeight(double height) {
 		return labelVBox.minHeight(height);
@@ -174,7 +184,8 @@ public class MindMapNodeVisual extends Region {
 		if (this.startPainting) {
 			updatingRectangleConnection();
 		} else {
-//			updatingRectangleConnection();
+			clearRectangleConnection();
+			updatingRectangleConnection();
 		}
 	}
 
