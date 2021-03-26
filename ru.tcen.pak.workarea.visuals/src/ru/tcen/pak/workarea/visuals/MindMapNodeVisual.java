@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.gef.fx.nodes.GeometryNode;
-import org.eclipse.gef.geometry.planar.Dimension;
 import org.eclipse.gef.geometry.planar.Point;
 import org.eclipse.gef.geometry.planar.RoundedRectangle;
 
@@ -102,13 +101,11 @@ public class MindMapNodeVisual extends Region {
 	}
 
 	public void clearRectangleConnection() {
-		System.out.println();
 		for (int i = quantityRectangleConnection; i > 0; i--) {
 			getChildren().remove(i + 1);
 			points.remove(i - 1);
 			pointsBox.remove(i - 1);
 		}
-		System.out.println();
 	}
 
 	@Override
@@ -180,15 +177,15 @@ public class MindMapNodeVisual extends Region {
 		return isStatic;
 	}
 
-	public Dimension rePaintingRectangleConnection() {
+	public void rePaintingRectangleConnection() {
 		this.updateDimensionNode();
 		if (this.startPainting) {
 			updatingRectangleConnection();
 		} else {
 			clearRectangleConnection();
 			updatingRectangleConnection();
+			// TODO updating Connection coordinates on the Rectangle
 		}
-		return new Dimension(NODE_WIDTH, NODE_HEIGH);
 	}
 
 	public void setColor(Color color) {
@@ -240,7 +237,6 @@ public class MindMapNodeVisual extends Region {
 	}
 
 	public void updatingRectangleConnection() {
-		System.out.println(NODE_WIDTH + " " + NODE_HEIGH);
 		Rectangle rec = null;
 		if (quantityRectangleConnection == 6) {
 			points.addAll(
