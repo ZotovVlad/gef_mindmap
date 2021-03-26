@@ -94,7 +94,9 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 	@Override
 	protected MindMapNodeVisual doCreateVisual() {
 		propertySet();
-		return new MindMapNodeVisual(quantityRectangleConnection, connectionOnlyRight, isStatic);
+		MindMapNodeVisual visual = new MindMapNodeVisual(quantityRectangleConnection, connectionOnlyRight, isStatic);
+		visual.rePaintingRectangleConnection();
+		return visual;
 	}
 
 	@Override
@@ -147,18 +149,17 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 //			}
 //		}
 
-		// added each node in collection for update each node
-		MindMapNodePart.mindMapNode.add(node);
-		// added each node visual in collection for update each node visual
-		MindMapNodePart.mindMapNodeVisual.add(visual);
+		visual.rePaintingRectangleConnection();
 
 		// use the IResizableContentPart API to resize the visual
 		setVisualSize(getContentSize());
 		// use the ITransformableContentPart API to position the visual
 		setVisualTransform(getContentTransform());
 
-		visual.rePaintingRectangleConnection();
-
+		// added each node in collection for update each node
+		MindMapNodePart.mindMapNode.add(node);
+		// added each node visual in collection for update each node visual
+		MindMapNodePart.mindMapNodeVisual.add(visual);
 	}
 
 	@Override
@@ -168,6 +169,11 @@ public class MindMapNodePart extends AbstractContentPart<MindMapNodeVisual> impl
 
 	@Override
 	public Dimension getContentSize() {
+		for (MindMapNodeVisual mindMapNodeVisual : mindMapNodeVisual) {
+			if (mindMapNodeVisual.getNameText().getText().equals(getContent().getName())) {
+				mindMapNodeVisual.rePaintingRectangleConnection();
+			}
+		}
 		return getContent().getBounds().getSize();
 	}
 

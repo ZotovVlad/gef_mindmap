@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.gef.fx.nodes.GeometryNode;
+import org.eclipse.gef.geometry.planar.Dimension;
 import org.eclipse.gef.geometry.planar.Point;
 import org.eclipse.gef.geometry.planar.RoundedRectangle;
 
@@ -35,7 +36,7 @@ public class MindMapNodeVisual extends Region {
 	private TextFlow descriptionFlow;
 	private Text descriptionText;
 	private Text nameText;
-	public GeometryNode<RoundedRectangle> shape;
+	private GeometryNode<RoundedRectangle> shape;
 	private VBox labelVBox;
 	private Image descriptionImage;
 	private String urlImage = "null.png";
@@ -179,7 +180,7 @@ public class MindMapNodeVisual extends Region {
 		return isStatic;
 	}
 
-	public void rePaintingRectangleConnection() {
+	public Dimension rePaintingRectangleConnection() {
 		this.updateDimensionNode();
 		if (this.startPainting) {
 			updatingRectangleConnection();
@@ -187,6 +188,7 @@ public class MindMapNodeVisual extends Region {
 			clearRectangleConnection();
 			updatingRectangleConnection();
 		}
+		return new Dimension(NODE_WIDTH, NODE_HEIGH);
 	}
 
 	public void setColor(Color color) {
@@ -238,6 +240,7 @@ public class MindMapNodeVisual extends Region {
 	}
 
 	public void updatingRectangleConnection() {
+		System.out.println(NODE_WIDTH + " " + NODE_HEIGH);
 		Rectangle rec = null;
 		if (quantityRectangleConnection == 6) {
 			points.addAll(
