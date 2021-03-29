@@ -13,6 +13,7 @@ import org.eclipse.gef.mvc.fx.parts.IContentPart;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import ru.tcen.pak.workarea.SimpleMindMapApplication;
 import ru.tcen.pak.workarea.model.MindMapNode;
 import ru.tcen.pak.workarea.parts.MindMapNodePart;
 
@@ -24,6 +25,10 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnDragHand
 	static List<MindMapNode> mindMapNodesAtField = new ArrayList<>();
 
 	private double offsetMenu = 300; // offset generated Tool Palette
+
+	double horizontalScrollOffset;
+
+	double verticalScrollOffset;
 
 	@Override
 	public void abortDrag() {
@@ -38,6 +43,8 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnDragHand
 	@Override
 	public void endDrag(MouseEvent e, Dimension delta) {
 		if (!mindMapNodeTopMoved.isStatic()) {
+			horizontalScrollOffset = SimpleMindMapApplication.paletteRootNode.getHorizontalScrollOffset();
+			verticalScrollOffset = SimpleMindMapApplication.paletteRootNode.getVerticalScrollOffset();
 			verifyAndMoveCoordinatesAtNodesAtField(e);
 			if (mindMapNodeBottomMoved.getBounds() == null) {
 				MindMapMovingHandler.mindMapNodeBottomMoved = mindMapNodeTopMoved;
@@ -92,7 +99,8 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnDragHand
 					&& mindMapNode.isStatic()) {
 				Rectangle bounds = mindMapNode.getBounds();
 				if (e.getX() - offsetMenu >= bounds.getX() && e.getX() - offsetMenu <= bounds.getX() + bounds.getWidth()
-						&& e.getY() >= bounds.getY() && e.getY() <= bounds.getY() + bounds.getHeight()) {
+						&& e.getY() - verticalScrollOffset >= bounds.getY()
+						&& e.getY() - verticalScrollOffset <= bounds.getY() + bounds.getHeight()) {
 					MindMapMovingHandler.mindMapNodeBottomMoved = mindMapNode;
 //					System.out.println(mindMapNode.getName() + " bottom");
 					break;

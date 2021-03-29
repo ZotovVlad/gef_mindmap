@@ -7,9 +7,11 @@ import java.util.List;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.IUndoContext;
 import org.eclipse.gef.common.adapt.AdapterKey;
+import org.eclipse.gef.fx.nodes.InfiniteCanvas;
 import org.eclipse.gef.mvc.fx.domain.HistoricizingDomain;
 import org.eclipse.gef.mvc.fx.domain.IDomain;
 import org.eclipse.gef.mvc.fx.viewer.IViewer;
+import org.eclipse.gef.mvc.fx.viewer.InfiniteCanvasViewer;
 
 import com.google.inject.Guice;
 
@@ -44,6 +46,10 @@ import ru.tcen.pak.workarea.models.ItemCreationModel.Type;
  *
  */
 public class SimpleMindMapApplication extends Application {
+
+	public static InfiniteCanvas paletteRootNode;
+
+	public static IViewer viewer;
 
 	public static void main(String[] args) {
 		Application.launch(args);
@@ -218,6 +224,11 @@ public class SimpleMindMapApplication extends Application {
 		return domain.getAdapter(AdapterKey.get(IViewer.class, IDomain.CONTENT_VIEWER_ROLE));
 	}
 
+	public void getInfiniteCanvas() {
+		viewer = getContentViewer();
+		paletteRootNode = ((InfiniteCanvasViewer) viewer).getCanvas();
+	}
+
 	/**
 	 * Creating JavaFX widgets and set them to the stage.
 	 */
@@ -257,6 +268,8 @@ public class SimpleMindMapApplication extends Application {
 		// ControllerJSON.writeAllPropertiesJSON();
 		IViewer viewer = getContentViewer();
 		viewer.getContents().setAll(mindMap);
+
+		this.getInfiniteCanvas();
 	}
 
 	/**
