@@ -98,7 +98,8 @@ public class MindMapMovingHandler extends AbstractHandler implements IOnDragHand
 			if (mindMapNode.hashCode() != MindMapMovingHandler.mindMapNodeTopMoved.hashCode()
 					&& mindMapNode.isStatic()) {
 				Rectangle bounds = mindMapNode.getBounds();
-				if (e.getX() - offsetMenu >= bounds.getX() && e.getX() - offsetMenu <= bounds.getX() + bounds.getWidth()
+				if (e.getX() - offsetMenu - horizontalScrollOffset >= bounds.getX()
+						&& e.getX() - offsetMenu - horizontalScrollOffset <= bounds.getX() + bounds.getWidth()
 						&& e.getY() - verticalScrollOffset >= bounds.getY()
 						&& e.getY() - verticalScrollOffset <= bounds.getY() + bounds.getHeight()) {
 					MindMapMovingHandler.mindMapNodeBottomMoved = mindMapNode;
