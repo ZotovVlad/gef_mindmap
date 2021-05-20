@@ -2,6 +2,10 @@ package ru.tcen.pak.workarea.model;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.eclipse.gef.geometry.planar.Rectangle;
 
@@ -19,6 +23,11 @@ public class SimpleMindMapExampleFactory {
 
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
+//				try {
+//					Thread.sleep(1000);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
 				MindMapNode node = new MindMapNode();
 				node.setName(i + "" + j);
 				node.setColor(Color.PALEVIOLETRED);
@@ -26,6 +35,7 @@ public class SimpleMindMapExampleFactory {
 				node.setBounds(
 						new Rectangle(300 + (j * WIDTH) + (j * DELTA), 0 + (i * HEIGHT) + (i * DELTA), WIDTH, HEIGHT));
 				mindMap.addChildElement(node);
+				writelog(node);
 			}
 		}
 
@@ -140,5 +150,22 @@ public class SimpleMindMapExampleFactory {
 		mindMap.addChildElement(center);
 
 		return mindMap;
+	}
+
+	private void writelog(MindMapNode node) {
+		SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String filePath = node.getNodeLogs();
+
+		String text = formatForDateNow.format(new Date()) + " [INFO] " + "MindMapNode" + " - " + "Create node "
+				+ node.getName() + " at the " + node.getNodeDirectory() + "\n";
+		text += formatForDateNow.format(new Date()) + " [DEBUG] " + "MindMapNode" + " - " + node.getName() + " "
+				+ node.getBounds() + " " + node.getColor() + " " + node.getNodeDirectory() + "\n";
+
+		try (FileWriter writer = new FileWriter(filePath, true)) {
+			writer.write(text);
+			writer.flush();
+		} catch (IOException e) {
+			System.out.println(e);
+		}
 	}
 }

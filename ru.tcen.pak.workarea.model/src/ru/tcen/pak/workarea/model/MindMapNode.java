@@ -50,6 +50,7 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 	private String nodeAllJSON = userDir + File.separator + "files" + File.separator;
 	private String nodeCode = userDir + File.separator + "files" + File.separator + "nodes" + File.separator;
 	private String nodeDirectory = userDir + File.separator + "files" + File.separator + "nodes" + File.separator;
+	private String nodeLogs = userDir + File.separator + "files" + File.separator;
 	private Set<String> titlesIncomingConnection = new HashSet<>();
 	private Set<String> titlesOutgoingConnection = new HashSet<>();
 
@@ -94,6 +95,7 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		this.nodeCode += this.hashCode() + File.separator + this.hashCode() + ".txt";
 //		this.nodeCode += this.hashCode() + File.separator + this.hashCode() + ".json";// for testing
 		this.nodeDirectory += this.hashCode();
+		this.nodeLogs += "properties" + File.separator + "mindMapNode" + ".log";
 
 		File file = new File(this.nodeDirectory);
 		file.mkdir();
@@ -224,6 +226,10 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 		return nodeDirectory;
 	}
 
+	public String getNodeLogs() {
+		return nodeLogs;
+	}
+
 	public String getNumberOfHexParameters() {
 		return number_of_hex_parameters;
 	}
@@ -327,6 +333,10 @@ public class MindMapNode extends AbstractMindMapItem implements Serializable {
 
 	public void setNodeDirectory(String nodeDirectory) {
 		this.nodeDirectory = nodeDirectory;
+	}
+
+	public void setNodeLogs(String nodeLogs) {
+		this.nodeLogs = nodeLogs;
 	}
 
 	public void setNumberOfHexParameters(String number_of_hex_parameters) {
